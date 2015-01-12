@@ -42,7 +42,6 @@ class MosaicsController < ApplicationController
     grid    = Array.new(columns, Array.new(rows))
     comp_img_width  = base_img.columns / columns
     comp_img_height = base_img.rows / rows
-    unused_comp_hists = comp_hists.dup
 
     columns.times do |c|
 
@@ -54,8 +53,8 @@ class MosaicsController < ApplicationController
         cropped_img  = base_img.crop(x, y, comp_img_width, comp_img_height, true)
         cropped_hist = to_histogram(cropped_img)
         cropped_hist = sort_by_population(cropped_hist)
-        index        = find_img_index(unused_comp_hists, comp_hists, cropped_hist)
         grid[c][r]   = comp_img[index]
+        index        = find_img_index(comp_hists, cropped_hist)
       end
     end 
 
@@ -121,23 +120,7 @@ class MosaicsController < ApplicationController
   end
 
 
-  def find_image(unused_comp_hists, comp_hists, base_hist)
-
-    3.times do |color_pos|
-      unused_comp_hists.each_with_index do |comp_hist, i|
-
-        # First [0] accesses highest occuring color
-        # Second [0] accesses reduced color bucket number
-        base_color = base_hist[0][0]
-        comp_color = comp_hist[color_pos][0]
-        if base_color == comp_color
-          binding.pry
-          return i
-        end
-      end
-    end
-
-
+  def find_img_index(comp_hists, base_hist)
     3.times do |color_pos|
       comp_hists.each_with_index do |comp_hist, i|
 
@@ -146,7 +129,6 @@ class MosaicsController < ApplicationController
         base_color = base_hist[0][0]
         comp_color = comp_hist[color_pos][0]
         if base_color == comp_color
-          binding.pry
           return i
         end
       end
