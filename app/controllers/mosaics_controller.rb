@@ -13,20 +13,20 @@ class MosaicsController < ApplicationController
     # retrieve base image
     base_img  = Image.read("app/assets/images/me.jpg").first # (@mosaic.base_img)
     # retrieve composition images' names
-    comp_imgs = Dir.entries("/Users/andrewfreda/Downloads/pics/other half/phone pics/all") #("#{@mosaic.comp_imgs_dir}")
-    comp_imgs.delete_if { |x| x.start_with?('.') }
-    comp_hists = Array.new(@mosaic.max_comp_imgs)
+    img_names = Dir.entries("/Users/andrewfreda/dev/rails/mosaics/app/assets/images/test") #("#{@mosaic.comp_imgs_dir}")
+    img_names.delete_if { |x| x.start_with?('.') }
+    comp_imgs = ImageList.new
+    comp_hists = Array.new
 
     @mosaic.max_comp_imgs.times do |i|
-      if i < comp_imgs.size
-        path          = "/Users/andrewfreda/Downloads/pics/other half/phone pics/all/#{comp_imgs[i]}"
-        comp_imgs[i]  = Image.read(path).first # ("#{(@mosaic.comp_imgs_dir)}/#{comp_imgs[pos])}").first
+      if i < img_names.size
+        path = "/Users/andrewfreda/dev/rails/mosaics/app/assets/images/test/#{img_names[i]}" # "#{(@mosaic.comp_imgs_dir)}/#{img_names[i])}"
+        comp_imgs.read(path)
         comp_hists[i] = to_histogram(comp_imgs[i])
       else
         break
       end
     end
-    binding.pry
 
     # At this point we have a histogram version of each of our composition images
     # Now we need to analyze our base image, breaking it up into a grid
