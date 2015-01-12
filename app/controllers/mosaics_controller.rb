@@ -83,7 +83,7 @@ class MosaicsController < ApplicationController
     histogram.each do |h|
 
       hsla = h.first.to_hsla
-      pos  = (hsla[0] + 10).to_i / 20
+      pos  = ((hsla[0] + 10).to_i / 20) % 18
       simplified_hist[pos] = simplified_hist[pos].push(h)
     end
 
