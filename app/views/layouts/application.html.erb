@@ -5,10 +5,30 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+
 </head>
 <body>
 
-<%= yield %>
+  <div id='container' class='container'>
+    <div class='row'>
+      <div class='col-xs-12'>
 
+        <% if notice or alert %>
+          <div class='flash' id='notice'> <%= notice %> </div>
+          <div class='flash' id='alert'>  <%= alert  %> </div>
+        <% end %>
+
+        </br>
+        </br>
+
+        <%= yield %>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </body>
 </html>
