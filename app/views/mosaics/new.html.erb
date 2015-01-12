@@ -1,0 +1,12 @@
+<div class='row'>
+  <div class='col-sm-12'>
+    <%= simple_form_for @mosaic, html: { class: 'form-signin' } do |f| %>
+      <h2 class='form-signin-heading'>Required Information:</h2>
+
+      <%= f.input_field :base_img, placeholder: '/your/path/here', class: 'form-control' %>
+      <%= f.input_field :comp_imgs_dir, placeholder: '/your/path/here', class: 'form-control' %>
+      <%= f.input_field :max_comp_imgs, placeholder: '150', class: 'form-control last-form-input' %>
+      <%= f.button :submit, 'Get Mosaic', class: 'btn btn-large btn-primary btn-block' %>
+    <% end %>
+  </div>
+</div>
