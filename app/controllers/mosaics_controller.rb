@@ -111,7 +111,7 @@ class MosaicsController < ApplicationController
 
   # Sort according to hue from HSLa
   def sort_by_color(histogram)
-    histogram.sort_by { |pixel, n| pixel.to_hsla[0] }
+    histogram.sort_by { |pos, v| v.keys.first.to_hsla[0] }
   end
 
   # Sort by number of times pixel appeared from greatest to least
