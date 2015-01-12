@@ -44,7 +44,6 @@ class MosaicsController < ApplicationController
     comp_img_height = base_img.rows / rows
 
     columns.times do |c|
-
       rows.times do |r|
       
         x = c * comp_img_width
@@ -64,11 +63,9 @@ class MosaicsController < ApplicationController
   ##### HELPER METHODS
   def to_histogram(img)
     num_colors  = 256
-    hist_height = 250
 
     img   = img.quantize(num_colors)
     hist  = img.color_histogram
-    scale = hist_height / (hist.values.max*1.025)   # put 2.5% air at the top
     # Transform histogram here, reducing # buckets and sorting
     hist  = reduce_histogram(hist)
     hist  = sort_by_population(hist)
