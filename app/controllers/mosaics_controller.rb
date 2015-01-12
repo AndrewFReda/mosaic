@@ -37,27 +37,31 @@ class MosaicsController < ApplicationController
     # Grid is an Array of Arrays where outer/inner arrays represent X/Y respectively
     # Array[0][0] represents upper left corner
     # For now starting out will be 8 coulmns with 10 rows
-    rows    = 10
-    columns = 8
-    grid    = Array.new(columns, Array.new(rows))
+    rows    = 8
+    columns = 10
     comp_img_width  = base_img.columns / columns
     comp_img_height = base_img.rows / rows
+    grid_imgs = ImageList.new
+    page = Magick::Rectangle.new(0,0,0,0)
 
     columns.times do |c|
       rows.times do |r|
       
-        x = c * comp_img_width
-        y = r * comp_img_height
+        page.x = c * comp_img_width
+        page.y = r * comp_img_height
 
-        cropped_img  = base_img.crop(x, y, comp_img_width, comp_img_height, true)
+        cropped_img  = base_img.crop(page.x, page.y, comp_img_width, comp_img_height, true)
         cropped_hist = to_histogram(cropped_img)
         cropped_hist = sort_by_population(cropped_hist)
-        grid[c][r]   = comp_img[index]
         index        = find_img_index(comp_hists, cropped_hist)
+        grid_imgs << comp_imgs[index].dup.scale(comp_img_width, comp_img_height)
+        grid_imgs.page = page
       end
     end 
 
-    
+    mosaic = grid_imgs.mosaic
+    mosaic.write("mosaic.jpg")
+
   end
 
   ##### HELPER METHODS
