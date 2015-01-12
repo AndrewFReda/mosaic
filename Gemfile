@@ -23,18 +23,15 @@ gem 'bcrypt', '~> 3.1.7'
 #gem 'omniauth-facebook'
 gem 'simple_form'
 gem 'lolcommits'
-gem 'rmagick'
+gem 'paperclip'
+gem 'dotenv-rails'
 
 # gem 'unicorn'
 # gem 'capistrano-rails', group: :development
 # gem 'debugger', group: [:development, :test]
 
-group :test do
-  gem 'dotenv-rails'
-end
 
 group :development do
-  gem 'dotenv-rails'
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'awesome_print'
