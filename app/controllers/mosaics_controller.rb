@@ -10,18 +10,22 @@ class MosaicsController < ApplicationController
   end
 
   def create
-    @mosaic   = Mosaic.new mosaic_params
+    @mosaic = Mosaic.new mosaic_params
     # retrieve base image
-    base_img  = Image.read("app/assets/images/me.jpg").first # (@mosaic.base_img)
-    # retrieve composition images' names
+    base_img = Image.read("app/assets/images/me.jpg").first # (@mosaic.base_img)
+    # retrieve names of composition images from specified path
     img_names = Dir.entries("/Users/andrewfreda/dev/rails/mosaics/app/assets/images/test") #("#{@mosaic.comp_imgs_dir}")
+    # remove '.' and '..' and any other file starting with '.'
     img_names.delete_if { |x| x.start_with?('.') }
-    comp_imgs = ImageList.new
+    # prepare image list and histogram lists
+    comp_imgs  = ImageList.new
     comp_hists = Array.new
 
     @mosaic.max_comp_imgs.times do |i|
+      # break if cycled through every file in directory
       if i < img_names.size
         path = "/Users/andrewfreda/dev/rails/mosaics/app/assets/images/test/#{img_names[i]}" # "#{(@mosaic.comp_imgs_dir)}/#{img_names[i])}"
+        # create image and histogram
         comp_imgs.read(path)
         comp_hists[i] = to_histogram(comp_imgs[i])
       else
