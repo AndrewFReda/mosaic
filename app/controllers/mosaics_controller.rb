@@ -29,6 +29,11 @@ class MosaicsController < ApplicationController
       end
     end
 
+    draw_mosaic(base_img, comp_imgs, comp_hists)
+  end
+
+  ##### HELPER METHODS
+  def draw_mosaic(base_img, comp_imgs, comp_hists)
     # At this point we have a histogram version of each of our composition images
     # Now we need to analyze our base image, breaking it up into a grid
 
