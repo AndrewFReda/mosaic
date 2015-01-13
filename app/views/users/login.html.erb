@@ -1,0 +1,12 @@
+<%= simple_form_for @user, url: url_for(controller: :users, action: :login_user), html: { class: 'form-signin' } do |f | %>
+  <h2 class='form-signin-heading'>Please login</h2>
+  <%= f.input_field :email, placeholder: 'Email Address', class: 'form-control' %>
+  <%= f.input_field :password, placeholder: 'Password', class: 'form-control last-form-input' %>
+  <%= f.button :submit, 'Login', class: 'btn btn-large btn-primary btn-block' %>
+  <%= link_to 'Continue as guest', login_user_path, class: 'btn btn-large btn-info btn-block' %>
+  </br>
+  <%= link_to 'Need to create an account?', new_user_path %>
+<% end %>
+
+
+
