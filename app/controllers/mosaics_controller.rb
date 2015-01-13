@@ -1,4 +1,5 @@
 class MosaicsController < ApplicationController
+  include Histogramr
 
   def new
     @mosaic = Mosaic.new
@@ -63,85 +64,6 @@ class MosaicsController < ApplicationController
     mosaic.write("mosaic.jpg")
 
   end
-
-  ##### HELPER METHODS
-  def to_histogram(img)
-    num_colors  = 256
-
-    img   = img.quantize(num_colors)
-    hist  = img.color_histogram
-    # Transform histogram here, reducing # buckets and sorting
-    hist  = reduce_histogram(hist)
-    hist  = sort_by_population(hist)
-  end
-
-  # Reduce the incoming histogram to have 18 buckets representing (fixed) color ranges
-  # These colors are displayed as the average color from that range with a corresponding total number of occurences
-  def reduce_histogram(histogram)
-    simplified_hist = Hash.new{ [] }
-
-    # Fill 18 buckets with pixels from 256 colors
-    histogram.each do |h|
-
-      hsla = h.first.to_hsla
-      pos  = ((hsla[0] + 10).to_i / 20) % 18
-      simplified_hist[pos] = simplified_hist[pos].push(h)
-    end
-
-    # Find average pixel representing each bucket
-    simplified_hist.each do |pos,arr|
-
-      avg_hsla = [0,0,0,0]
-      total    = 0
-
-      arr.each do |p,n|
-        avg_hsla[0] += p.to_hsla[0]
-        avg_hsla[1] += p.to_hsla[1]
-        avg_hsla[2] += p.to_hsla[2]
-        avg_hsla[3] += p.to_hsla[3]
-        total       += n
-      end
-
-      avg_hsla.collect! { |n| (n / arr.size).round(1) }
-      pixel = Magick::Pixel.from_hsla(avg_hsla[0], avg_hsla[1], avg_hsla[2], avg_hsla[3])
-      # Output: {Pos => {Pixel => Total}, Pos => ...}
-      simplified_hist[pos] = {pixel => total}
-    end
-    simplified_hist
-  end
-
-  # Sort according to hue from HSLa
-  def sort_by_color(histogram)
-    histogram.sort_by { |pos, v| v.keys.first.to_hsla[0] }
-  end
-
-  # Sort by number of times pixel appeared from greatest to least
-  def sort_by_population(histogram)
-    histogram.sort_by { |pos, v| v.values.first }.reverse
-  end
-
-
-  def find_img_index(comp_hists, base_hist)
-    3.times do |color_pos|
-      comp_hists.each_with_index do |comp_hist, i|
-
-        # First [0] accesses highest occuring color
-        # Second [0] accesses reduced color bucket number
-        base_color = base_hist[0][0]
-        comp_color = comp_hist[color_pos][0]
-        if base_color == comp_color
-          return i
-        end
-      end
-    end
-
-    # Raise an error if loop completed (i.e. found no match)
-    # ** Consider setting flag to check after completion instead of just raising error
-    binding.pry
-    raise 'Could not find suitable images.'
-  end
-
-
 
 
   private
