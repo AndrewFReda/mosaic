@@ -11,12 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150106194853) do
+ActiveRecord::Schema.define(version: 20150113220933) do
 
   create_table "mosaics", force: true do |t|
     t.string   "base_img"
     t.string   "comp_imgs_dir"
     t.integer  "max_comp_imgs"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "users", force: true do |t|
+    t.string   "email"
+    t.string   "password_digest", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
