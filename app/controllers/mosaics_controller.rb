@@ -38,31 +38,37 @@ class MosaicsController < ApplicationController
     # Grid is an Array of Arrays where outer/inner arrays represent X/Y respectively
     # Array[0][0] represents upper left corner
     # For now starting out will be 8 coulmns with 10 rows
-    rows    = 8
-    columns = 10
-    comp_img_width  = base_img.columns / columns
-    comp_img_height = base_img.rows / rows
+    rows    = 160
+    columns = 120
+    
+    # break base_img into grid and set up mosiac img
+    grid_img_width  = base_img.columns / columns
+    grid_img_height = base_img.rows / rows
     grid_imgs = ImageList.new
     page = Magick::Rectangle.new(0,0,0,0)
 
     columns.times do |c|
       rows.times do |r|
-      
-        page.x = c * comp_img_width
-        page.y = r * comp_img_height
+        # X and Y grid offset
+        page.x = c * grid_img_width
+        page.y = r * grid_img_height
 
-        cropped_img  = base_img.crop(page.x, page.y, comp_img_width, comp_img_height, true)
+        # crop to grid cell image and create corresponding histogram
+        cropped_img  = base_img.crop(page.x, page.y, grid_img_width, grid_img_height, true)
         cropped_hist = to_histogram(cropped_img)
-        cropped_hist = sort_by_population(cropped_hist)
-        index        = find_img_index(comp_hists, cropped_hist)
-        grid_imgs << comp_imgs[index].dup.scale(comp_img_width, comp_img_height)
+        # find composition image with histgram matching this grid cell image's histogram
+        img = find_img_by_hist(comp_imgs, comp_hists, cropped_hist)
+        # resize image, insert and set page offsets
+        scale = 5
+        grid_imgs << img.scale((grid_img_width * scale), (grid_img_height * scale))
+        page.x *= scale
+        page.y *= scale
         grid_imgs.page = page
       end
     end 
 
     mosaic = grid_imgs.mosaic
-    mosaic.write("mosaic.jpg")
-
+    mosaic.write("mosaic3.jpg")
   end
 
 
