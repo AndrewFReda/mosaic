@@ -12,8 +12,13 @@ class MosaicsController < ApplicationController
 
   def create
     @mosaic = Mosaic.new mosaic_params
+
+  end
+
+  def upload
+    @mosaic = Mosaic.new
     # retrieve base image
-    base_img = Image.read("app/assets/images/hank1.png").first # (@mosaic.base_img)
+    base_img = Image.read("app/assets/images/hank2.png").first # (@mosaic.base_img)
     # retrieve names of composition images from specified path
     img_names = Dir.entries("/Users/andrewfreda/dev/rails/mosaics/app/assets/images/test_images") #("#{@mosaic.comp_imgs_dir}")
     # remove '.' and '..' and any other file starting with '.'
@@ -22,7 +27,8 @@ class MosaicsController < ApplicationController
     comp_imgs  = ImageList.new
     comp_hists = Array.new
 
-    @mosaic.max_comp_imgs.times do |i|
+    50.times do |i|
+    #@mosaic.max_comp_imgs.times do |i|
       # break if cycled through every file in directory
       if i < img_names.size
         path = "/Users/andrewfreda/dev/rails/mosaics/app/assets/images/test_images/#{img_names[i]}" # "#{(@mosaic.comp_imgs_dir)}/#{img_names[i])}"
@@ -35,11 +41,6 @@ class MosaicsController < ApplicationController
     end
 
     draw_mosaic(base_img, comp_imgs, comp_hists)
-  end
-
-  def upload
-    @mosaic = Mosaic.new
-    
   end
 
   ##### HELPER METHODS

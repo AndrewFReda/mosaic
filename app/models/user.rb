@@ -3,4 +3,6 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email
   validates_length_of :password, minimum: 1
 
+  has_many :uploaded_pictures, { class_name: 'Picture', dependent: :destroy }
+
 end

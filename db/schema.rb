@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150113220933) do
+ActiveRecord::Schema.define(version: 20150114011015) do
+
+  create_table "histograms", force: true do |t|
+    t.integer  "picture_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "histograms", ["picture_id"], name: "index_histograms_on_picture_id"
 
   create_table "mosaics", force: true do |t|
     t.string   "base_img"
@@ -20,6 +28,16 @@ ActiveRecord::Schema.define(version: 20150113220933) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "pictures", force: true do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.string   "s3_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "pictures", ["user_id"], name: "index_pictures_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "email"
