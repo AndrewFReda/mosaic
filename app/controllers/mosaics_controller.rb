@@ -37,6 +37,11 @@ class MosaicsController < ApplicationController
     draw_mosaic(base_img, comp_imgs, comp_hists)
   end
 
+  def upload
+    @mosaic = Mosaic.new
+    
+  end
+
   ##### HELPER METHODS
   def draw_mosaic(base_img, comp_imgs, comp_hists)
     # At this point we have a histogram version of each of our composition images

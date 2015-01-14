@@ -1,11 +1,3 @@
-
-<%= simple_form_for @mosaic, html: { class: 'form-signin' } do |f| %>
-  <h2 class='form-signin-heading'>Required Information:</h2>
-  <%= f.input_field :base_img, placeholder: '/your/path/here', class: 'form-control' %>
-  <%= f.input_field :comp_imgs_dir, placeholder: '/your/path/here', class: 'form-control' %>
-  <%= f.input_field :max_comp_imgs, placeholder: '150', class: 'form-control last-form-input' %>
-  <%= f.button :submit, 'Get Mosaic', class: 'btn btn-large btn-primary btn-block' %>
-  </br>
-  <%= link_to 'Sign Out', current_user, method: :delete, class: 'btn btn-danger' %>
-<% end %>
-
+<%= link_to 'Upload Composition Pictures', upload_path, class: 'btn btn-info' %>
+<%= link_to 'Upload Base Picture', ???, class: 'btn btn-primary' %>
+<%= link_to 'Sign Out', current_user, method: :delete, class: 'btn btn-danger' %>
