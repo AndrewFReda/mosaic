@@ -14,6 +14,7 @@
 ActiveRecord::Schema.define(version: 20150114011015) do
 
   create_table "histograms", force: true do |t|
+    t.integer  "dominant_hue"
     t.integer  "picture_id"
     t.datetime "created_at"
     t.datetime "updated_at"
