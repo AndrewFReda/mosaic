@@ -15,7 +15,8 @@ module Histogramr
       simplified_hist[pos] += h.last
     end
 
-    sort_by_population(simplified_hist)
+    sorted = sort_by_population(simplified_hist)
+    Histogram.new(dominant_hue: sorted.first.first)
   end
 
 
