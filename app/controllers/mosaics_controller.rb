@@ -17,34 +17,32 @@ class MosaicsController < ApplicationController
 
   def upload
     @mosaic = Mosaic.new
-    # retrieve base image
-    base_img = Image.read("app/assets/images/hank2.png").first # (@mosaic.base_img)
+    @user   = current_user
     # retrieve names of composition images from specified path
     img_names = Dir.entries("/Users/andrewfreda/dev/rails/mosaics/app/assets/images/test_images") #("#{@mosaic.comp_imgs_dir}")
     # remove '.' and '..' and any other file starting with '.'
     img_names.delete_if { |x| x.start_with?('.') }
     # prepare image list and histogram lists
     comp_imgs  = ImageList.new
-    comp_hists = Array.new
 
-    50.times do |i|
-    #@mosaic.max_comp_imgs.times do |i|
+    img_names.each_with_index do |name, i|
       # break if cycled through every file in directory
-      if i < img_names.size
-        path = "/Users/andrewfreda/dev/rails/mosaics/app/assets/images/test_images/#{img_names[i]}" # "#{(@mosaic.comp_imgs_dir)}/#{img_names[i])}"
-        # create image and histogram
-        comp_imgs.read(path)
-        comp_hists[i] = to_histogram(comp_imgs[i])
-      else
-        break
-      end
+      path = "/Users/andrewfreda/dev/rails/mosaics/app/assets/images/test_images/#{name}" # "#{(@mosaic.comp_imgs_dir)}/#{img_names[i])}"
+      # create image and histogram
+      comp_imgs.read(path)
+      pic = Picture.new(name: name, s3_url: path, histogram: to_histogram(comp_imgs[i]))
+      @user.uploaded_picturess << pic
     end
 
-    draw_mosaic(base_img, comp_imgs, comp_hists)
+    binding.pry
+
+    # retrieve base image
+    base_img = Image.read("app/assets/images/hank2.png").first
+    draw_mosaic(base_img, comp_imgs)
   end
 
   ##### HELPER METHODS
-  def draw_mosaic(base_img, comp_imgs, comp_hists)
+  def draw_mosaic(base_img, comp_imgs)
     # At this point we have a histogram version of each of our composition images
     # Now we need to analyze our base image, breaking it up into a grid
 
@@ -73,7 +71,7 @@ class MosaicsController < ApplicationController
         cropped_img  = base_img.crop(page.x, page.y, grid_img_width, grid_img_height, true)
         cropped_hist = to_histogram(cropped_img)
         # find composition image with histgram matching this grid cell image's histogram
-        img = find_img_by_hist(comp_imgs, comp_hists, cropped_hist)
+        img = find_img_by_hist(comp_imgs, cropped_hist)
         # resize image, insert and set page offsets
         scale = 5
         grid_imgs << img.scale((grid_img_width * scale), (grid_img_height * scale))
