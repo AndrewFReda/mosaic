@@ -33,9 +33,12 @@ ActiveRecord::Schema.define(version: 20150114011015) do
   create_table "pictures", force: true do |t|
     t.integer  "user_id"
     t.string   "name"
-    t.string   "s3_url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   add_index "pictures", ["user_id"], name: "index_pictures_on_user_id"
