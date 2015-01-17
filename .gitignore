@@ -15,4 +15,6 @@
 /log/*.log
 /tmp
 
-app/assets/images/test_images/
+app/assets/images/
+
+.env
