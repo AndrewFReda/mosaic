@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.6'
+gem 'dotenv-rails', :groups => [:development, :test]
 gem 'sqlite3'
 gem 'sass-rails'
 gem 'uglifier', '>= 1.3.0'
@@ -23,8 +24,8 @@ gem 'bcrypt', '~> 3.1.7'
 #gem 'omniauth-facebook'
 gem 'simple_form'
 gem 'lolcommits'
+gem 'aws-sdk'
 gem 'paperclip'
-gem 'dotenv-rails'
 
 # gem 'unicorn'
 # gem 'capistrano-rails', group: :development
