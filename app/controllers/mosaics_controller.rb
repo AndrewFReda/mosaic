@@ -19,14 +19,12 @@ class MosaicsController < ApplicationController
     @mosaic = Mosaic.new
     @user   = current_user
     # retrieve names of composition images from specified path
-    img_names = Dir.entries("/Users/andrewfreda/dev/rails/mosaics/app/assets/images/test_images") #("#{@mosaic.comp_imgs_dir}")
+    img_names = Dir.entries("/Users/andrewfreda/dev/rails/mosaics/app/assets/images/test_images")
     # remove '.' and '..' and any other file starting with '.'
     img_names.delete_if { |x| x.start_with?('.') }
-    # prepare image list and histogram lists
     comp_imgs  = ImageList.new
 
     img_names.each_with_index do |name, i|
-      # break if cycled through every file in directory
       path = "/Users/andrewfreda/dev/rails/mosaics/app/assets/images/test_images/#{name}" # "#{(@mosaic.comp_imgs_dir)}/#{img_names[i])}"
       # create image and histogram
       comp_imgs.read(path)
