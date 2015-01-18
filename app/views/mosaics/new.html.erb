@@ -1,3 +1,13 @@
-<%= link_to 'Upload Composition Pictures', upload_path, class: 'btn btn-info' %>
-<%= link_to 'Upload Base Picture', upload_path, class: 'btn btn-primary' %>
-<%= link_to 'Sign Out', current_user, method: :delete, class: 'btn btn-danger' %>
+<%= form_for @mosaic, :html => {  multipart: true } do |f| %>
+  <%= f.label :composition_pictures %>
+  <!-- Use HTML5 multiple attribute to enable multiple selection
+       and pass back to controller all files as an array, ready 
+       for paperclip!!
+       file_field_tag, since images is not a gallery attribute
+  -->
+  <%= file_field_tag "compositions[]", type: :file, multiple: true, :class => 'btn btn-primary' %>
+  <%= f.label :base_pictures %>
+  <%= file_field_tag "base", type: :file, :class => 'btn btn-primary' %>
+  </br>
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+<% end %>

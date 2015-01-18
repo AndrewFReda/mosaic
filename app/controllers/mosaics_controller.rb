@@ -126,6 +126,7 @@ class MosaicsController < ApplicationController
 
   private
     def mosaic_params
+      params.require(:mosaic).permit(:compositions, :base)
     end
 
 end
