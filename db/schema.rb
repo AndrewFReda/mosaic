@@ -23,16 +23,15 @@ ActiveRecord::Schema.define(version: 20150114011015) do
   add_index "histograms", ["picture_id"], name: "index_histograms_on_picture_id"
 
   create_table "mosaics", force: true do |t|
-    t.string   "base_img"
-    t.string   "comp_imgs_dir"
-    t.integer  "max_comp_imgs"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "pictures", force: true do |t|
-    t.integer  "user_id"
     t.string   "name"
+    t.integer  "composition_id"
+    t.integer  "base_id"
+    t.integer  "mosaic_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "image_file_name"
@@ -40,8 +39,6 @@ ActiveRecord::Schema.define(version: 20150114011015) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
   end
-
-  add_index "pictures", ["user_id"], name: "index_pictures_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "email"

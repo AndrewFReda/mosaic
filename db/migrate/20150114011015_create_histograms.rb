@@ -3,10 +3,9 @@ class CreateHistograms < ActiveRecord::Migration
     create_table :histograms do |t|
 
       t.integer :dominant_hue
-      t.belongs_to :picture
+      t.belongs_to :picture, index: true
       t.timestamps
     end
     
-    add_index :histograms, :picture_id
   end
 end
