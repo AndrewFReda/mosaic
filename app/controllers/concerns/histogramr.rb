@@ -43,18 +43,19 @@ module Histogramr
   # Return index corresponding to histogram that matches base img histogram on success
   # Return nil on failure
   # Index randomly selected from matching indexes
-  def find_index_by_hist(comp_hists, base_hist)
+  def find_index_by_hist(comp_pics, base_hist)
     matches = []
-    comp_hists.each_with_index do |comp_hist, i|
+    comp_pics.each_with_index do |comp_pic, i|
       # First [0] accesses highest occuring color
       # Second [0] accesses reduced color bucket number
       # Determines if they share the same dominant color bucket
-      if base_hist[0][0] == comp_hist[0][0]
+      comp_hist = comp_pic.histogram
+      if base_hist.dominant_hue == comp_hist.dominant_hue
         matches << i
       end
     end
 
-    return matches.sample
+    matches.sample
   end
 
 end
