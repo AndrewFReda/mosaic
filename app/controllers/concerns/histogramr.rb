@@ -29,14 +29,20 @@ module Histogramr
   # Return image corresponding to histogram that matches base img histogram
   # Error on failure
   # Image randomly selected from matching images
-  def find_img_by_hist(comp_imgs, comp_hists, base_hist)
-    index = find_index_by_hist(comp_hists, base_hist)
+  def find_img_by_hist(comp_pics, cache, base_hist)
+    index = find_index_by_hist(comp_pics, base_hist)
 
     # Raise an error if found no match
     if index.nil?
       raise 'Could not find sufficient matching composition images.'
+    elsif cache[index].nil?
+      file = comp_pics[index].image
+      puts 'not cached'
+      img = Image.read(file).first
+      cache[index] = img
     else
-      return comp_imgs[index]
+      puts 'cached'
+      cache[index]
     end
   end
 
