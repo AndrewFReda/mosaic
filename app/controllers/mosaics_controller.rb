@@ -70,19 +70,26 @@ class MosaicsController < ApplicationController
     image.close
   end
 
-  def upload_comp
+  def upload
+    binding.pry
     @mosaic = Mosaic.new
     @user   = current_user
-    # retrieve names of composition images from specified path
-    img_names = Dir.entries("/Users/andrewfreda/dev/rails/mosaics/app/assets/images/test_images")
-    # remove '.' and '..' and any other file starting with '.'
-    img_names.delete_if { |x| x.start_with?('.') }
 
-    img_names.each_with_index do |name, i|
-      # create image and histogram
-      path = "/Users/andrewfreda/dev/rails/mosaics/app/assets/images/test_images/#{name}"
-      file = File.open(path)
-      name = "#{DateTime.now.to_s}-#{name}"
+    upload_comp
+    upload_base
+
+
+    flash[:notice] = 'Images successfully uploaded.'
+    render 'new'
+  end
+
+  def upload_comp
+    temps   = params[:mosaic][:compositions]
+    
+    temps.each do |temp|
+
+      file = File.open(temp.tempfile)
+      name = "#{DateTime.now.to_s}-#{temp.original_filename}"
       img  = Image.read(file).first
       @picture = Picture.new(name: name, histogram: to_histogram(img), image: file, composition_id: @user.id)
       #@picture.image.options[:path] = "/#{@user.email}/composition-pictures/#{name}"
@@ -90,9 +97,8 @@ class MosaicsController < ApplicationController
       if @picture.save
         @user.composition_pictures << @picture
       else
-        binding.pry
         @picture.destroy
-        raise "Problems uploading one of the pictures."
+        raise "Problems occured during upload of a picture."
       end
       # Check url after the picture is saved to see if it saved on S3 without error
       # If url reset to default, image overwrote an existing one on S3
@@ -101,25 +107,23 @@ class MosaicsController < ApplicationController
       #end
       file.close
     end
-
-    flash[:notice] = 'Composition images uploaded.'
-    render 'new'
   end
 
   def upload_base
-    # retrieve base image and create the mosaic from it
-    @user = current_user
-    name  = 'hank3.png'
-    file  = File.open("/Users/andrewfreda/dev/rails/mosaics/app/assets/images/#{name}")
-    name  = "#{DateTime.now.to_s}-#{name}"
-    @picture = Picture.new(name: name, image: file, base_id: @user.id)
+    temp  = params[:mosaic][:base]
+    if not temp.nil?
+      file  = File.open(temp.tempfile)
+      name  = "#{DateTime.now.to_s}-#{temp.original_filename}"
+      @picture = Picture.new(name: name, image: file, base_id: @user.id)
 
-    if @picture.save
-      @user.base_pictures << @picture
-      flash[:notice] = 'Base image uploaded.'
-      render 'new'
-    else
-      raise 'Problems uploading the base picture.'
+      if @picture.save
+        @user.base_pictures << @picture
+      else
+        @picture.destroy
+        raise 'Problems uploading the base picture.'
+      end
+
+      file.close
     end
   end
 
