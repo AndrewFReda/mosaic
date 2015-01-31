@@ -1,6 +1,9 @@
 class Picture < ActiveRecord::Base
   has_one :histogram, dependent: :destroy
 
+  # Create Image as attachment to this model using Paperclip.
+  # On Picture.save, store on Amazon S3 at url, with path derived from User/Picture keys
+  # Interpretted by Paperclip (see initializers/paperclip.rb)
   has_attached_file :image, :path => '/:user_email/:picture_type/:name', :url => 'https://s3.amazonaws.com/afr-mosaic/:user_email/:picture_type/:name'
 
   # Validate the attached image is image/jpg, image/png, etc
