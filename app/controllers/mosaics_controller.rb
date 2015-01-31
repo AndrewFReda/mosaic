@@ -3,17 +3,17 @@ class MosaicsController < ApplicationController
 
   def new
     @mosaic = Mosaic.new
-    @user = current_user
+    @user   = current_user
   end
 
   def show
-    binding.pry
     @mosaic = Mosaic
+    @user   = current_user
   end
 
   def create
+    @mosaic = Mosaic.new
     @user    = current_user
-    binding.pry
     #base_img = Image.read(@user.base_pictures[(@user.base_pictures.size - 1)].image).first
     # At this point we have a histogram version of each of our composition images
     # Now we need to analyze our base image, breaking it up into a grid
@@ -71,28 +71,26 @@ class MosaicsController < ApplicationController
   end
 
   def upload
-    binding.pry
     @mosaic = Mosaic.new
     @user   = current_user
 
     upload_comp
     upload_base
 
-
     flash[:notice] = 'Images successfully uploaded.'
     render 'new'
   end
 
   def upload_comp
-    temps   = params[:mosaic][:compositions]
-    
-    temps.each do |temp|
+    temps = params[:user][:compositions]
 
-      file = File.open(temp.tempfile)
-      name = "#{DateTime.now.to_s}-#{temp.original_filename}"
-      img  = Image.read(file).first
+    # Check that temps is not nil before iterating
+    temps and temps.each do |temp|
+      file     = File.open(temp.tempfile)
+      name     = "#{DateTime.now.to_s}-#{temp.original_filename}"
+      img      = Image.read(file).first
       @picture = Picture.new(name: name, histogram: to_histogram(img), image: file, composition_id: @user.id)
-      #@picture.image.options[:path] = "/#{@user.email}/composition-pictures/#{name}"
+      file.close
 
       if @picture.save
         @user.composition_pictures << @picture
@@ -100,21 +98,20 @@ class MosaicsController < ApplicationController
         @picture.destroy
         raise "Problems occured during upload of a picture."
       end
-      # Check url after the picture is saved to see if it saved on S3 without error
-      # If url reset to default, image overwrote an existing one on S3
-      #if @picture.image.url != URI::encode("https://s3.amazonaws.com/afr-mosaic/#{@user.email}/composition-pictures/#{name}") and
-      #    @picture.image.url != @user.composition_pictures[(@user.composition_pictures.size - 1)].image.url
-      #end
-      file.close
     end
   end
 
   def upload_base
-    temp  = params[:mosaic][:base]
-    if not temp.nil?
-      file  = File.open(temp.tempfile)
-      name  = "#{DateTime.now.to_s}-#{temp.original_filename}"
-      @picture = Picture.new(name: name, image: file, base_id: @user.id)
+    temps = params[:user][:bases]
+    
+    # Check that temps is not nil before iterating
+    temps and temps.each do |temp|
+
+      file     = File.open(temp.tempfile)
+      name     = "#{DateTime.now.to_s}-#{temp.original_filename}"
+      img      = Image.read(file).first
+      @picture = Picture.new(name: name, image: file, composition_id: @user.id)
+      file.close
 
       if @picture.save
         @user.base_pictures << @picture
@@ -122,15 +119,12 @@ class MosaicsController < ApplicationController
         @picture.destroy
         raise 'Problems uploading the base picture.'
       end
-
-      file.close
     end
   end
 
-
   private
     def mosaic_params
-      params.require(:mosaic).permit(:compositions, :base)
+      params.require(:mosaic).permit(:compositions, :bases)
     end
 
 end
