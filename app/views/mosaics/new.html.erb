@@ -1,3 +1,7 @@
+<h2> Create a Mosaic! </h2>
+
+</br>
+
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#upload_modal">
   Upload Pictures
@@ -6,7 +10,7 @@
 </br>
 </br>
 
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#choose_composition_modal">
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#select_modal">
   Select Pictures
 </button>
 
@@ -15,3 +19,9 @@
 <%= render 'modals/upload' %>
 <!-- Choose Images Modal -->
 <%= render 'modals/select' %>
+
+
+</br>
+</br>
+
+<%= link_to 'Sign Out', user_path(id: current_user.id), method: :delete %>
