@@ -74,20 +74,11 @@ class MosaicsController < ApplicationController
       end
     end 
 
-    name     = "mosaichank3.jpg"
-    path     = "/Users/andrewfreda/dev/rails/mosaics/app/assets/images/#{name}"
-    name     = "#{DateTime.now.to_s}-#{name}"
-    mosaic   = grid_imgs.mosaic
-    mosaic.write(path)
-    image    = File.open(path)
-    @picture = Picture.new(name: name, image: image, mosaic_id: @user.id)
-    if @picture.save
-      @user.mosaics << @picture
-    else
-      @picture.destroy
-      raise "Problems saving mosaic image."
-    end
-    image.close
+    mosaic = grid_imgs.mosaic
+    upload_mosaic(mosaic)
+
+    # FIX:: NOT GOOD PRACTICE TO PASS WRONG ID
+    redirect_to mosaic_path(id: @picture.id)
   end
 
   def upload
@@ -139,6 +130,24 @@ class MosaicsController < ApplicationController
         @picture.destroy
         raise 'Problems uploading the base picture.'
       end
+    end
+  end
+
+  def upload_mosaic(mosaic)
+    name     = "#{DateTime.now.to_s}-mosaic.jpg"
+    # NOT SURE WHERE TO WRITE TO JUST YET...
+    path     = "public/images/#{name}"
+    
+    mosaic.write(path)
+    file     = File.open(path)
+    @picture = Picture.new(name: name, image: file, mosaic_id: @user.id)
+    file.close
+
+    if @picture.save
+      @user.mosaics << @picture
+    else
+      @picture.destroy
+      raise "Problems occured while saving the mosaic picture."
     end
   end
 
