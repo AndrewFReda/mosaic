@@ -12,8 +12,8 @@
 
         <div class="modal-body">
           
-          <%= f.association :composition_pictures, collection: @user.composition_pictures %>
-          <%= f.association :base_pictures, collection: @user.base_pictures %>
+          <%= f.association :composition_pictures, collection: @user.composition_pictures,include_hidden: false, class: 'form-control', as: :check_boxes %>
+          <%= f.association :base_pictures, collection: @user.base_pictures, include_hidden: false, class: 'form-control last-form-input', as: :radio_buttons %>
 
         </div>
 
