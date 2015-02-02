@@ -43,6 +43,9 @@ class MosaicsController < ApplicationController
     # For now starting out will be 8 coulmns with 10 rows
     rows    = 80  
     columns = 60
+    id = params[:user][:base_picture_ids].first
+    @picture = Picture.find(id)
+    base_img = Image.read(@picture.image).first
     
     # break base_img into grid and set up mosiac img
     grid_img_width  = base_img.columns / columns
