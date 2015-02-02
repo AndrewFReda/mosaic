@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150114011015) do
+ActiveRecord::Schema.define(version: 20150201204243) do
 
   create_table "histograms", force: true do |t|
     t.integer  "dominant_hue"
@@ -46,5 +46,7 @@ ActiveRecord::Schema.define(version: 20150114011015) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
 
 end
