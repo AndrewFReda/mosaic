@@ -1,0 +1,10 @@
+<h2> Show dis shit </h2>
+
+<!-- TODO: Figure out better sizing scheme. This will just distort -->
+<%= image_tag(@user.mosaics.last.name, size: '560x350',) %>
+
+</br></br>
+
+<%= link_to('Save', new_mosaic_path, class: 'btn btn-primary') %>
+<%= link_to('Delete', mosaics_path, method: :delete, class: 'btn btn-danger') %>
+<%= link_to('Share', new_mosaic_path, class: 'btn btn-success') %>
