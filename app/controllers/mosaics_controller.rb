@@ -9,6 +9,23 @@ class MosaicsController < ApplicationController
   def show
     @mosaic = Mosaic
     @user   = current_user
+  def delete
+    @mosaic  = Mosaic.new
+    @user    = current_user
+
+    if params[:mosaic] and params[:mosaic][:id]
+      @picture = Picture.find(params[:mosaic][:id])
+      @picture.destroy
+      # TODO: Delete off of S3 as well
+      flash[:notice] = 'Mosaic successfully deleted.'
+    elsif @user.mosaics.last.delete
+      # TODO: Delete off of S3 as well
+      flash[:notice] = 'Mosaic successfully deleted.'
+    else
+      raise 'Problem occured while deleting the mosaic.'
+    end
+
+    redirect_to new_mosaic_path
   end
 
   def create

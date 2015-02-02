@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   root to: 'users#login'
   
   post   'upload',  to: 'mosaics#upload', as: 'upload'
+  delete 'mosaics', to: 'mosaics#delete'
   
   resources :users
   resources :mosaics
