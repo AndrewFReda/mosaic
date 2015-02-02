@@ -1,0 +1,30 @@
+<div class="modal fade" id="delete_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+  
+    <div class="modal-content">
+      
+      <%= simple_form_for @user, url: delete_pictures_path, method: 'delete' do |f| %>
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class: 'modal-title', id: 'myModalLabel'> Delete Pictures </h4>
+        </div>
+
+        <div class="modal-body">
+          
+          <%= f.association :composition_pictures, collection: @user.composition_pictures,include_hidden: false, class: 'form-control' %>
+          <%= f.association :base_pictures, collection: @user.base_pictures, include_hidden: false, class: 'form-control' %>
+          <%= f.association :mosaics, collection: @user.mosaics, include_hidden: false, class: 'form-control last-form-input' %>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+          <%= f.button :submit, 'Delete Mosaics', class: 'btn btn-primary' %>
+        </div>
+
+      <% end %>
+
+    </div>
+  </div>
+</div>

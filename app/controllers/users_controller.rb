@@ -70,6 +70,27 @@ class UsersController < ApplicationController
 
     render new_mosaic_path
   end
+
+  def delete_pictures
+    @user = current_user
+
+    destroy_all_by_ids(params[:user][:composition_picture_ids])
+    destroy_all_by_ids(params[:user][:base_picture_ids])
+    destroy_all_by_ids(params[:user][:mosaic_ids])
+
+    flash[:notice] = 'Successfully deleted pictures.'
+    render 'show'
+  end
+
+  def destroy_all_by_ids(ids)
+    ids and ids.each do |id|
+      @picture = Picture.find(id)
+      if not @picture.destroy
+        raise 'Problem deleting a mosaic.'
+      end
+    end
+  end
+
   def check_auth
     if current_user
       redirect_to new_mosaic_path
