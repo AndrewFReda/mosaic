@@ -1,28 +1,40 @@
 <h2> Create a Mosaic! </h2>
 
-</br>
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#upload_modal">
-  Upload Pictures
-</button>
+<div class='row'>
+  <div class='col-xs-12'>
 
-</br>
-</br>
     <%= link_to 'Profile', user_path(id: current_user.id), class: 'btn btn-info btn-sm h-right' %>
 
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#select_modal">
-  Select Pictures
-</button>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col-xs-12'>
+
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#upload_modal"> Upload Pictures </button>
+
+    </div>
+  </div>
+  </br>
+  <div class='row'>
+    <div class='col-xs-12'>
+
+      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#select_modal"> Select Pictures </button>
+
+    </div>
+  </div>
+  </br>
+  <div class='row'>
+    <div class='col-xs-12'>
+
+      <%= link_to 'Sign Out', user_path(id: current_user.id), method: :delete, class: 'btn btn-danger btn-sm' %>
+
+  </div>
+</div>
 
 
 <!-- Upload Images Modal -->
 <%= render 'modals/upload' %>
 <!-- Choose Images Modal -->
 <%= render 'modals/select' %>
-
-
-</br>
-</br>
-
-<%= link_to 'Sign Out', user_path(id: current_user.id), method: :delete %>
