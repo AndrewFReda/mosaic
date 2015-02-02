@@ -84,21 +84,24 @@ class MosaicsController < ApplicationController
   def upload
     @mosaic = Mosaic.new
     @user   = current_user
-
-    upload_comp
+    
+    upload_composition
     upload_base
 
     flash[:notice] = 'Images successfully uploaded.'
     render 'new'
   end
 
-  def upload_comp
+
+  # UPLOAD HELPERS
+  def upload_composition
     temps = params[:user][:compositions]
 
     # Check that temps is not nil before iterating
     temps and temps.each do |temp|
-      file     = File.open(temp.tempfile)
+
       name     = "#{DateTime.now.to_s}-#{temp.original_filename}"
+      file     = File.open(temp.tempfile)
       img      = Image.read(file).first
       @picture = Picture.new(name: name, histogram: to_histogram(img), image: file, composition_id: @user.id)
       file.close
@@ -107,7 +110,7 @@ class MosaicsController < ApplicationController
         @user.composition_pictures << @picture
       else
         @picture.destroy
-        raise "Problems occured during upload of a picture."
+        raise "Problems occured while uploading a composition picture."
       end
     end
   end
@@ -128,7 +131,7 @@ class MosaicsController < ApplicationController
         @user.base_pictures << @picture
       else
         @picture.destroy
-        raise 'Problems uploading the base picture.'
+        raise 'Problems occured while uploading a base picture.'
       end
     end
   end
