@@ -121,10 +121,9 @@ class MosaicsController < ApplicationController
     # Check that temps is not nil before iterating
     temps and temps.each do |temp|
 
-      file     = File.open(temp.tempfile)
       name     = "#{DateTime.now.to_s}-#{temp.original_filename}"
-      img      = Image.read(file).first
-      @picture = Picture.new(name: name, image: file, composition_id: @user.id)
+      file     = File.open(temp.tempfile)
+      @picture = Picture.new(name: name, image: file, base_id: @user.id)
       file.close
 
       if @picture.save
