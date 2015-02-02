@@ -52,6 +52,25 @@ class UsersController < ApplicationController
     end
   end
 
+  def change_password
+    @user = current_user
+
+    if user_params[:password] == user_params[:password_confirmation]
+      if @user and @user.authenticate(user_params[:password])
+        if @user.update(password: params[:user][:new_password])
+          flash[:notice] = 'Successfully updated password.'
+        else
+          flash[:alert] = 'Failed to update password.'
+        end
+      else
+        flash[:alert] = 'Password is incorrect.'
+      end
+    else
+      flash[:alert] = 'Password and confirmation do not match.'
+    end
+
+    render new_mosaic_path
+  end
   def check_auth
     if current_user
       redirect_to new_mosaic_path
