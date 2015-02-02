@@ -1,0 +1,33 @@
+<h2> Profile </h2>
+
+</br>
+
+<div class='row'>
+  <div class='col-xs-12'>
+    
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delete_modal"> Delete Pictures </button>
+    
+  </div>
+</div>
+</br>
+<div class='row'>
+  <div class='col-xs-12'>
+
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#change_password_modal"> Change Password </button>
+
+  </div>
+</div>
+</br>
+<div class='row'>
+  <div class='col-xs-12'>
+
+    <%= link_to 'Back', new_mosaic_path, class: 'btn btn-danger' %>
+
+  </div>
+</div>
+
+
+<!-- Delete Pictures Modal -->
+<%= render 'modals/delete' %>
+<!-- Change Password Modal -->
+<%= render 'modals/change_password' %>
