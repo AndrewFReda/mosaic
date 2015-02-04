@@ -2,7 +2,7 @@
 
 # Use of Picture name in route
 Paperclip.interpolates('name') do |attachment, style|
-  attachment.instance.name.parameterize
+  attachment.instance.name
 end
 
 # Use of Picture type as a string in route.
