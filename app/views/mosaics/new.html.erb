@@ -6,29 +6,29 @@
 
     <%= link_to 'Profile', user_path(id: current_user.id), class: 'btn btn-info btn-sm h-right' %>
 
-    </div>
   </div>
-  <div class='row'>
-    <div class='col-xs-12'>
+</div>
+<div class='row'>
+  <div class='col-xs-12'>
 
-      <!-- Button trigger modal -->
-      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#upload_modal"> Upload Pictures </button>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#upload_modal"> Upload Pictures </button>
 
-    </div>
   </div>
-  </br>
-  <div class='row'>
-    <div class='col-xs-12'>
+</div>
+</br>
+<div class='row'>
+  <div class='col-xs-12'>
 
-      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#select_modal"> Select Pictures </button>
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#select_modal"> Select Pictures </button>
 
-    </div>
   </div>
-  </br>
-  <div class='row'>
-    <div class='col-xs-12'>
+</div>
+</br>
+<div class='row'>
+  <div class='col-xs-12'>
 
-      <%= link_to 'Sign Out', user_path(id: current_user.id), method: :delete, class: 'btn btn-danger btn-sm' %>
+    <%= link_to 'Sign Out', user_path(id: current_user.id), method: :delete, class: 'btn btn-danger btn-sm' %>
 
   </div>
 </div>

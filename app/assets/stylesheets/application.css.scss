@@ -17,6 +17,7 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+/* GENERAL LAYOUT STYLES */
 #container {
   max-width: 600px;
   margin-top: 100px;
@@ -25,37 +26,40 @@
   background-color: #fff;
   border: 1px solid rgba(0,0,0,0.1);
 }
-
 body {
   background: #eee !important;  
 }
 
+/* POSITIIONING STYLE */
 .v-center {
   margin-top: 100px;
 }
-
 .h-right {
   float: right;
 }
 
-/* FLASH STYLES */
+/* IMAGE PICKER STYLES */
+.checked {
+  border:solid 2px red;
+}
+#hidden_div {
+  display: none;
+}
 
+/* FLASH STYLES */
 .flash {
   margin-top: 15px;
   font-weight: bold;
   font-size: 16px;
 }
-
 #notice {
   color: green;
 }
-
 #alert {
   color: red;
 }
 
 /*  FORM STYLES */
-
 .form-signin {
   max-width: 380px;
   padding: 15px 35px 45px;
@@ -65,7 +69,6 @@ body {
   .checkbox {
     margin-bottom: 30px;
   }
-
   .form-control {
     position: relative;
     font-size: 16px;
@@ -77,14 +80,12 @@ body {
       z-index: 2;
     }
   }
-
   input[type="text"] {
     margin-bottom: -1px;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
   }
-
-  .last-form-input {
+  .last-form-control {
     margin-bottom: 20px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;

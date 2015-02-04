@@ -3,7 +3,7 @@
 
     <div class="modal-content">
       
-      <%= simple_form_for @user, url: upload_path, method: 'post' do |f|  %>
+      <%= simple_form_for @user, url: upload_path, method: 'post', html: { class: 'form-signin' } do |f|  %>
 
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -15,7 +15,7 @@
           <%= f.file_field :compositions, multiple: true, class: 'form-control' %>
 
           <%= f.label :base_pictures, class: 'form-label' %>
-          <%= f.file_field :bases, multiple: true, class: 'form-control last-form-input' %>
+          <%= f.file_field :bases, multiple: true, class: 'form-control last-form-control' %>
         </div>
 
         <div class="modal-footer">
