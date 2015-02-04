@@ -4,6 +4,8 @@
   <title>Mosaics</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <%= csrf_meta_tags %>
 
 </head>
@@ -24,8 +26,8 @@
     </div>
   </div>
 
+  <!-- Add to load #{controller_name}.js for each controller and only that controller -->
+  <%= javascript_include_tag params[:controller] %>
 
-  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </body>
 </html>
