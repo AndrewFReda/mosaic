@@ -12,15 +12,37 @@
 
         <div class="modal-body">
           
-          <%= f.association :composition_pictures, collection: @user.composition_pictures,include_hidden: false, class: 'form-control' %>
-          <%= f.association :base_pictures, collection: @user.base_pictures, include_hidden: false, class: 'form-control' %>
-          <%= f.association :mosaics, collection: @user.mosaics, include_hidden: false, class: 'form-control last-form-input' %>
+          <% base_url = "https://s3.amazonaws.com/afr-mosaic/#{@user.email}" %>
+          <!-- Create lists of selectable images mapped to check boxes and radio buttons created below for composition and base pictures respectively. Tied together in Mosaics.js -->
+          <h5> Composition Pictures </h5>
+          <% @user.composition_pictures.each do |c| %>
+            <%= image_tag "#{base_url}/composition-pictures/#{c.name}", size: '96x60', id: "cimage-#{c.id}" %>
+          <% end %>
+
+          <h5> Base Pictures </h5>
+          <% @user.base_pictures.each do |b| %>
+            <%= image_tag "#{base_url}/base-pictures/#{b.name}", size: '96x60', id: "bimage-#{b.id}", class: 'image-list' %>
+          <% end %>
+
+          <h5> Mosaics </h5>
+          <% @user.mosaics.each do |m| %>
+            <%= image_tag "#{base_url}/base-pictures/#{m.name}", size: '96x60', id: "mimage-#{m.id}", class: 'image-list' %>
+          <% end %>
+
+          <!-- Hide the check boxes and radio buttons, only need images to display -->
+          <div id='hidden_div'>
+            <!-- Create lists of check boxes and radio buttons representing composition and base pictures respectively. These are controlled by clicks on images. 
+               - Check box/radio button IDs: user_[composition/base]_picture_ids_[id] -->
+            <%= f.association :composition_pictures, collection: @user.composition_pictures,include_hidden: false, class: 'image-checkbox', as: :check_boxes %>
+            <%= f.association :base_pictures, collection: @user.base_pictures, include_hidden: false, class: 'image-checkbox', as: :check_boxes %>
+            <%= f.association :mosaics, collection: @user.mosaics, include_hidden: false, class: 'image-checkbox', as: :check_boxes %>
+          </div>
 
         </div>
 
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-          <%= f.button :submit, 'Delete Mosaics', class: 'btn btn-primary' %>
+          <%= f.button :submit, 'Delete Pictures', class: 'btn btn-primary' %>
         </div>
 
       <% end %>
@@ -28,3 +50,9 @@
     </div>
   </div>
 </div>
+
+<%= javascript_tag do %>
+  window.composition_pictures = <%= raw @user.composition_pictures.to_json %>
+  window.base_pictures        = <%= raw @user.base_pictures.to_json %>
+  window.mosaics              = <%= raw @user.mosaics.to_json %>
+<% end %>
