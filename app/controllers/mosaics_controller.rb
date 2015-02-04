@@ -47,7 +47,7 @@ class MosaicsController < ApplicationController
     # For now starting out will be 8 coulmns with 10 rows
     rows    = 80  
     columns = 60
-    id = params[:user][:base_picture_ids].first
+    id = params[:user][:base_picture_ids]
     @picture = Picture.find(id)
     base_img = Image.read(@picture.image).first
     
