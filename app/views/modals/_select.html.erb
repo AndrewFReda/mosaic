@@ -28,8 +28,8 @@
           <div id='hidden_div'>
             <!-- Create lists of check boxes and radio buttons representing composition and base pictures respectively. These are controlled by clicks on images. 
                - Check box/radio button IDs: user_[composition/base]_picture_ids_[id] -->
-            <%= f.association :composition_pictures, collection: @user.composition_pictures,include_hidden: false, class: 'image-checkbox', as: :check_boxes %>
-            <%= f.association :base_pictures, collection: @user.base_pictures, include_hidden: false, class: 'image-radiobutton', as: :radio_buttons %>
+            <%= f.association :composition_pictures, collection: @user.composition_pictures, as: :check_boxes, include_hidden: false, class: 'image-checkbox' } %>
+            <%= f.association :base_pictures, collection: @user.base_pictures, class: 'image-radiobutton', as: :radio_buttons %>
           </div>
 
         </div>
