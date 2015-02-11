@@ -42,7 +42,7 @@ class MosaicsController < ApplicationController
     base_img = Image.read(@picture.image).first
     comp_ids = params[:user][:composition_picture_ids]
     # TODO: Fix this hack work around for "" being sent along with ids
-    # Talks about issue but doesn't fix for me: http://stackoverflow.com/questions/14054164/rails-simple-form-getting-an-empty-string-from-checkbox-collection
+    # http://stackoverflow.com/questions/14054164/rails-simple-form-getting-an-empty-string-from-checkbox-collection
     comp_ids.delete_if { |comp_id| comp_id.empty? }
     comp_pics = Array.new
     comp_ids.each do |comp_id|
@@ -63,13 +63,12 @@ class MosaicsController < ApplicationController
     # Determine height/width of the individual grid cells 
     base_grid_cell_width  = base_img.columns / mosaic_columns
     base_grid_cell_height = base_img.rows / mosaic_rows
-    # Create list of composition images that comprise the mosaic and their page position
-    mosaic_imgs = ImageList.new
-    page = Magick::Rectangle.new(0,0,0,0)
     # Create cache for initial lookup and acache for the scaled composition images
     cache = Hash.new
+    scaled = Hash.new
     # Scale is somewhat arbitrary right now, but it determines size of final mosaic
     scale = 1
+    mosaic = Image.new(base_img.columns * scale, base_img.rows * scale)
 
     # iterate through the grid that will represent the mosaic
     mosaic_columns.times do |c|
@@ -86,18 +85,19 @@ class MosaicsController < ApplicationController
 
         # Find composition image with matching histogram to base image's current cropped histogram
         @picture = find_picture_by_hist(cropped_hist, comp_pics, cache)
-        # TODO: Cache scaled images as well
-        mosaic_imgs.read(@picture.image)
-        mosaic_imgs.last.scale!((base_grid_cell_width * scale), (base_grid_cell_height * scale))
+        
+        if scaled[@picture.id].nil?
+          img = Image.read(@picture.image).first
+          scaled[@picture.id] = img.scale((base_grid_cell_width * scale), (base_grid_cell_height * scale))
+        end
 
-        # Insert and set offsets/page
-        page.x = current_grid_x * scale
-        page.y = current_grid_y * scale
-        mosaic_imgs.page = page
+        mosaic.composite!(scaled[@picture.id], 
+                          (current_grid_x * scale), 
+                          (current_grid_y * scale), 
+                          OverCompositeOp)
       end
     end 
 
-    mosaic = mosaic_imgs.mosaic
     upload_mosaic(mosaic)
 
     # FIX:: NOT GOOD PRACTICE TO PASS WRONG ID
