@@ -73,10 +73,12 @@ class UsersController < ApplicationController
 
   def delete_pictures
     @user = current_user
+    # TODO: Fix this hack work around for "" being sent along with ids
+    # http://stackoverflow.com/questions/14054164/rails-simple-form-getting-an-empty-string-from-checkbox-collection
+    dirty_ids = params[:user][:composition_picture_ids].concat(params[:user][:base_picture_ids]).concat(params[:user][:mosaic_ids])
+    ids   = dirty_ids.delete_if { |id| id.empty? }
 
-    destroy_all_by_ids(params[:user][:composition_picture_ids])
-    destroy_all_by_ids(params[:user][:base_picture_ids])
-    destroy_all_by_ids(params[:user][:mosaic_ids])
+    destroy_all_by_ids(ids)
 
     flash[:notice] = 'Successfully deleted pictures.'
     render 'show'

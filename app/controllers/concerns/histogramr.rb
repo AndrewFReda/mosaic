@@ -1,4 +1,5 @@
 module Histogramr
+  # TODO: Should this be put into Histogram class insted?
   extend ActiveSupport::Concern
 
   def to_histogram(img)
@@ -25,35 +26,25 @@ module Histogramr
     histogram.sort_by { |pos, v| v }.reverse
   end
 
+  # Return a Picture with a Histogram that matches the given base grid image's Histogram
+  # Picture is randomly selected from all matching pictures
+  # Error on failure to find image
+  def find_picture_by_hist(base_hist, comp_pics, cache)
+    index = find_index_by_hist(base_hist, comp_pics)
 
-  # Return image corresponding to histogram that matches base img histogram
-  # Error on failure
-  # Image randomly selected from matching images
-  def find_img_by_hist(comp_pics, cache, base_hist)
-    index = find_index_by_hist(comp_pics, base_hist)
-
-    # Raise an error if found no match
-    if index.nil?
-      raise 'Could not find sufficient matching composition images.'
-    elsif cache[index].nil?
-      file = comp_pics[index].image
-      puts 'not cached'
-      img = Image.read(file).first
-      cache[index] = img
+    if cache[index].nil?
+      cache[index] = comp_pics[index]
     else
-      puts 'cached'
       cache[index]
     end
   end
 
-  # Return index corresponding to histogram that matches base img histogram on success
-  # Return nil on failure
-  # Index randomly selected from matching indexes
-  def find_index_by_hist(comp_pics, base_hist)
+  # Return an index for a Histogram that matches the given base grid image's Histogram
+  # Index randomly selected from all matching indexes
+  # Error on failure to find image
+  def find_index_by_hist(base_hist, comp_pics)
     matches = []
     comp_pics.each_with_index do |comp_pic, i|
-      # First [0] accesses highest occuring color
-      # Second [0] accesses reduced color bucket number
       # Determines if they share the same dominant color bucket
       comp_hist = comp_pic.histogram
       if base_hist.dominant_hue == comp_hist.dominant_hue
@@ -61,7 +52,11 @@ module Histogramr
       end
     end
 
-    matches.sample
+    if matches.empty?
+      raise 'Could not find sufficient matching composition images.'
+    else
+      matches.sample
+    end
   end
 
 end

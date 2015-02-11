@@ -1,7 +1,7 @@
 <h2> Show dis shit </h2>
 
 <!-- TODO: Figure out better sizing scheme. This will just distort -->
-<%= image_tag(@user.mosaics.last.name, size: '560x350',) %>
+<%= image_tag(@user.mosaics.last.name, size: picture_lg(@user.mosaics.last)) %>
 
 </br></br>
 
