@@ -38,3 +38,9 @@
 <%= render 'modals/upload' %>
 <!-- Choose Images Modal -->
 <%= render 'modals/select' %>
+
+<%= javascript_tag do %>
+  window.composition_pictures = <%= raw @user.composition_pictures.to_json %>
+  window.base_pictures        = <%= raw @user.base_pictures.to_json %>
+  window.mosaics              = <%= raw @user.mosaics.to_json %>
+<% end %>

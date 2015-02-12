@@ -44,10 +44,3 @@
     </div>
   </div>
 </div>
-
-
-<%= javascript_tag do %>
-  window.composition_pictures = <%= raw @user.composition_pictures.to_json %>
-  window.base_pictures        = <%= raw @user.base_pictures.to_json %>
-  window.mosaics              = <%= raw @user.mosaics.to_json %>
-<% end %>
