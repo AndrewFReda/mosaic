@@ -16,17 +16,17 @@
           <!-- Create lists of selectable images mapped to check boxes and radio buttons created below for composition and base pictures respectively. Tied together in Mosaics.js -->
           <h5> Composition Pictures </h5>
           <% @user.composition_pictures.each do |c| %>
-            <%= image_tag "#{base_url}/composition-pictures/#{c.name}", size: '96x60', id: "cimage-#{c.id}" %>
+            <%= image_tag "#{base_url}/composition-pictures/#{c.name}", size: '96x60', id: "cimg-del-#{c.id}" %>
           <% end %>
 
           <h5> Base Pictures </h5>
           <% @user.base_pictures.each do |b| %>
-            <%= image_tag "#{base_url}/base-pictures/#{b.name}", size: '96x60', id: "bimage-#{b.id}", class: 'image-list' %>
+            <%= image_tag "#{base_url}/base-pictures/#{b.name}", size: '96x60', id: "bimg-del-#{b.id}", class: 'image-list' %>
           <% end %>
 
           <h5> Mosaics </h5>
           <% @user.mosaics.each do |m| %>
-            <%= image_tag "#{base_url}/base-pictures/#{m.name}", size: '96x60', id: "mimage-#{m.id}", class: 'image-list' %>
+            <%= image_tag "#{base_url}/mosaics/#{m.name}", size: '96x60', id: "mimg-del-#{m.id}", class: 'image-list' %>
           <% end %>
 
           <!-- Hide the check boxes and radio buttons, only need images to display -->

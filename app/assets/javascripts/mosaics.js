@@ -1,14 +1,14 @@
 $(document).ready(function() {
 
     for(i=0; i<composition_pictures.length; i++) {
-        var id = '#cimage-' + composition_pictures[i].id;
+        var id = '#cimg-sel-' + composition_pictures[i].id;
 
         $(id).on('click', function(click){
             var $$ = $(this)
             // Split id name on '-', and take just final ID from it
-            // We know structure will be 'cimage-' followed by the ID of the picture
+            // We know structure will be 'cimg-del-' followed by the ID of the picture
             // We can now construct the check ID from these pieces
-            var id = "#user_composition_picture_ids_" + click.currentTarget.id.split("-")[1]
+            var id = "#user_composition_picture_ids_" + click.currentTarget.id.split("-")[2]
 
             if(!$$.is('.checked')){
                 $$.addClass('checked');
@@ -22,14 +22,14 @@ $(document).ready(function() {
 
     for(i=0; i<base_pictures.length; i++) {
 
-        var id = '#bimage-' + base_pictures[i].id;
+        var id = '#bimg-sel-' + base_pictures[i].id;
         $(id).on('click', function(click){
 
             if(!$(this).is('.checked')){
                 // Split id name on '-', and take just final ID from it
-                // We know structure will be 'bimage-' followed by the ID of the picture
+                // We know structure will be 'bimg-del-' followed by the ID of the picture
                 // We can now construct the check ID from these pieces
-                var id = "#user_base_picture_ids_" + click.currentTarget.id.split("-")[1]
+                var id = "#user_base_picture_ids_" + click.currentTarget.id.split("-")[2]
                 $(id).prop('checked', true).change();
             }
         })
@@ -44,7 +44,7 @@ $(document).ready(function() {
         var active_btn  = change.currentTarget.id;
         for(i=0; i<radio_btns.length; i++) {
             var cur_btn = radio_btns[i].id;
-            var cur_img = '#bimage-' + cur_btn.split("_")[4];
+            var cur_img = '#bimg-sel-' + cur_btn.split("_")[4];
             if(cur_btn == active_btn){
                 $(cur_img).addClass('checked');
             } else {
