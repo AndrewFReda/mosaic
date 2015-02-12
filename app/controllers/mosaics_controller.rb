@@ -8,7 +8,6 @@ class MosaicsController < ApplicationController
   end
 
   def show
-    @mosaic  = Mosaic
     @user    = current_user
     @picture = Picture.find(params[:id])
   end

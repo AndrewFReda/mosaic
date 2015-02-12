@@ -1,5 +1,6 @@
 module Uploadr
   extend ActiveSupport::Concern
+  #TODO: Upload only .jpg or .png
 
   # UPLOAD HELPERS
   def upload_composition

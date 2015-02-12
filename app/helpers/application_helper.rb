@@ -10,9 +10,7 @@ module ApplicationHelper
 
   def picture_size(picture, base_dimension)
     puts 'determining size....'
-    binding.pry
     image   = Image.read(picture.image).first
-    binding.pry
     columns = image.columns
     rows    = image.rows
     x = base_dimension

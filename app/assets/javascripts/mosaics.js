@@ -35,6 +35,7 @@ $(document).ready(function() {
         })
     };
 
+    // Watch base picture radio buttons to reflect update in selected picture
     $('input:radio[name="user[base_picture_ids]"]').on('change', function(change) {
         // Split the id name on '_', and take just the final piece from it.
         // We know structure will be 'user_base_picture_ids_' followed by the ID 
