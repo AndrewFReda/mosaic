@@ -59,4 +59,16 @@ module Histogramr
     end
   end
 
+
+  # Fill given cache with pictures from given comp_pics
+  # Buckets sorted based on dominant hue from the Histogram
+  def fill_cache_by_hist(cache, comp_pics)
+    
+    comp_pics.each do |comp_pic|
+      hue = comp_pic.histogram.dominant_hue
+      cache[hue] = cache[hue].push(comp_pic)
+    end
+    cache
+  end
+
 end

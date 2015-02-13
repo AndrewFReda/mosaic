@@ -62,13 +62,16 @@ class MosaicsController < ApplicationController
     # Determine height/width of the individual grid cells 
     base_grid_cell_width  = base_img.columns / mosaic_columns
     base_grid_cell_height = base_img.rows / mosaic_rows
-    # Create cache for initial lookup and acache for the scaled composition images
-    cache = Hash.new
-    scaled = Hash.new
     # Scale is somewhat arbitrary right now, but it determines size of final mosaic
     scale = 1
     mosaic = Image.new(base_img.columns * scale, base_img.rows * scale)
-
+    # Create cache and scaled caches
+    cache = Hash.new { [] }
+    scaled = Hash.new
+    # Divide composition pictures into the cache's buckets sorted by histogram hue
+    cache = fill_cache_by_hist(cache, comp_pics)
+    binding.pry
+    puts "----------------------------------------------#{DateTime.now}"
     # iterate through the grid that will represent the mosaic
     mosaic_columns.times do |c|
       mosaic_rows.times do |r|
@@ -81,9 +84,10 @@ class MosaicsController < ApplicationController
         cropped_img  = base_img.crop(current_grid_x, current_grid_y, 
                                       base_grid_cell_width, base_grid_cell_height, true)
         cropped_hist = to_histogram(cropped_img)
-
-        # Find composition image with matching histogram to base image's current cropped histogram
-        @picture = find_picture_by_hist(cropped_hist, comp_pics, cache)
+        cropped_hue  = cropped_hist.dominant_hue
+        # Find composition image of matching dominant hue with the cropped image, 
+        #  chosen at random from the cache's matching hue bucket
+        @picture = cache[cropped_hue].sample
         
         if scaled[@picture.id].nil?
           img = Image.read(@picture.image).first
@@ -95,7 +99,8 @@ class MosaicsController < ApplicationController
                           (current_grid_y * scale), 
                           OverCompositeOp)
       end
-    end 
+    end
+    puts "----------------------------------------------#{DateTime.now}"
 
     upload_mosaic(mosaic)
 
