@@ -71,7 +71,7 @@ class MosaicsController < ApplicationController
     # Divide composition pictures into the cache's buckets sorted by histogram hue
     cache = fill_cache_by_hist(cache, comp_pics)
     binding.pry
-    puts "----------------------------------------------#{DateTime.now}"
+
     # iterate through the grid that will represent the mosaic
     mosaic_columns.times do |c|
       mosaic_rows.times do |r|
@@ -100,7 +100,6 @@ class MosaicsController < ApplicationController
                           OverCompositeOp)
       end
     end
-    puts "----------------------------------------------#{DateTime.now}"
 
     upload_mosaic(mosaic)
 
