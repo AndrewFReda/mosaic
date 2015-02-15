@@ -13,6 +13,15 @@
 <div class='row'>
   <div class='col-xs-12'>
 
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#distribution_modal"> View Picture Distribution </button>
+
+  </div>
+</div>
+</br>
+<div class='row'>
+  <div class='col-xs-12'>
+
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#change_password_modal"> Change Password </button>
 
   </div>
@@ -29,5 +38,7 @@
 
 <!-- Delete Pictures Modal -->
 <%= render 'modals/delete' %>
+<!-- View Color Distribution Modal -->
+<%= render 'modals/distribution' %>
 <!-- Change Password Modal -->
 <%= render 'modals/change_password' %>
