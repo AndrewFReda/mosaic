@@ -71,6 +71,9 @@ class MosaicsController < ApplicationController
     # Divide composition pictures into the cache's buckets sorted by histogram hue
     cache = fill_cache_by_hist(cache, comp_pics)
     binding.pry
+    # Create cache and fill buckets with composition pictures matching given ids
+    #  Cache keys are histogram hues
+    cache = create_histogram_cache_by_ids(comp_ids)
 
     # iterate through the grid that will represent the mosaic
     mosaic_columns.times do |c|
