@@ -39,15 +39,11 @@ class MosaicsController < ApplicationController
     base_id  = params[:user][:base_picture_ids]
     @picture = Picture.find(base_id)
     base_img = Image.read(@picture.image).first
-    comp_ids = params[:user][:composition_picture_ids]
+
     # TODO: Fix this hack work around for "" being sent along with ids
     # http://stackoverflow.com/questions/14054164/rails-simple-form-getting-an-empty-string-from-checkbox-collection
+    comp_ids = params[:user][:composition_picture_ids]
     comp_ids.delete_if { |comp_id| comp_id.empty? }
-    comp_pics = Array.new
-    comp_ids.each do |comp_id|
-      @picture = Picture.find(comp_id)
-      comp_pics << @picture
-    end
 
     # Divide this base image into a grid and determine the dominant color of each cell
     # Determine ratio of mosaic image based on aspect of base image
