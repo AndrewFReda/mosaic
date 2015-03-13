@@ -58,15 +58,6 @@ class MosaicsController < ApplicationController
     # Determine height/width of the individual grid cells 
     base_grid_cell_width  = base_img.columns / mosaic_columns
     base_grid_cell_height = base_img.rows / mosaic_rows
-    # Scale is somewhat arbitrary right now, but it determines size of final mosaic
-    scale = 1
-    mosaic = Image.new(base_img.columns * scale, base_img.rows * scale)
-    # Create cache and scaled caches
-    cache = Hash.new { [] }
-    scaled = Hash.new
-    # Divide composition pictures into the cache's buckets sorted by histogram hue
-    cache = fill_cache_by_hist(cache, comp_pics)
-    binding.pry
     # Create cache and fill buckets with composition pictures matching given ids
     #  Cache keys are histogram hues
     cache = create_histogram_cache_by_ids(comp_ids)
@@ -87,11 +78,6 @@ class MosaicsController < ApplicationController
         # Find composition image of matching dominant hue with the cropped image, 
         #  chosen at random from the cache's matching hue bucket
         @picture = cache[cropped_hue].sample
-        
-        if scaled[@picture.id].nil?
-          img = Image.read(@picture.image).first
-          scaled[@picture.id] = img.scale((base_grid_cell_width * scale), (base_grid_cell_height * scale))
-        end
 
         mosaic.composite!(scaled[@picture.id], 
                           (current_grid_x * scale), 
