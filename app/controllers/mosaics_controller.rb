@@ -73,18 +73,14 @@ class MosaicsController < ApplicationController
 
         # Crop to grid cell image and create corresponding histogram
         # Crop: starting x pixel coord, starting y pixel coord, x pixel length, y pixel length, discard non-cropped
-        cropped_img  = base_img.crop(current_grid_x, current_grid_y, 
-                                      base_grid_cell_width, base_grid_cell_height, true)
-        cropped_hist = to_histogram(cropped_img)
-        cropped_hue  = cropped_hist.dominant_hue
+        cropped_img = base_img.crop(current_grid_x, current_grid_y, 
+                                      base_grid_cell_width, base_grid_cell_height, 
+                                        true)
+        hue = to_histogram(cropped_img).dominant_hue
+
         # Find composition image of matching dominant hue with the cropped image, 
         #  chosen at random from the cache's matching hue bucket
-        @picture = cache[cropped_hue].sample
-
-        mosaic.composite!(scaled[@picture.id], 
-                          (current_grid_x * scale), 
-                          (current_grid_y * scale), 
-                          OverCompositeOp)
+        @picture = cache[hue].sample
         mosaic_img.composite!(@picture.image, current_grid_x, current_grid_y, OverCompositeOp)
       end
     end
