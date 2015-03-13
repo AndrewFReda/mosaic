@@ -58,6 +58,8 @@ class MosaicsController < ApplicationController
     # Determine height/width of the individual grid cells 
     base_grid_cell_width  = base_img.columns / mosaic_columns
     base_grid_cell_height = base_img.rows / mosaic_rows
+    mosaic_img = Image.new(base_img.columns, base_img.rows)
+    
     # Create cache and fill buckets with composition pictures matching given ids
     #  Cache keys are histogram hues
     cache = create_histogram_cache_by_ids(comp_ids)
@@ -83,11 +85,12 @@ class MosaicsController < ApplicationController
                           (current_grid_x * scale), 
                           (current_grid_y * scale), 
                           OverCompositeOp)
+        mosaic_img.composite!(@picture.image, current_grid_x, current_grid_y, OverCompositeOp)
       end
     end
 
-    upload_mosaic(mosaic)
-
+    upload_mosaic(mosaic_img)
+    
     # FIX:: NOT GOOD PRACTICE TO PASS WRONG ID
     redirect_to mosaic_path(id: @picture.id)
   end
