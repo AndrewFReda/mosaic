@@ -75,19 +75,10 @@ class UsersController < ApplicationController
     dirty_ids = params[:user][:composition_picture_ids].concat(params[:user][:base_picture_ids]).concat(params[:user][:mosaic_ids])
     ids       = dirty_ids.delete_if { |id| id.empty? }
 
-    destroy_all_by_ids(ids)
+    @user.destroy_pictures_by_ids(ids)
 
     flash[:notice] = 'Successfully deleted pictures.'
     render 'show'
-  end
-
-  def destroy_all_by_ids(ids)
-    ids and ids.each do |id|
-      @picture = Picture.find(id)
-      if not @picture.destroy
-        raise 'Problem deleting a mosaic.'
-      end
-    end
   end
 
   def bypass_auth
