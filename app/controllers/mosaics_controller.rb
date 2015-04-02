@@ -2,6 +2,8 @@ class MosaicsController < ApplicationController
   include Histogramr
   include Uploadr
 
+  before_action :sanitize_composition_ids, only: :create
+
   def new
     @mosaic = Mosaic.new
     @user   = current_user
@@ -105,6 +107,12 @@ class MosaicsController < ApplicationController
   private
     def mosaic_params
       params.require(:mosaic).permit(:compositions, :bases)
+    end
+
+    def sanitize_composition_ids
+      # TODO: Fix this hack work around for "" being sent along with ids
+      # http://stackoverflow.com/questions/14054164/rails-simple-form-getting-an-empty-string-from-checkbox-collection
+      params[:user][:composition_picture_ids].delete_if { |comp_id| comp_id.empty? }
     end
 
 end
