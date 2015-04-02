@@ -18,10 +18,10 @@ class UsersController < ApplicationController
       redirect_to new_mosaic_path
     else
       if @user.errors[:email].empty?
-        flash[:alert] = 'Password and confirmation do not match.'
+        flash.now[:alert] = 'Password and confirmation do not match.'
         redirect_to new_user_path, status: 401
       else
-        flash[:alert] = 'User with this email already exists.'
+        flash.now[:alert] = 'User with this email already exists.'
         redirect_to new_user_path, status: 400
       end
     end
@@ -44,7 +44,7 @@ class UsersController < ApplicationController
       redirect_to(new_mosaic_path, notice: "Welcome back, #{@user.email}")
     else
       @user = User.new
-      flash[:alert] = 'Invalid email or password.'
+      flash.now[:alert] = 'Invalid email or password.'
       render login_user_path, status: 401
     end
   end
@@ -55,18 +55,18 @@ class UsersController < ApplicationController
     if user_params[:password] == user_params[:password_confirmation]
       if @user and @user.authenticate(user_params[:password])
         if @user.update(password: params[:user][:new_password])
-          flash[:notice] = 'Successfully updated password.'
+          flash.now[:notice] = 'Successfully updated password.'
           render new_mosaic_path, status: 200
         else
-          flash[:alert] = 'Failed to update password.'
+          flash.now[:alert] = 'Failed to update password.'
           render new_mosaic_path, status: 500
         end
       else
-        flash[:alert] = 'Password is incorrect.'
+        flash.now[:alert] = 'Password is incorrect.'
         render new_mosaic_path, status: 401
       end
     else
-      flash[:alert] = 'Password and confirmation do not match.'
+      flash.now[:alert] = 'Password and confirmation do not match.'
       render new_mosaic_path, status: 401
     end
   end
@@ -80,7 +80,7 @@ class UsersController < ApplicationController
 
     @user.destroy_pictures_by_ids(ids)
 
-    flash[:notice] = 'Successfully deleted pictures.'
+    flash.now[:notice] = 'Successfully deleted pictures.'
     render 'show'
   end
 

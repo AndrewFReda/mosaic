@@ -22,14 +22,14 @@ class MosaicsController < ApplicationController
       @picture = Picture.find(params[:mosaic][:id])
       @picture.destroy
       # TODO: Delete off of S3 as well
-      flash[:notice] = 'Mosaic successfully deleted.'
+      flash.now[:notice] = 'Mosaic successfully deleted.'
     elsif @user.mosaics.last
       @user.mosaics.last.delete
       # TODO: Delete off of S3 as well
-      flash[:notice] = 'Mosaic successfully deleted.'
+      flash.now[:notice] = 'Mosaic successfully deleted.'
     else
-      flash[:alert]  = 'Problem occured while deleting the mosaic.'
-      status         = 401 
+      flash.now[:alert] = 'Problem occured while deleting the mosaic.'
+      status            = 401 
     end
 
     status ||= 200
@@ -103,7 +103,7 @@ class MosaicsController < ApplicationController
     upload_composition
     upload_base
 
-    flash[:notice] = 'Images successfully uploaded.'
+    flash.now[:notice] = 'Images successfully uploaded.'
     render 'new'
   end
 
