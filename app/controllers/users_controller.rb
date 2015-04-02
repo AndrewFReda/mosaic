@@ -1,10 +1,6 @@
 class UsersController < ApplicationController
   include Histogramr
-  before_action :check_auth, only: [:new, :login]
-
-  def index
-    @users = User.all
-  end
+  before_action :bypass_auth, only: [:new, :login]
 
   def new
     @user = User.new
@@ -30,7 +26,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def destroy
+  def logout
     session[:user_id] = nil
     redirect_to login_user_path
   end
@@ -39,6 +35,7 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  # TODO make both either redirect or render
   def login_user
     @user = User.find_by(email: user_params[:email])
     if @user and @user.authenticate(user_params[:password])
@@ -76,7 +73,7 @@ class UsersController < ApplicationController
     # TODO: Fix this hack work around for "" being sent along with ids
     # http://stackoverflow.com/questions/14054164/rails-simple-form-getting-an-empty-string-from-checkbox-collection
     dirty_ids = params[:user][:composition_picture_ids].concat(params[:user][:base_picture_ids]).concat(params[:user][:mosaic_ids])
-    ids   = dirty_ids.delete_if { |id| id.empty? }
+    ids       = dirty_ids.delete_if { |id| id.empty? }
 
     destroy_all_by_ids(ids)
 
@@ -93,9 +90,11 @@ class UsersController < ApplicationController
     end
   end
 
-  def check_auth
+  def bypass_auth
     if current_user
       redirect_to new_mosaic_path
+    else
+      # Do nothing.
     end
   end
 
