@@ -4,6 +4,7 @@ module Uploadr
 
   # UPLOAD HELPERS
   def upload_composition
+    @user = current_user
     temps = params[:user][:compositions]
 
     # Check that temps is not nil before iterating
@@ -25,6 +26,7 @@ module Uploadr
   end
 
   def upload_base
+    @user = current_user
     temps = params[:user][:bases]
     
     # Check that temps is not nil before iterating
@@ -45,9 +47,10 @@ module Uploadr
   end
 
   def upload_mosaic(mosaic)
-    name     = "#{DateTime.now.to_s}-mosaic.jpg"
+    @user = current_user
+    name  = "#{DateTime.now.to_s}-mosaic.jpg"
     # NOT SURE WHERE TO WRITE TO JUST YET...
-    path     = "public/images/#{name}"
+    path  = "public/images/#{name}"
     
     mosaic.write(path)
     file     = File.open(path)
