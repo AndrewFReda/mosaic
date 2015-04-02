@@ -89,11 +89,9 @@ class MosaicsController < ApplicationController
         mosaic_img.composite!(@picture.image, current_grid_x, current_grid_y, OverCompositeOp)
       end
     end
+    mosaic_id  = upload_mosaic(mosaic_img)
 
-    upload_mosaic(mosaic_img)
-    
-    # FIX:: NOT GOOD PRACTICE TO PASS WRONG ID
-    redirect_to mosaic_path(id: @picture.id)
+    redirect_to mosaic_path(id: mosaic_id)
   end
 
   def upload

@@ -60,6 +60,7 @@ module Uploadr
 
     if @picture.save
       @user.mosaics << @picture
+      return @user.mosaics.last.id
     else
       @picture.destroy
       raise "Problems occured while saving the mosaic picture."
