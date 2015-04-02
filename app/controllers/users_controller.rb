@@ -19,10 +19,11 @@ class UsersController < ApplicationController
     else
       if @user.errors[:email].empty?
         flash[:alert] = 'Password and confirmation do not match.'
+        redirect_to new_user_path, status: 401
       else
         flash[:alert] = 'User with this email already exists.'
+        redirect_to new_user_path, status: 400
       end
-      redirect_to new_user_path
     end
   end
 
@@ -44,7 +45,7 @@ class UsersController < ApplicationController
     else
       @user = User.new
       flash[:alert] = 'Invalid email or password.'
-      render login_user_path
+      render login_user_path, status: 401
     end
   end
 
@@ -55,17 +56,19 @@ class UsersController < ApplicationController
       if @user and @user.authenticate(user_params[:password])
         if @user.update(password: params[:user][:new_password])
           flash[:notice] = 'Successfully updated password.'
+          render new_mosaic_path, status: 200
         else
           flash[:alert] = 'Failed to update password.'
+          render new_mosaic_path, status: 500
         end
       else
         flash[:alert] = 'Password is incorrect.'
+        render new_mosaic_path, status: 401
       end
     else
       flash[:alert] = 'Password and confirmation do not match.'
+      render new_mosaic_path, status: 401
     end
-
-    render new_mosaic_path
   end
 
   def delete_pictures
