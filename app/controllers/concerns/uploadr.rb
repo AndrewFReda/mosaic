@@ -12,8 +12,9 @@ module Uploadr
 
       name     = "#{DateTime.now.to_s}-#{temp.original_filename}"
       file     = File.open(temp.tempfile)
-      img      = Image.read(file).first
-      @picture = Picture.new(name: name, histogram: to_histogram(img), image: file, composition_id: @user.id)
+      @picture = Picture.new(name: name, image: file, composition_id: @user.id)
+      # TODO: Consider moving this into Picture's initialize or save method
+      @picture.set_histogram_from_file(file)
       file.close
 
       if @picture.save

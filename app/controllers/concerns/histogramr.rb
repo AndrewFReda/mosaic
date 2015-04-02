@@ -2,30 +2,6 @@ module Histogramr
   # TODO: Should this be put into Histogram class insted?
   extend ActiveSupport::Concern
 
-  def to_histogram(img)
-    num_colors = 8
-
-    img   = img.quantize(num_colors)
-    hist  = img.color_histogram
-    simplified_hist = Hash.new{ 0 }
-
-    # Sort 8-color occurences in histogram into 18 buckets
-    hist.each do |h|
-      hsla = h.first.to_hsla
-      pos  = (hsla[0].to_i / 20) % 18
-      simplified_hist[pos] += h.last
-    end
-
-    sorted = sort_by_population(simplified_hist)
-    Histogram.new(dominant_hue: sorted.first.first)
-  end
-
-
-  # Sort by number of times pixel appeared from greatest to least
-  def sort_by_population(histogram)
-    histogram.sort_by { |pos, v| v }.reverse
-  end
-
   # Return a Picture with a Histogram that matches the given base grid image's Histogram
   # Picture is randomly selected from all matching pictures
   # Error on failure to find image
@@ -58,7 +34,6 @@ module Histogramr
       matches.sample
     end
   end
-
 
   # Create a cache filled with pictures matching given composition picture ids
   # Buckets sorted based on dominant hue from the Histograms
