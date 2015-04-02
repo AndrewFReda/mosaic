@@ -12,7 +12,14 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require bootstrap-sprockets
 
 // Removed loading of tree, instead load controller specific files
+//= require lodash
+//= require backbone
+//= require mosaics
+//= require_tree ../templates
+//= require_tree ./models
+//= require_tree ./collections
+//= require_tree ./views
+//= require_tree ./routers
