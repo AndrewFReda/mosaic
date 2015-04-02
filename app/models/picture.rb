@@ -8,4 +8,12 @@ class Picture < ActiveRecord::Base
 
   # Validate the attached image is image/jpg, image/png, etc
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
+  
+
+  def set_histogram_from_file(file)
+    self.histogram = Histogram.new
+
+    image = Image.read(file).first    
+    self.histogram.set_hue_from_image(image)
+  end
 end

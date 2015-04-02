@@ -4,6 +4,7 @@ module Uploadr
 
   # UPLOAD HELPERS
   def upload_composition
+    @user = current_user
     temps = params[:user][:compositions]
 
     # Check that temps is not nil before iterating
@@ -11,8 +12,9 @@ module Uploadr
 
       name     = "#{DateTime.now.to_s}-#{temp.original_filename}"
       file     = File.open(temp.tempfile)
-      img      = Image.read(file).first
-      @picture = Picture.new(name: name, histogram: to_histogram(img), image: file, composition_id: @user.id)
+      @picture = Picture.new(name: name, image: file, composition_id: @user.id)
+      # TODO: Consider moving this into Picture's initialize or save method
+      @picture.set_histogram_from_file(file)
       file.close
 
       if @picture.save
@@ -25,6 +27,7 @@ module Uploadr
   end
 
   def upload_base
+    @user = current_user
     temps = params[:user][:bases]
     
     # Check that temps is not nil before iterating
@@ -45,9 +48,10 @@ module Uploadr
   end
 
   def upload_mosaic(mosaic)
-    name     = "#{DateTime.now.to_s}-mosaic.jpg"
+    @user = current_user
+    name  = "#{DateTime.now.to_s}-mosaic.jpg"
     # NOT SURE WHERE TO WRITE TO JUST YET...
-    path     = "public/images/#{name}"
+    path  = "public/images/#{name}"
     
     mosaic.write(path)
     file     = File.open(path)
@@ -56,6 +60,7 @@ module Uploadr
 
     if @picture.save
       @user.mosaics << @picture
+      return @user.mosaics.last.id
     else
       @picture.destroy
       raise "Problems occured while saving the mosaic picture."

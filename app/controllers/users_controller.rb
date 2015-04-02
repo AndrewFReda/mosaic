@@ -1,10 +1,6 @@
 class UsersController < ApplicationController
   include Histogramr
-  before_action :check_auth, only: [:new, :login]
-
-  def index
-    @users = User.all
-  end
+  before_action :bypass_auth, only: [:new, :login]
 
   def new
     @user = User.new
@@ -22,15 +18,16 @@ class UsersController < ApplicationController
       redirect_to new_mosaic_path
     else
       if @user.errors[:email].empty?
-        flash[:alert] = 'Password and confirmation do not match.'
+        flash.now[:alert] = 'Password and confirmation do not match.'
+        redirect_to new_user_path, status: 401
       else
-        flash[:alert] = 'User with this email already exists.'
+        flash.now[:alert] = 'User with this email already exists.'
+        redirect_to new_user_path, status: 400
       end
-      redirect_to new_user_path
     end
   end
 
-  def destroy
+  def logout
     session[:user_id] = nil
     redirect_to login_user_path
   end
@@ -39,6 +36,7 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  # TODO make both either redirect or render
   def login_user
     @user = User.find_by(email: user_params[:email])
     if @user and @user.authenticate(user_params[:password])
@@ -46,8 +44,8 @@ class UsersController < ApplicationController
       redirect_to(new_mosaic_path, notice: "Welcome back, #{@user.email}")
     else
       @user = User.new
-      flash[:alert] = 'Invalid email or password.'
-      render login_user_path
+      flash.now[:alert] = 'Invalid email or password.'
+      render login_user_path, status: 401
     end
   end
 
@@ -57,18 +55,20 @@ class UsersController < ApplicationController
     if user_params[:password] == user_params[:password_confirmation]
       if @user and @user.authenticate(user_params[:password])
         if @user.update(password: params[:user][:new_password])
-          flash[:notice] = 'Successfully updated password.'
+          flash.now[:notice] = 'Successfully updated password.'
+          render new_mosaic_path, status: 200
         else
-          flash[:alert] = 'Failed to update password.'
+          flash.now[:alert] = 'Failed to update password.'
+          render new_mosaic_path, status: 500
         end
       else
-        flash[:alert] = 'Password is incorrect.'
+        flash.now[:alert] = 'Password is incorrect.'
+        render new_mosaic_path, status: 401
       end
     else
-      flash[:alert] = 'Password and confirmation do not match.'
+      flash.now[:alert] = 'Password and confirmation do not match.'
+      render new_mosaic_path, status: 401
     end
-
-    render new_mosaic_path
   end
 
   def delete_pictures
@@ -76,26 +76,19 @@ class UsersController < ApplicationController
     # TODO: Fix this hack work around for "" being sent along with ids
     # http://stackoverflow.com/questions/14054164/rails-simple-form-getting-an-empty-string-from-checkbox-collection
     dirty_ids = params[:user][:composition_picture_ids].concat(params[:user][:base_picture_ids]).concat(params[:user][:mosaic_ids])
-    ids   = dirty_ids.delete_if { |id| id.empty? }
+    ids       = dirty_ids.delete_if { |id| id.empty? }
 
-    destroy_all_by_ids(ids)
+    @user.destroy_pictures_by_ids(ids)
 
-    flash[:notice] = 'Successfully deleted pictures.'
+    flash.now[:notice] = 'Successfully deleted pictures.'
     render 'show'
   end
 
-  def destroy_all_by_ids(ids)
-    ids and ids.each do |id|
-      @picture = Picture.find(id)
-      if not @picture.destroy
-        raise 'Problem deleting a mosaic.'
-      end
-    end
-  end
-
-  def check_auth
+  def bypass_auth
     if current_user
       redirect_to new_mosaic_path
+    else
+      # Do nothing.
     end
   end
 
