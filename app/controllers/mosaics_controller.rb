@@ -23,14 +23,17 @@ class MosaicsController < ApplicationController
       @picture.destroy
       # TODO: Delete off of S3 as well
       flash[:notice] = 'Mosaic successfully deleted.'
-    elsif @user.mosaics.last.delete
+    elsif @user.mosaics.last
+      @user.mosaics.last.delete
       # TODO: Delete off of S3 as well
       flash[:notice] = 'Mosaic successfully deleted.'
     else
-      raise 'Problem occured while deleting the mosaic.'
+      flash[:alert]  = 'Problem occured while deleting the mosaic.'
+      status         = 401 
     end
 
-    redirect_to new_mosaic_path
+    status ||= 200
+    redirect_to new_mosaic_path, status: status
   end
 
   def create
