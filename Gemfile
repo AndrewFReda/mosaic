@@ -26,6 +26,8 @@ gem 'simple_form'
 gem 'lolcommits'
 gem 'aws-sdk'
 gem 'paperclip'
+gem 'speed'
+gem 'rspec-rails'
 
 # gem 'unicorn'
 # gem 'capistrano-rails', group: :development
