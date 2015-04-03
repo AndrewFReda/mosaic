@@ -1,4 +1,4 @@
-RSpec.describe MosaicsController do
+RSpec.describe PicturesController do
   
   describe '#new' do
     it 'returns an HTTP 200' do
@@ -18,12 +18,12 @@ RSpec.describe MosaicsController do
     end
   end
 
-  describe '#delete' do
+  describe '#delete_mosaic' do
     it 'returns an HTTP 200 when specifying ID' do
       user = User.create(email: 'newaccount1@test.com', password: 1, password_confirmation: 1)
       Picture.create(mosaic_id: 1)
 
-      delete :delete, mosaic: { id: 1 }
+      delete :delete_mosaic, mosaic: { id: 1 }
 
       expect(response.status).to eq(200)
     end
@@ -33,7 +33,7 @@ RSpec.describe MosaicsController do
       session[:user_id] = user.id
       Picture.create(mosaic_id: 1)
 
-      delete :delete
+      delete :delete_mosaic
 
       expect(response.status).to eq(200)
     end
@@ -42,7 +42,7 @@ RSpec.describe MosaicsController do
       user = User.create(email: 'newaccount1@test.com', password: 1, password_confirmation: 1)
       session[:user_id] = user.id
 
-      delete :delete, id: 1
+      delete :delete_mosaic, id: 1
 
       expect(response.status).to eq(401)
     end

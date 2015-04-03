@@ -46,7 +46,7 @@ class UsersController < ApplicationController
     else
       @user = User.new
       flash.now[:alert] = 'Invalid email or password.'
-      render login_user_path, status: 401
+      render 'new_login', status: 401
     end
   end
 

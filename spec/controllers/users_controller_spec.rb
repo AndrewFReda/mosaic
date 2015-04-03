@@ -41,7 +41,7 @@ RSpec.describe UsersController do
   describe '#logout' do
     it 'log current user out by removing :user_id from session' do
       user = User.create(email: 'newaccount1@test.com', password: 1, password_confirmation: 1)
-      post :login_user, user: { email: user.email, password: user.password }
+      post :login, user: { email: user.email, password: user.password }
       expect(session[:user_id]).to eq(user.id)
 
       delete :logout
@@ -50,31 +50,31 @@ RSpec.describe UsersController do
     end
   end
 
-  describe '#login' do
+  describe '#new_login' do
     it 'returns an HTTP 200 indicating successful display of login form' do
-      get :login
+      get :new_login
 
       expect(response.status).to eq(200)
     end
   end
 
-  describe '#login_user' do
+  describe '#login' do
     it 'sets session ID equal to the current user ID on success' do
       user = User.create(email: 'newaccount1@test.com', password: 1, password_confirmation: 1)
-      post :login_user, user: { email: user.email, password: user.password }
+      post :login, user: { email: user.email, password: user.password }
       expect(session[:user_id]).to eq(user.id)
     end
 
     it 'returns an HTTP 302 and redirects to the new mosaic path on success' do
       user = User.create(email: 'newaccount1@test.com', password: 1, password_confirmation: 1)
-      post :login_user, user: { email: user.email, password: user.password }
+      post :login, user: { email: user.email, password: user.password }
       expect(response.status).to eq(302)
-      expect(response).to redirect_to(new_mosaic_path)
+      expect(response).to redirect_to(new_picture_path)
     end
 
     it 'returns an HTTP 401 for failed login' do
       user = User.create(email: 'newaccount1@test.com', password: 1, password_confirmation: 1)
-      post :login_user, user: { email: user.email, password: 2 }
+      post :login, user: { email: user.email, password: 2 }
       expect(response.status).to eq(401)
     end
   end
@@ -82,7 +82,7 @@ RSpec.describe UsersController do
   describe '#change_password' do
     it 'returns an HTTP 200 and updates the users password on success' do
       user = User.create(email: 'newaccount1@test.com', password: 1, password_confirmation: 1)
-      post :login_user, user: { email: user.email, password: user.password }
+      post :login, user: { email: user.email, password: user.password }
 
       new_password = 2
       post :change_password, user: { 
@@ -96,13 +96,13 @@ RSpec.describe UsersController do
       delete :logout
       expect(session[:user_id]).to eq(nil)
 
-      post :login_user, user: { email: user.email, password: new_password }
+      post :login, user: { email: user.email, password: new_password }
       expect(response.status).to eq(302)
     end
 
     it 'returns an HTTP 401 when password is incorrect' do
       user = User.create(email: 'newaccount1@test.com', password: 1, password_confirmation: 1)
-      post :login_user, user: { email: user.email, password: user.password }
+      post :login, user: { email: user.email, password: user.password }
 
       new_password = 2
       post :change_password, user: { 
@@ -116,7 +116,7 @@ RSpec.describe UsersController do
 
     it 'returns an HTTP 401 when password and confirmation do not match' do
       user = User.create(email: 'newaccount1@test.com', password: 1, password_confirmation: 1)
-      post :login_user, user: { email: user.email, password: user.password }
+      post :login, user: { email: user.email, password: user.password }
 
       new_password = 2
       post :change_password, user: { 
@@ -132,7 +132,7 @@ RSpec.describe UsersController do
   describe '#delete_pictures' do
     it 'returns an HTTP 200 and deletes pictures specified from user' do
       user = User.create(email: 'newaccount1@test.com', password: 1, password_confirmation: 1)
-      post :login_user, user: { email: user.email, password: user.password }
+      post :login, user: { email: user.email, password: user.password }
 
       # TODO add actual pictures to delete and check against them
       delete :delete_pictures, user: { composition_picture_ids: [], 
