@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  root to: 'users#login'
+  root to: 'users#new_login'
 
   post   'users/change_password', to: 'users#change_password', as: 'change_password'
   delete 'users/delete_pictures', to: 'users#delete_pictures', as: 'delete_pictures'

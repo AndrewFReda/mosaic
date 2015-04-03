@@ -37,12 +37,12 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  # TODO make both either redirect or render
   def login
     @user = User.find_by(email: user_params[:email])
     if @user and @user.authenticate(user_params[:password])
-      session[:user_id] = @user.id
-      redirect_to(new_picture_path, notice: "Welcome back, #{@user.email}")
+      session[:user_id]  = @user.id
+      flash.now[:notice] = "Welcome back, #{@user.email}."
+      render '/pictures/new'
     else
       @user = User.new
       flash.now[:alert] = 'Invalid email or password.'
