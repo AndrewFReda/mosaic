@@ -3,7 +3,7 @@
 
 <div id='navbar' class='row'>
   <div class='col-xs-12'>
-    <%= link_to 'Sign Out', login_user_path, method: :delete, class: 'btn btn-danger btn-sm right' %>
+    <%= link_to 'Sign Out', logout_user_path, method: :delete, class: 'btn btn-danger btn-sm right' %>
     <!--<%= link_to 'Settings', user_path(id: current_user.id), class: 'btn btn-primary btn-sm right' %>-->
     <%= link_to 'Profile', user_path(id: current_user.id), class: 'btn btn-info btn-sm right' %>
   </div>

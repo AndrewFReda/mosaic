@@ -4,8 +4,8 @@ Rails.application.routes.draw do
   delete 'users/delete_pictures', to: 'users#delete_pictures', as: 'delete_pictures'
   get    'users/login', to: 'users#login', as: 'login_user'
   post   'users/login', to: 'users#login_user'
-  delete 'users/logout', to: 'users#logout'
   root to: 'users#login'
+  delete 'users/logout', to: 'users#logout', as: 'logout_user'
   
   post   'upload',  to: 'mosaics#upload', as: 'upload'
   delete 'mosaics', to: 'mosaics#delete'
