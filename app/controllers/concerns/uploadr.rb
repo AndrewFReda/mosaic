@@ -4,7 +4,6 @@ module Uploadr
 
   # UPLOAD HELPERS
   def upload_composition
-    @user = current_user
     temps = params[:user][:compositions]
 
     # Check that temps is not nil before iterating
@@ -27,7 +26,6 @@ module Uploadr
   end
 
   def upload_base
-    @user = current_user
     temps = params[:user][:bases]
     
     # Check that temps is not nil before iterating
