@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   include Histogramr
+  include Uploadr
   before_action :bypass_auth, only: [:new, :login]
 
   def new
@@ -85,6 +86,16 @@ class UsersController < ApplicationController
     render 'show'
   end
 
+  def upload_pictures
+    @user = current_user
+    
+    upload_composition
+    upload_base
+
+    flash.now[:notice] = 'Images successfully uploaded.'
+    render 'pictures/new'
+  end
+
   def bypass_auth
     if current_user
       redirect_to new_picture_path
@@ -95,6 +106,6 @@ class UsersController < ApplicationController
 
   private
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :password_digest)
+      params.require(:user).permit(:email, :password, :password_confirmation, :password_digest, :composition_picture_ids, :base_picture_ids, :mosaic_ids)
     end
 end
