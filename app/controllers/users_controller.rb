@@ -15,7 +15,7 @@ class UsersController < ApplicationController
 
     if @user.save
       session[:user_id] = @user.id
-      redirect_to new_mosaic_path
+      redirect_to new_picture_path
     else
       if @user.errors[:email].empty?
         flash.now[:alert] = 'Password and confirmation do not match.'
@@ -41,7 +41,7 @@ class UsersController < ApplicationController
     @user = User.find_by(email: user_params[:email])
     if @user and @user.authenticate(user_params[:password])
       session[:user_id] = @user.id
-      redirect_to(new_mosaic_path, notice: "Welcome back, #{@user.email}")
+      redirect_to(new_picture_path, notice: "Welcome back, #{@user.email}")
     else
       @user = User.new
       flash.now[:alert] = 'Invalid email or password.'
@@ -69,6 +69,7 @@ class UsersController < ApplicationController
       flash.now[:alert] = 'Password and confirmation do not match.'
       render new_mosaic_path, status: 401
     end
+    render new_picture_path, status: status
   end
 
   def delete_pictures
@@ -86,7 +87,7 @@ class UsersController < ApplicationController
 
   def bypass_auth
     if current_user
-      redirect_to new_mosaic_path
+      redirect_to new_picture_path
     else
       # Do nothing.
     end
