@@ -46,9 +46,9 @@ $(document).ready(function() {
         $(id).on('click', function(click){
             var $$ = $(this)
             // Split id name on '-', and take just final ID from it
-            // We know structure will be 'cimg-del-' followed by the ID of the picture
+            // We know structure will be 'mimg-del-' followed by the ID of the picture
             // We can now construct the check ID from these pieces
-            var id = "#user_mosaic_ids_" + click.currentTarget.id.split("-")[1]
+            var id = "#user_mosaic_ids_" + click.currentTarget.id.split("-")[2]
 
             if(!$$.is('.checked')){
                 $$.addClass('checked');
