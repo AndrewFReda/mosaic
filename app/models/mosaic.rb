@@ -1,22 +1,29 @@
 class Mosaic < ActiveRecord::Base
 #  has_one :mosaic, class_name: 'Picture', dependent: :destroy
 
-
-  def set_grid_from_image(base_img)
-    # Determine ratio of mosaic image based on aspect of base image
-    if base_img.columns > base_img.rows
-      self.grid_columns = 120 * (base_img.columns / base_img.rows)
+  # Determine aspect ratio of this Mosaic based on given ImageMagick image
+  def set_grid_from_image(image)
+    if image.columns > image.rows
+      self.grid_columns = 120 * (image.columns / image.rows)
       self.grid_rows    = 120
     else
       self.grid_columns = 120
-      self.grid_rows    = 120 * (base_img.rows / base_img.columns)
+      self.grid_rows    = 120 * (image.rows / image.columns)
     end
   end
 
+  # Determine the dominant hue of given ImageMagick Image
+  def get_hue_from_image(image)
+    hist = Histogram.new
+    hist.set_hue_from_image(image)
+    hist.dominant_hue
+  end
 
+  # Create a Mosaic as an ImageMagick from:
+  #    base_img: ImageMagick image serving as basis for Mosaic
+  #    cache:    Composition ImageMagick images used as components to create Mosaic
   def create_from_img_and_cache(base_img, cache)
-
-    set_grid_from_image(base_img)
+    self.set_grid_from_image(base_img)
     final_img = Image.new(base_img.columns, base_img.rows)
 
     # Divide given base image into a grid and determine the dominant color of each cell
@@ -37,9 +44,7 @@ class Mosaic < ActiveRecord::Base
         cropped_img = base_img.crop(current_grid_x, current_grid_y, 
                                       base_grid_cell_width, base_grid_cell_height, 
                                         true)
-        hist = Histogram.new
-        hist.set_hue_from_image(cropped_img)
-        hue = hist.dominant_hue
+        hue = self.get_hue_from_image(cropped_img)
 
         # Find composition image of matching dominant hue with the cropped image, 
         #  chosen at random from the cache's matching hue sub-array
