@@ -51,28 +51,33 @@ class UsersController < ApplicationController
   end
 
   def change_password
-    @user = current_user
+    @user  = current_user
+    status = nil
 
     if user_params[:password] == user_params[:password_confirmation]
       if @user and @user.authenticate(user_params[:password])
         if @user.update(password: params[:user][:new_password])
           flash.now[:notice] = 'Successfully updated password.'
-          render new_mosaic_path, status: 200
+          status = 200
         else
           flash.now[:alert] = 'Failed to update password.'
-          render new_mosaic_path, status: 500
+          status = 500
         end
       else
         flash.now[:alert] = 'Password is incorrect.'
-        render new_mosaic_path, status: 401
+        status = 401
       end
     else
       flash.now[:alert] = 'Password and confirmation do not match.'
-      render new_mosaic_path, status: 401
+      status = 401
     end
+
     render new_picture_path, status: status
   end
 
+
+  # TODO: Fix problem where all IDs to be deleted are sent as the :composition_picture_ids in addition
+  #       to their other types
   def delete_pictures
     @user = current_user
     # TODO: Fix this hack work around for "" being sent along with ids
