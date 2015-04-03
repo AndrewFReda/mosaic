@@ -32,12 +32,12 @@ class UsersController < ApplicationController
     redirect_to login_user_path
   end
 
-  def login
+  def new_login
     @user = User.new
   end
 
   # TODO make both either redirect or render
-  def login_user
+  def login
     @user = User.find_by(email: user_params[:email])
     if @user and @user.authenticate(user_params[:password])
       session[:user_id] = @user.id
