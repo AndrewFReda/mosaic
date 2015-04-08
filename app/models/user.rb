@@ -15,13 +15,6 @@ class User < ActiveRecord::Base
   has_many :base_pictures, class_name: 'Picture', foreign_key: 'base_id', dependent: :destroy
   has_many :mosaics, class_name: 'Picture', foreign_key: 'mosaic_id', dependent: :destroy
 
-  def destroy_pictures_by_ids(ids)
-    ids and ids.each do |id|
-      @picture = Picture.find(id)
-      # TODO: Check if user owns picture
-      if not @picture.destroy
-        raise 'Problem deleting a picture.'
-      end
   def set_session_id
     session[:user_id] = self.id
   end
@@ -35,5 +28,29 @@ class User < ActiveRecord::Base
   def set_session_id()
     session[:user_id] = @id
   end
+
+end
+  def delete_composition_pictures(ids)
+    delete_pictures(ids, self.composition_pictures)
+  end
+
+  def delete_base_pictures(ids)
+    delete_pictures(ids, self.base_pictures)
+  end
+
+  def delete_mosaics(ids)
+    delete_pictures(ids, self.mosaics)
+  end
+
+  private
+    def delete_pictures(ids, pictures)
+      ids.each do |id|
+        begin
+          pictures.delete(id)
+        rescue
+          # send error code
+        end
+      end
+    end
 
 end
