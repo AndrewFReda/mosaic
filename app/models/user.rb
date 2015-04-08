@@ -22,7 +22,18 @@ class User < ActiveRecord::Base
       if not @picture.destroy
         raise 'Problem deleting a picture.'
       end
+  def set_session_id
+    session[:user_id] = self.id
+  end
+
+  def unset_session_id
+    session[:user_id] = nil
+  end
     end
+  end
+
+  def set_session_id()
+    session[:user_id] = @id
   end
 
 end
