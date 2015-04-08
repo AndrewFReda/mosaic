@@ -29,7 +29,7 @@ class PicturesController < ApplicationController
     comp_ids = params[:user][:composition_picture_ids]
     cache    = create_histogram_cache_from_ids(comp_ids)
 
-    @mosaic    = Mosaic.create
+    @mosaic    = Mosaic.new
     mosaic_img = @mosaic.create_from_img_and_cache(base_img, cache)
     mosaic_id  = upload_mosaic(mosaic_img)
 
