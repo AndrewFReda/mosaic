@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   include Histogramr
   include Uploadr
-  before_action :bypass_auth, only: [:new, :login]
+  before_action :bypass_auth, only: [:new, :new_login]
 
   def new
     @user = User.new
