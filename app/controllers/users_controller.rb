@@ -41,8 +41,8 @@ class UsersController < ApplicationController
   def login
     @user = User.find_by(email: user_params[:email])
     if @user and @user.authenticate(user_params[:password])
-      flash.now[:notice] = "Welcome back, #{@user.email}."
       @user.set_session_id()
+      flash.now[:notice] = "Welcome back, #{@user.email}."
       render '/pictures/new'
     else
       @user = User.new
