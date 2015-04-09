@@ -32,10 +32,6 @@ class UsersController < ApplicationController
     redirect_to login_user_path
   end
 
-  def new_login
-    @user = User.new
-  end
-
   def login
     @user = User.find_by(email: user_params[:email])
     if @user and @user.authenticate(user_params[:password])
