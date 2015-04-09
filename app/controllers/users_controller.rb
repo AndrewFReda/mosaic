@@ -103,18 +103,19 @@ class UsersController < ApplicationController
     render 'pictures/new'
   end
 
-  def bypass_auth
-    if current_user
-      redirect_to new_picture_path
-    else
-      # Do nothing.
-    end
-  end
-
   private
     def user_params
       params.require(:user).permit(:email, :password, :password_confirmation, :password_digest, :composition_picture_ids, :base_picture_ids, :mosaic_ids)
     end
+
+    def bypass_auth
+      if current_user
+        redirect_to new_picture_path
+      else
+        # Do nothing.
+      end
+    end
+
     # TODO: Fix this hack work around for "" being sent along with ids
     # http://stackoverflow.com/questions/14054164/rails-simple-form-getting-an-empty-string-from-checkbox-collection
     def clean_ids(ids)
