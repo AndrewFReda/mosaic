@@ -12,15 +12,8 @@
 <body>
 
   <div id='container' class='container'>
-    <div class='row'>
-      <div class='col-xs-12'>
-
-      </div>
-    </div>
+    <%= yield %>
   </div>
-
-  <!-- Add to load #{controller_name}.js for each controller and only that controller -->
-  <%= javascript_include_tag params[:controller] %>
 
 </body>
 </html>
