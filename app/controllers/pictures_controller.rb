@@ -12,7 +12,6 @@ class PicturesController < ApplicationController
     @user.add_composition_pictures_from_tempfiles params[:user][:compositions]
     @user.add_base_pictures_from_tempfiles params[:user][:bases]
 
-    flash.now[:notice] = 'Images successfully uploaded.'
     render 'new'
   end
 
@@ -43,14 +42,14 @@ class PicturesController < ApplicationController
       @picture = Picture.find(params[:mosaic][:id])
       @picture.destroy
       # TODO: Delete off of S3 as well
-      flash.now[:notice] = 'Mosaic successfully deleted.'
+      # success
     elsif @user.mosaics.last
       @user.mosaics.last.delete
       # TODO: Delete off of S3 as well
-      flash.now[:notice] = 'Mosaic successfully deleted.'
+      # success
     else
-      flash.now[:alert] = 'Problem occured while deleting the mosaic.'
-      status            = 401 
+      status = 401 
+      # failure
     end
 
     status ||= 200

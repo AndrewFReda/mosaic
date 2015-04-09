@@ -18,10 +18,10 @@ class UsersController < ApplicationController
       redirect_to new_picture_path
     else
       if @user.errors[:email].empty?
-        flash.now[:alert] = 'Password and confirmation do not match.'
+        # password and confirmation do not match
         redirect_to new_user_path, status: 401
       else
-        flash.now[:alert] = 'User with this email already exists.'
+        # user with this email already exists
         redirect_to new_user_path, status: 400
       end
     end
@@ -41,11 +41,11 @@ class UsersController < ApplicationController
     @user = User.find_by(email: user_params[:email])
     if @user and @user.authenticate(user_params[:password])
       @user.set_session_id(session)
-      flash.now[:notice] = "Welcome back, #{@user.email}."
+      # success
       render '/pictures/new'
     else
       @user = User.new
-      flash.now[:alert] = 'Invalid email or password.'
+      # failure
       render 'new_login', status: 401
     end
   end
@@ -57,18 +57,18 @@ class UsersController < ApplicationController
     if user_params[:password] == user_params[:password_confirmation]
       if @user and @user.authenticate(user_params[:password])
         if @user.update(password: params[:user][:new_password])
-          flash.now[:notice] = 'Successfully updated password.'
+          # success
           status = 200
         else
-          flash.now[:alert] = 'Failed to update password.'
+          # failure to update password
           status = 500
         end
       else
-        flash.now[:alert] = 'Password is incorrect.'
+        # password is incorrect
         status = 401
       end
     else
-      flash.now[:alert] = 'Password and confirmation do not match.'
+       # password and confirmation do not match
       status = 401
     end
 
@@ -89,7 +89,6 @@ class UsersController < ApplicationController
     @user.delete_base_pictures base_ids
     @user.delete_mosaics mosaic_ids
 
-    flash.now[:notice] = 'Successfully deleted pictures.'
     render 'show'
   end
 
@@ -99,7 +98,6 @@ class UsersController < ApplicationController
     @user.add_composition_pictures_from_tempfiles params[:user][:compositions]
     @user.add_base_pictures_from_tempfiles params[:user][:bases]
 
-    flash.now[:notice] = 'Images successfully uploaded.'
     render 'pictures/new'
   end
 
