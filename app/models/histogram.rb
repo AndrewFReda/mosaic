@@ -1,6 +1,7 @@
 class Histogram < ActiveRecord::Base
   belongs_to :picture
 
+  # Set this Histogram's dominant hue from given ImageMagick image
   def set_hue_from_image(img)
     num_colors = 8
 
@@ -8,7 +9,7 @@ class Histogram < ActiveRecord::Base
     hist  = img.color_histogram
     simplified_hist = Hash.new{ 0 }
 
-    # Sort 8-color occurences in histogram into 18 buckets
+    # Sort 8-color histogram into 18 buckets
     hist.each do |h|
       hsla = h.first.to_hsla
       pos  = (hsla[0].to_i / 20) % 18
@@ -18,7 +19,6 @@ class Histogram < ActiveRecord::Base
     # Sort by number of times pixel appeared from greatest to least
     sorted = simplified_hist.sort_by { |pos, v| v }.reverse
     self.dominant_hue = sorted.first.first
-    self
   end
 
 end

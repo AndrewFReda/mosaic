@@ -6,7 +6,7 @@ $(document).ready(function() {
         $(id).on('click', function(click){
             var $$ = $(this)
             // Split id name on '-', and take just final ID from it
-            // We know structure will be 'cimg-del-' followed by the ID of the picture
+            // We know structure will be 'cimg-sel-' followed by the ID of the picture
             // We can now construct the check ID from these pieces
             var id = "#user_composition_picture_ids_" + click.currentTarget.id.split("-")[2]
 
@@ -27,7 +27,7 @@ $(document).ready(function() {
 
             if(!$(this).is('.checked')){
                 // Split id name on '-', and take just final ID from it
-                // We know structure will be 'bimg-del-' followed by the ID of the picture
+                // We know structure will be 'bimg-sel-' followed by the ID of the picture
                 // We can now construct the check ID from these pieces
                 var id = "#user_base_picture_ids_" + click.currentTarget.id.split("-")[2]
                 $(id).prop('checked', true).change();

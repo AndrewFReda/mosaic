@@ -30,7 +30,7 @@
 <div class='row'>
   <div class='col-xs-12'>
 
-    <%= link_to 'Back', new_mosaic_path, class: 'btn btn-danger' %>
+    <%= link_to 'Back', new_picture_path, class: 'btn btn-danger' %>
 
   </div>
 </div>
@@ -42,3 +42,9 @@
 <%= render 'modals/distribution' %>
 <!-- Change Password Modal -->
 <%= render 'modals/change_password' %>
+
+<%= javascript_tag do %>
+  window.composition_pictures = <%= raw @user.composition_pictures.to_json %>
+  window.base_pictures        = <%= raw @user.base_pictures.to_json %>
+  window.mosaics              = <%= raw @user.mosaics.to_json %>
+<% end %>
