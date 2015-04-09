@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
 
-  root to: 'users#new_login'
+
+  root to: 'application#index'
+
+  resources :users
+
+=begin
 
   post   'users/change_password', to: 'users#change_password', as: 'change_password'
   delete 'users/delete_pictures', to: 'users#delete_pictures', as: 'delete_pictures'
@@ -14,5 +19,7 @@ Rails.application.routes.draw do
   
   resources :users
   resources :pictures
+
+=end
 
 end
