@@ -65,11 +65,10 @@ RSpec.describe UsersController do
       expect(session[:user_id]).to eq(user.id)
     end
 
-    it 'returns an HTTP 302 and redirects to the new mosaic path on success' do
+    it 'returns an HTTP 200 on success' do
       user = User.create(email: 'newaccount1@test.com', password: 1, password_confirmation: 1)
       post :login, user: { email: user.email, password: user.password }
-      expect(response.status).to eq(302)
-      expect(response).to redirect_to(new_picture_path)
+      expect(response.status).to eq(200)
     end
 
     it 'returns an HTTP 401 for failed login' do
@@ -97,7 +96,7 @@ RSpec.describe UsersController do
       expect(session[:user_id]).to eq(nil)
 
       post :login, user: { email: user.email, password: new_password }
-      expect(response.status).to eq(302)
+      expect(response.status).to eq(200)
     end
 
     it 'returns an HTTP 401 when password is incorrect' do

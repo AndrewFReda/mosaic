@@ -14,7 +14,7 @@ class UsersController < ApplicationController
     @user = User.new user_params
 
     if @user.save
-      @user.set_session_id()
+      @user.set_session_id(session)
       redirect_to new_picture_path
     else
       if @user.errors[:email].empty?
@@ -29,7 +29,7 @@ class UsersController < ApplicationController
 
   def logout
     @user = current_user
-    @user.unset_session_id()
+    @user.unset_session_id(session)
     redirect_to login_user_path
   end
 
@@ -40,7 +40,7 @@ class UsersController < ApplicationController
   def login
     @user = User.find_by(email: user_params[:email])
     if @user and @user.authenticate(user_params[:password])
-      @user.set_session_id()
+      @user.set_session_id(session)
       flash.now[:notice] = "Welcome back, #{@user.email}."
       render '/pictures/new'
     else

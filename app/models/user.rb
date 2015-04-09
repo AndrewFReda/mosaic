@@ -15,11 +15,12 @@ class User < ActiveRecord::Base
   has_many :base_pictures, class_name: 'Picture', foreign_key: 'base_id', dependent: :destroy
   has_many :mosaics, class_name: 'Picture', foreign_key: 'mosaic_id', dependent: :destroy
 
-  def set_session_id
+  # TODO: Explore alternative, I don't like passing session
+  def set_session_id(session)
     session[:user_id] = self.id
   end
 
-  def unset_session_id
+  def unset_session_id(session)
     session[:user_id] = nil
   end
 
