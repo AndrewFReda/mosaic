@@ -30,50 +30,55 @@ body {
   background: #eee !important;  
 }
 
-/* POSITIIONING STYLE */
-.right {
-  float: right;
-}
 
-/* IMAGE PICKER STYLES */
-.checked {
-  border:solid 2px red;
-}
-#hidden_div {
-  display: none;
-}
-
-/*  FORM STYLES */
-.form-signin {
+/* Registration Form Styles */
+.registration-form {
   max-width: 380px;
   padding: 15px 35px 45px;
   margin: 0 auto;
 
-  .form-signin-heading,
-  .checkbox {
-    margin-bottom: 30px;
-  }
-  .form-control {
-    position: relative;
-    font-size: 16px;
-    height: auto;
-    padding: 10px;
-    @include box-sizing(border-box);
 
-    &:focus {
-      z-index: 2;
+  .input-group {
+    .form-control {
+      font-size: 18px;
+      height: auto;    
+      padding: 10px;
+
+      &:focus {
+        z-index: 2;
+      }
+    }
+
+    .input-group-addon {
+      min-width:40px;
+      font-weight: bold;
+      font-size: 18px;
+      text-align:center;
     }
   }
-  input[type="text"] {
-    margin-bottom: -1px;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-  .last-form-control {
-    margin-bottom: 20px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
+
+  .registration-form-footer {
+
+    button {
+      margin-top: 4px;
+      width: 100%;
+      font-size: 18px;
+      font-weight: bold;
+    }
   }
 }
 
+.registration-nav {
+  li {
+    width: 50%;
+
+    a { 
+      color: black;
+    }
+  }
+
+  .active {
+    font-weight: bold;
+  }
+}
 
