@@ -81,9 +81,9 @@ class UsersController < ApplicationController
   def delete_pictures
     @user = current_user
 
-    comp_ids   = clean_ids params[:user][:composition_picture_ids]
-    base_ids   = clean_ids params[:user][:base_picture_ids]
-    mosaic_ids = clean_ids params[:user][:mosaic_ids]
+    comp_ids   = clean_ids(params[:user][:composition_picture_ids])
+    base_ids   = clean_ids(params[:user][:base_picture_ids])
+    mosaic_ids = clean_ids(params[:user][:mosaic_ids])
 
     @user.delete_composition_pictures comp_ids
     @user.delete_base_pictures base_ids

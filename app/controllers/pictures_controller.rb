@@ -1,8 +1,6 @@
 class PicturesController < ApplicationController
   include Histogramr
 
-  before_action :sanitize_composition_ids, only: :create_mosaic
-
   def new
     @picture = Picture.new
     @user = current_user
@@ -27,7 +25,7 @@ class PicturesController < ApplicationController
 
     # Create cache and fill buckets with composition pictures matching given ids
     #  Cache keys are histogram hues
-    comp_ids = params[:user][:composition_picture_ids]
+    comp_ids = clean_ids(params[:user][:composition_picture_ids])
     cache    = create_histogram_cache_from_ids(comp_ids)
 
     @mosaic    = Mosaic.new
@@ -64,10 +62,10 @@ class PicturesController < ApplicationController
       params.require(:picture).permit(:compositions, :bases)
     end
 
-    def sanitize_composition_ids
+    def clean_ids(ids)
       # TODO: Fix this hack work around for "" being sent along with ids
       # http://stackoverflow.com/questions/14054164/rails-simple-form-getting-an-empty-string-from-checkbox-collection
-      params[:user][:composition_picture_ids].delete_if { |comp_id| comp_id.empty? }
+      ids.delete_if { |comp_id| comp_id.empty? }
     end
 
 end
