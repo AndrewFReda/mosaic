@@ -1,5 +1,4 @@
 module Histogramr
-  # TODO: Should this be put into Histogram class insted?
   extend ActiveSupport::Concern
 
   # Return a Picture with a Histogram that matches the given base grid image's Histogram
