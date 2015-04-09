@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   include Histogramr
-  before_action :bypass_auth, only: [:new, :new_login]
 
   def new
     @user = User.new
@@ -104,14 +103,6 @@ class UsersController < ApplicationController
   private
     def user_params
       params.require(:user).permit(:email, :password, :password_confirmation, :password_digest, :composition_picture_ids, :base_picture_ids, :mosaic_ids)
-    end
-
-    def bypass_auth
-      if current_user
-        redirect_to new_picture_path
-      else
-        # Do nothing.
-      end
     end
 
     # TODO: Fix this hack work around for "" being sent along with ids
