@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   include Histogramr
-  include Uploadr
   before_action :bypass_auth, only: [:new, :new_login]
 
   def new
@@ -97,8 +96,8 @@ class UsersController < ApplicationController
   def upload_pictures
     @user = current_user
     
-    upload_composition
-    upload_base
+    @user.add_composition_pictures_from_tempfiles params[:user][:compositions]
+    @user.add_base_pictures_from_tempfiles params[:user][:bases]
 
     flash.now[:notice] = 'Images successfully uploaded.'
     render 'pictures/new'

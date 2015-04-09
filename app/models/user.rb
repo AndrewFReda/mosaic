@@ -22,14 +22,41 @@ class User < ActiveRecord::Base
   def unset_session_id
     session[:user_id] = nil
   end
+
+  def add_composition_pictures_from_tempfiles(temps)
+    # Check that temps is not nil before iterating
+    temps and temps.each do |temp|
+      
+      @picture = Picture.new
+      @picture.set_from_tempfile(temp)
+      self.composition_pictures << @picture
     end
   end
 
-  def set_session_id()
-    session[:user_id] = @id
+  def add_base_pictures_from_tempfiles(temps)
+    # Check that temps is not nil before iterating
+    temps and temps.each do |temp|
+
+      @picture = Picture.new
+      @picture.set_from_tempfile(temp)
+      self.base_pictures << @picture
+    end
   end
 
-end
+  def add_mosaic_from_IM_image(mosaic)
+
+    name  = "#{DateTime.now.to_s}-mosaic.jpg"
+    # TODO: NOT SURE WHERE TO WRITE TO YET...
+    path  = "public/images/#{name}"
+    mosaic.write(path)
+
+    file     = File.open(path)
+    @picture = Picture.new
+    @picture.set_from_file(file, name)
+    @user.mosaics << @picture    
+    file.close
+  end
+
   def delete_composition_pictures(ids)
     delete_pictures(ids, self.composition_pictures)
   end
