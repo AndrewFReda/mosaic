@@ -3,7 +3,9 @@ window.Mosaics =
   Collections: {}
   Views: {}
   Routers: {}
-  initialize: -> alert 'Hello from Backbone!'
+  initialize: -> 
+    new @Routers.MosaicsRouter
+    Backbone.history.start(pushState: true)
 
 window.App = window.Mosaics
 
