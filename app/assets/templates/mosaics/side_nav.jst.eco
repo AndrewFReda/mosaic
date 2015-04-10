@@ -1,0 +1,6 @@
+<div class="nav nav-pills nav-stacked">
+  <li role="presentation" id='view-mosaics-nav' class="active"><a href="#">View Mosaics</a></li>
+  <li role="presentation" id='create-mosaics-nav'><a href="#">Create Mosaics</a></li>
+  <li role="presentation" id='manage-content-nav'><a href="#">Manage Content</a></li>
+  <li role="presentation" id='manage-profile-nav'><a href="#">Manage Profile</a></li>
+</div>
