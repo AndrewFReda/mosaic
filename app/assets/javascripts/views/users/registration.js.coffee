@@ -6,8 +6,8 @@ class App.Views.Registration extends Backbone.View
     'click #sign-up-nav': 'renderSignUp'
 
   initialize: ->
-    @login  = new App.Views.Login(model: @model)
-    @signUp = new App.Views.SignUp(model: @model)
+    @login  = new App.Views.Login()
+    @signUp = new App.Views.SignUp()
 
   render: =>
     @$el.html(@template())
