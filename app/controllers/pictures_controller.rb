@@ -4,6 +4,7 @@ class PicturesController < ApplicationController
   def new
     @picture = Picture.new
     @user = current_user
+    render json: @user
   end
 
   def create
@@ -12,7 +13,7 @@ class PicturesController < ApplicationController
     @user.add_composition_pictures_from_tempfiles params[:user][:compositions]
     @user.add_base_pictures_from_tempfiles params[:user][:bases]
 
-    render 'new'
+    render json: @user
   end
 
   def create_mosaic
@@ -31,29 +32,27 @@ class PicturesController < ApplicationController
     mosaic_img = @mosaic.create_from_img_and_cache(base_img, cache)
     @user.add_mosaic_from_IM_image(mosaic_img)
 
-    redirect_to picture_path(id: @user.mosaics.last.id)
+    render json: @user.mosaics.last
   end
 
   def delete_mosaic
-    @mosaic  = Mosaic.new
-    @user    = current_user
+    @user = current_user
 
     if params[:mosaic] and params[:mosaic][:id]
       @picture = Picture.find(params[:mosaic][:id])
       @picture.destroy
       # TODO: Delete off of S3 as well
       # success
+      render nothing: true, status: 204
     elsif @user.mosaics.last
       @user.mosaics.last.delete
       # TODO: Delete off of S3 as well
       # success
+      render nothing: true, status: 204
     else
-      status = 401 
       # failure
+      render json: @user, status: 401
     end
-
-    status ||= 200
-    redirect_to new_picture_path, status: status
   end
 
   private
