@@ -1,8 +1,12 @@
 class App.Routers.MosaicsRouter extends Backbone.Router
   routes:
     '': 'index'
+    #'': 'mosaics'
 
   index: ->
-    user = new App.Models.User()
-    view = new App.Views.Registration(model: user)
+    view = new App.Views.Registration()
+    $('#container').html(view.render().el)
+
+  mosaics: ->
+    view = new App.Views.Dashboard()
     $('#container').html(view.render().el)
