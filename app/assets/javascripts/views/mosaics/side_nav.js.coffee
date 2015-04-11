@@ -2,7 +2,7 @@ class App.Views.SideNav extends Backbone.View
   template: JST['mosaics/side_nav']
 
   tagName: 'ul'
-  className: 'sideNav'
+  className: 'side-nav'
 
   events:
     'click #view-mosaics': 'viewMosaics'

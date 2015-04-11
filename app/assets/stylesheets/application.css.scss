@@ -82,7 +82,12 @@ body {
   }
 }
 
-.mosaic {
-  list-style-type: none;
-}
+.dashboard {
+  .mosaic {
+    list-style-type: none;
+  }
 
+  ul {
+    padding-left: 0px;
+  }
+}

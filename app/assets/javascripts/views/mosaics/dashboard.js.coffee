@@ -1,6 +1,8 @@
 class App.Views.Dashboard extends Backbone.View
   template: JST['mosaics/dashboard']
 
+  className: 'dashboard'
+
   initialize: ->
 
   render: =>
