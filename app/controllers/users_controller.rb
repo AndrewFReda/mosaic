@@ -33,18 +33,18 @@ class UsersController < ApplicationController
       if @user and @user.authenticate(user_params[:password])
         if @user.update(password: params[:user][:new_password])
           # success
-          respond_with status: 200, nothing: true
+          respond_with @user, status: 200
         else
           # failure to update password
-          respond_with status: 500, nothing: true
+          respond_with @user, status: 500
         end
       else
         # password is incorrect
-        respond_with status: 401, nothing: true
+        respond_with @user, status: 401
       end
     else
        # password and confirmation do not match
-      respond_with status: 401, nothing: true
+      respond_with @user, status: 401
     end
   end
 
