@@ -1,13 +1,13 @@
 class UsersController < ApplicationController
   include Histogramr
 
-  respond_to :json, only: [:create, :login]
+  respond_to :json, only: [:create, :show, :mosaics]
 
   # Rails API back-end for Backbone front-end
 
   def create
     @user = User.new user_params
-
+    
     if @user.save
       respond_with @user
     else

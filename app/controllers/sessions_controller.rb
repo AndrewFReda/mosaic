@@ -17,7 +17,6 @@ class SessionsController < ApplicationController
     end
   end
 
-  # No matter what I do I can't get Backbone to send a request here....
   def destroy
     sign_out()
     binding.pry
