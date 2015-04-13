@@ -1,4 +1,12 @@
 <div class='row'>
+  <div class='col-xs-12'>
+    <div id='dashboard-top-nav'>
+      <a id='sign-out' href="#">Sign Out</a>
+    </div>
+  </div>
+</div>
+
+<div class='row'>
   <div class='col-xs-3'>
     <div id='dashboard-side-nav'>
     </div>
