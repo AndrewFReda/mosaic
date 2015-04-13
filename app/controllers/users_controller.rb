@@ -9,7 +9,6 @@ class UsersController < ApplicationController
     @user = User.new user_params
 
     if @user.save
-      @user.set_session_id(session)
       respond_with @user
     else
       if @user.errors[:email].empty?

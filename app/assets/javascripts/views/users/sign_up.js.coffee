@@ -23,8 +23,14 @@ class App.Views.SignUp extends Backbone.View
     false
 
   handleSignUpSuccess: (model, resp, opts) =>
-    view = new App.Views.Dashboard(collection: @collection)
-    $('#container').html(view.render().el)
+    @session = new App.Models.Session()
+    @session.set
+      email: model.get('email')
+      password: model.get('password')
+    @session.save(null, {
+      success: @session.handleLoginSuccess
+      error: @session.handleLoginFailure
+    })
 
   handleSignUpFailure: (model, resp, opts) =>
     console.log('handleSignUpFailure')
