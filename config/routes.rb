@@ -3,7 +3,8 @@ Rails.application.routes.draw do
 
   root to: 'application#index'
 
-  post   'users/login',  to: 'users#login',           as: 'login_user'
+  # Naming the resource singularly enables you to leave off the :id
+  resource :session, only: [:create, :destroy, :show]
   resources :users
 
   get 'users/:id/pictures/mosaics', to: 'users#mosaics'

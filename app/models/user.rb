@@ -15,15 +15,6 @@ class User < ActiveRecord::Base
   has_many :base_pictures, class_name: 'Picture', foreign_key: 'base_id', dependent: :destroy
   has_many :mosaics, class_name: 'Picture', foreign_key: 'mosaic_id', dependent: :destroy
 
-  # TODO: Explore alternative, I don't like passing session
-  def set_session_id(session)
-    session[:user_id] = self.id
-  end
-
-  def unset_session_id(session)
-    session[:user_id] = nil
-  end
-
   def add_composition_pictures_from_tempfiles(temps)
     # Check that temps is not nil before iterating
     temps and temps.each do |temp|

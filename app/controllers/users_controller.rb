@@ -22,28 +22,9 @@ class UsersController < ApplicationController
     end
   end
 
-  def login
-    @user = User.find_by(email: user_params[:email])
-    if @user and @user.authenticate(user_params[:password])
-      @user.set_session_id(session)
-      # success
-      respond_with @user
-    else
-      @user = User.new
-      # failure
-      respond_with @user, status: 400
-    end
-  end
-
   def show
     @user = User.find params[:id]
     respond_with @user
-  end
-
-  def logout
-    @user = current_user
-    @user.unset_session_id(session)
-    respond_with status: 200, nothing: true
   end
 
   def change_password
