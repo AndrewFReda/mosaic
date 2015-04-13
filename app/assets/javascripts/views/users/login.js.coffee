@@ -6,10 +6,6 @@ class App.Views.Login extends Backbone.View
   events:
     'click #login-btn': 'login'
 
-  initialize: ->
-    @user = new App.Models.User()
-    @user.url = '/users/login'
-
   render: =>
     @$el.html(@template())
     this

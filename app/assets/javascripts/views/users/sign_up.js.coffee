@@ -6,13 +6,12 @@ class App.Views.SignUp extends Backbone.View
   events:
     'click #sign-up-btn': 'signUp'
 
-  initialize: ->
-    @user = new App.Models.User()
   render: =>
     @$el.html(@template())
     this
 
   signUp: ->
+    @user = new App.Models.User()
     @user.set
       email: @$('.user-email').val(),
       password: @$('.user-password').val(),
