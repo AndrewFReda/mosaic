@@ -11,24 +11,12 @@ class App.Views.Login extends Backbone.View
     this
 
   login: ->
-    @user.set
+    @session = new App.Models.Session()
+    @session.set
       email: @$('.user-email').val()
       password: @$('.user-password').val()
-    @user.save(null, {
-      success: @handleLoginSuccess, #@user.handleLoginSuccess
-      error: @handleLoginFailure    #@user.handleLoginFailure
+    @session.save(null, {
+      success: @session.handleLoginSuccess
+      error: @session.handleLoginFailure
     })
     false
-
-  handleLoginSuccess: (model, resp, opts) =>
-    @collection.url = '/users/' + model.id + '/pictures/mosaics'
-    @collection.fetch({ 
-      success: (col, resp, opts) ->
-        view = new App.Views.Dashboard(collection: col)
-        $('#container').html(view.render().el)
-      error: (col, resp, opts) ->
-        #not sure
-      })
-
-  handleLoginFailure: (model, resp, opts) =>
-    console.log('handleLoginFailure')
