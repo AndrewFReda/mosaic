@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
     def current_user
       begin
         if session[:user_id]
-          @current_user ||= User.find session[:user_id]
+          @_current_user ||= User.find session[:user_id]
         end
       rescue ActiveRecord::RecordNotFound
       end
