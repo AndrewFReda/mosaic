@@ -14,10 +14,10 @@ class UsersController < ApplicationController
     else
       if @user.errors[:email].empty?
         # password and confirmation do not match
-        render json: @user, status: 401
+        respond_with @user, status: 401
       else
         # user with this email already exists
-        render json: @user, status: 400
+        respond_with @user, status: 400
       end
     end
   end
@@ -27,23 +27,23 @@ class UsersController < ApplicationController
     if @user and @user.authenticate(user_params[:password])
       @user.set_session_id(session)
       # success
-      render json: @user
+      respond_with @user
     else
       @user = User.new
       # failure
-      render json: @user, status: 400
+      respond_with @user, status: 400
     end
   end
 
   def show
     @user = User.find params[:id]
-    render json: @user
+    respond_with @user
   end
 
   def logout
     @user = current_user
     @user.unset_session_id(session)
-    render nothing: true
+    respond_with status: 200, nothing: true
   end
 
   def change_password
@@ -53,18 +53,18 @@ class UsersController < ApplicationController
       if @user and @user.authenticate(user_params[:password])
         if @user.update(password: params[:user][:new_password])
           # success
-          render nothing: true, status: 200
+          respond_with status: 200, nothing: true
         else
           # failure to update password
-          render nothing: true, status: 500
+          respond_with status: 500, nothing: true
         end
       else
         # password is incorrect
-        render nothing: true, status: 401
+        respond_with status: 401, nothing: true
       end
     else
        # password and confirmation do not match
-      render nothing: true, status: 401
+      respond_with status: 401, nothing: true
     end
   end
 
@@ -82,7 +82,7 @@ class UsersController < ApplicationController
     @user.delete_base_pictures base_ids
     @user.delete_mosaics mosaic_ids
 
-    render json: @user
+    respond_with @user
   end
 
   def upload_pictures
@@ -91,12 +91,12 @@ class UsersController < ApplicationController
     @user.add_composition_pictures_from_tempfiles params[:user][:compositions]
     @user.add_base_pictures_from_tempfiles params[:user][:bases]
 
-    render json: @user
+    respond_with @user
   end
 
   def mosaics
     @user = current_user
-    render json: @user.composition_pictures
+    respond_with @user.composition_pictures
   end
 
   private
