@@ -8,8 +8,6 @@ class App.Views.SignUp extends Backbone.View
 
   initialize: ->
     @user = new App.Models.User()
-    @collection = new App.Collections.Pictures()
-
   render: =>
     @$el.html(@template())
     this

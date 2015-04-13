@@ -8,7 +8,6 @@ class App.Views.Login extends Backbone.View
 
   initialize: ->
     @user = new App.Models.User()
-    @collection = new App.Collections.Pictures()
     @user.url = '/users/login'
 
   render: =>
