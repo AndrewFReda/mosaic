@@ -1,12 +1,19 @@
 class App.Routers.MosaicsRouter extends Backbone.Router
   routes:
-    '': 'index'
-    #'': 'mosaics'
+    '': 'registrationOrDashboard'
 
-  index: ->
-    view = new App.Views.Registration()
+  # Show either dashboard or registration page depending on the session
+  registrationOrDashboard: ->
+    @session = new App.Models.Session()
+    @session.fetch(
+      success: @dashboard
+      error: @registration
+    )
+
+  dashboard: (model, resp, opts) ->
+    view = new App.Views.Dashboard(model: model)
     $('#container').html(view.render().el)
 
-  mosaics: ->
-    view = new App.Views.Dashboard()
+  registration: (model, resp, opts) ->
+    view = new App.Views.Registration()
     $('#container').html(view.render().el)
