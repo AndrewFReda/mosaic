@@ -22,13 +22,4 @@ module ApplicationHelper
     end
     "#{x}x#{y}"
   end
-
-  def fill_hash_by_hue(comp_pics)
-    hash = Hash.new{ [] }
-    comp_pics.each do |comp_pic|
-      hue = comp_pic.histogram.dominant_hue
-      hash[hue] = hash[hue].push(comp_pic)
-    end
-    hash
-  end
 end

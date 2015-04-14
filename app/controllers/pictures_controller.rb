@@ -1,12 +1,6 @@
 class PicturesController < ApplicationController
   include Histogramr
 
-  def new
-    @picture = Picture.new
-    @user = current_user
-    respond_with @user
-  end
-
   def create
     @user = current_user
     
