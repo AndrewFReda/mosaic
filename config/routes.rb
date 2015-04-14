@@ -12,9 +12,8 @@ Rails.application.routes.draw do
 
 =begin
 
+
   delete 'users/delete_pictures', to: 'users#delete_pictures', as: 'delete_pictures'
-  post   'users/login',  to: 'users#login',           as: 'login_user'
-  delete 'users/logout', to: 'users#logout',          as: 'logout_user'
   post   'upload',       to: 'users#upload_pictures', as: 'upload'
   
   delete 'mosaics', to: 'pictures#delete_mosaic'

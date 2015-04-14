@@ -19,7 +19,6 @@ class SessionsController < ApplicationController
 
   def destroy
     sign_out()
-    binding.pry
     respond_with status: 204, nothing: true
   end
 
