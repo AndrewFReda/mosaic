@@ -8,10 +8,10 @@ Rails.application.routes.draw do
   resources :users
 
   get 'users/:id/pictures/mosaics', to: 'users#mosaics'
+  put 'users/:id/change_password', to: 'users#change_password'
 
 =begin
 
-  post   'users/change_password', to: 'users#change_password', as: 'change_password'
   delete 'users/delete_pictures', to: 'users#delete_pictures', as: 'delete_pictures'
   post   'users/login',  to: 'users#login',           as: 'login_user'
   delete 'users/logout', to: 'users#logout',          as: 'logout_user'

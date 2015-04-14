@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   include Histogramr
 
-  respond_to :json, only: [:create, :show, :mosaics]
+  respond_to :json, only: [:create, :show, :mosaics, :change_password]
 
   # Rails API back-end for Backbone front-end
 
@@ -27,11 +27,12 @@ class UsersController < ApplicationController
   end
 
   def change_password
-    @user  = current_user
+    @user = current_user
 
-    if user_params[:password] == user_params[:password_confirmation]
-      if @user and @user.authenticate(user_params[:password])
-        if @user.update(password: params[:user][:new_password])
+    # Currently not sending any statuses correctly...
+    if params[:password] == params[:password_confirmation]
+      if @user and @user.authenticate(params[:password])
+        if @user.update(password: params[:new_password])
           # success
           respond_with @user, status: 200
         else
@@ -43,7 +44,7 @@ class UsersController < ApplicationController
         respond_with @user, status: 401
       end
     else
-       # password and confirmation do not match
+      # password and confirmation do not match
       respond_with @user, status: 401
     end
   end
