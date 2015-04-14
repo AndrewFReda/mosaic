@@ -1,0 +1,17 @@
+<header class='profile-header'>
+  <h2> Change Password </h2>
+</header>
+
+<hr>
+
+<div class='profile-body'>
+  <h4 class="content" id="profile-email"><%= @user.get('email') %></h4>
+
+  <input type='password' class="content form-control" id='password' placeholder="Password..."></input>  
+  <input type='password' class="content form-control" id='password-confirmation' placeholder="Confirmation..."></input>
+  <input type='password' class="content form-control" id='new-password' placeholder="New Password..."></input>
+</div>
+
+<div class='profile-footer'>
+  <button class="save btn btn-large btn-primary"> Save </button>
+</div>
