@@ -1,5 +1,5 @@
 class App.Views.Registration extends Backbone.View
-  template: JST['user/registration']
+  template: JST['users/registration']
 
   events:
     'click #login-nav': 'renderLogin'

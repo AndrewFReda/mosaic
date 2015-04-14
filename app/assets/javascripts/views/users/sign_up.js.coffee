@@ -1,5 +1,5 @@
 class App.Views.SignUp extends Backbone.View
-  template: JST['user/sign_up']
+  template: JST['users/sign_up']
 
   className: 'registration-form'
 
@@ -27,10 +27,10 @@ class App.Views.SignUp extends Backbone.View
     @session.set
       email: model.get('email')
       password: model.get('password')
-    @session.save(null, {
+    @session.save(null,
       success: @session.handleLoginSuccess
       error: @session.handleLoginFailure
-    })
+    )
 
   handleSignUpFailure: (model, resp, opts) =>
     console.log('handleSignUpFailure')

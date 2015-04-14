@@ -1,5 +1,5 @@
 class App.Views.Login extends Backbone.View
-  template: JST['user/login']
+  template: JST['users/login']
 
   className: 'registration-form'
     
@@ -15,8 +15,8 @@ class App.Views.Login extends Backbone.View
     @session.set
       email: @$('.user-email').val()
       password: @$('.user-password').val()
-    @session.save(null, {
+    @session.save(null,
       success: @session.handleLoginSuccess
       error: @session.handleLoginFailure
-    })
+    )
     false
