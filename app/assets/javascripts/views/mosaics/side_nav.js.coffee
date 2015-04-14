@@ -5,6 +5,7 @@ class App.Views.SideNav extends Backbone.View
   className: 'side-nav'
 
   events:
+    'click .side-nav-item': 'removeActiveNavs'
     'click #view-mosaics-nav': 'viewMosaics'
     'click #create-mosaics-nav': 'createMosaics'
     'click #manage-content-nav': 'manageContent'
@@ -17,18 +18,25 @@ class App.Views.SideNav extends Backbone.View
     @$el.html(@template())
     this
 
-  viewMosaics: ->
-    view = new App.Views.Mosaics()
+  viewMosaics: (e) ->
+    $(e.currentTarget).addClass('active')
+    view = new App.Views.Mosaics(model: @session)
     $('#dashboard-content').html(view.render().el)
 
-  createMosaics: ->
+  createMosaics: (e) ->
+    $(e.currentTarget).addClass('active')
     view = new App.Views.CreateMosaic()
     $('#dashboard-content').html(view.render().el)
 
-  manageContent: ->
+  manageContent: (e) ->
+    $(e.currentTarget).addClass('active')
     view = new App.Views.ManageContent()
     $('#dashboard-content').html(view.render().el)
 
-  manageProfile: ->
-    view = new App.Views.ManageProfile()
+  manageProfile: (e) ->
+    $(e.currentTarget).addClass('active')
+    view = new App.Views.Profile(model: @session)
     $('#dashboard-content').html(view.render().el)
+
+  removeActiveNavs: (e) ->
+    @$('.side-nav-item').removeClass('active')
