@@ -24,3 +24,4 @@ class App.Views.Dashboard extends Backbone.View
         $('#container').html(view.render().el)
       error: ->
         # handle error
+    false

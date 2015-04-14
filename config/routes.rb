@@ -12,7 +12,6 @@ Rails.application.routes.draw do
 
 =begin
 
-
   delete 'users/delete_pictures', to: 'users#delete_pictures', as: 'delete_pictures'
   post   'upload',       to: 'users#upload_pictures', as: 'upload'
   

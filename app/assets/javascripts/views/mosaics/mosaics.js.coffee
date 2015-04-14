@@ -4,8 +4,8 @@ class App.Views.Mosaics extends Backbone.View
   className: 'mosaics'
 
   initialize: ->
-    @session = @model
-    @collection = new App.Collections.Pictures()
+    @session        = @model
+    @collection     = new App.Collections.Pictures()
     @collection.url = '/users/' + @session.id + '/pictures/mosaics'
     @collection.fetch()
     @listenTo(@collection, 'add', @renderMosaic)
