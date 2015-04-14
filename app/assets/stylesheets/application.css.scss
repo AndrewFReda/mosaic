@@ -82,16 +82,62 @@ body {
   }
 }
 
+/***** DASHBOARD PAGE *****/
+
 .dashboard {
-  .mosaic {
-    list-style-type: none;
+  #sign-out {
+    float: right;
+    color: red;
+    font-weight: bold;
+    font-style: italic;
+
+    &:hover {
+      text-decoration: none;
+    }
   }
 
   ul {
     padding-left: 0px;
   }
+
+  /***** MOSAICS PAGE *****/
+  .side-nav {
+    .active a {
+      background-color: gray !important;
+    }
+  }
+
+  /***** MOSAICS PAGE *****/
+  .mosaics {
+    .mosaic {
+      list-style-type: none;
+    }
+  }
+
+  /***** PROFILE PAGE *****/
+
+  .profile {
+    .form-control {
+      font-size: 14px;
+      height: auto;    
+      padding: 6px;
+
+      &:focus {
+        z-index: 2;
+      }
+    }
+
+    input {
+      margin: 0 auto;
+      width: 60%;
+    }
+
+    button {
+      margin-top: 4px;
+      width: 60%;
+      font-size: 14px;
+      font-weight: bold;
+    }
+  }
 }
 
-#sign-out {
-  float: right;
-}
