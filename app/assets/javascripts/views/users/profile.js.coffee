@@ -16,7 +16,7 @@ class App.Views.Profile extends Backbone.View
     this
 
   updatePassword: ->
-    @user.url = '/users/' + @user.get('id') + '/change_password'
+    @user.url = '/users/' + @user.get('id') + '/password'
     @user.set
       password: @$('#password').val()
       password_confirmation: @$('#password-confirmation').val()
