@@ -9,12 +9,14 @@ gem 'sass-rails'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
-# Turbolinks makes following links in your web application faster. https://github.com/rails/turbolinks
-gem 'turbolinks'
+gem 'backbone-on-rails'
+gem 'lodash-rails'
+gem 'jquery-fileupload-rails'
+
 gem 'jbuilder', '~> 2.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-gem "therubyracer"
+gem 'therubyracer'
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
 
@@ -28,6 +30,8 @@ gem 'aws-sdk'
 gem 'paperclip'
 gem 'speed'
 gem 'rspec-rails'
+
+gem 'rubocop'
 
 # gem 'unicorn'
 # gem 'capistrano-rails', group: :development

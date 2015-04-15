@@ -1,12 +1,19 @@
 Rails.application.routes.draw do
 
-  root to: 'users#new_login'
 
-  post   'users/change_password', to: 'users#change_password', as: 'change_password'
+  root to: 'application#index'
+
+  # Naming the resource singularly enables you to leave off the :id
+  resource :session, only: [:create, :destroy, :show]
+  resources :users do
+    resources :pictures
+  end
+
+  put 'users/:id/password', to: 'users#update_password'
+
+=begin
+
   delete 'users/delete_pictures', to: 'users#delete_pictures', as: 'delete_pictures'
-  get    'users/login',  to: 'users#new_login',       as: 'login_user'
-  post   'users/login',  to: 'users#login'
-  delete 'users/logout', to: 'users#logout',          as: 'logout_user'
   post   'upload',       to: 'users#upload_pictures', as: 'upload'
   
   delete 'mosaics', to: 'pictures#delete_mosaic'
@@ -14,5 +21,7 @@ Rails.application.routes.draw do
   
   resources :users
   resources :pictures
+
+=end
 
 end

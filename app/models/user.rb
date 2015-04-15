@@ -8,22 +8,9 @@ class User < ActiveRecord::Base
  
   validates :password, length: { minimum: 1 }
 
-  # Alternatively I can say has_many :pictures then in the Picture class it belongs_to :user
-  # I would then need to add another field that indicates the type of picture, or simply create
-  # 'getter' methods that select the appropriate picture type
-  has_many :composition_pictures, class_name: 'Picture', foreign_key: 'composition_id', dependent: :destroy
-  has_many :base_pictures, class_name: 'Picture', foreign_key: 'base_id', dependent: :destroy
-  has_many :mosaics, class_name: 'Picture', foreign_key: 'mosaic_id', dependent: :destroy
+  has_many :pictures, dependent: :destroy
 
-  # TODO: Explore alternative, I don't like passing session
-  def set_session_id(session)
-    session[:user_id] = self.id
-  end
-
-  def unset_session_id(session)
-    session[:user_id] = nil
-  end
-
+###### NOT IMPLEMENTED ##############
   def add_composition_pictures_from_tempfiles(temps)
     # Check that temps is not nil before iterating
     temps and temps.each do |temp|

@@ -1,10 +1,16 @@
 class PicturesController < ApplicationController
   include Histogramr
 
-  def new
-    @picture = Picture.new
-    @user = current_user
+  respond_to :json, only: [:index]
+
+  def index
+    # TODO: Should this just be 'current_user' instead?
+    @user = User.find params[:user_id]
+    respond_with @user.pictures
   end
+
+
+  ################################### Not implemented ###################################
 
   def create
     @user = current_user
@@ -12,8 +18,7 @@ class PicturesController < ApplicationController
     @user.add_composition_pictures_from_tempfiles params[:user][:compositions]
     @user.add_base_pictures_from_tempfiles params[:user][:bases]
 
-    flash.now[:notice] = 'Images successfully uploaded.'
-    render 'new'
+    respond_with @user
   end
 
   def create_mosaic
@@ -32,34 +37,32 @@ class PicturesController < ApplicationController
     mosaic_img = @mosaic.create_from_img_and_cache(base_img, cache)
     @user.add_mosaic_from_IM_image(mosaic_img)
 
-    redirect_to picture_path(id: @user.mosaics.last.id)
+    respond_with @user.mosaics.last
   end
 
   def delete_mosaic
-    @mosaic  = Mosaic.new
-    @user    = current_user
+    @user = current_user
 
     if params[:mosaic] and params[:mosaic][:id]
       @picture = Picture.find(params[:mosaic][:id])
       @picture.destroy
       # TODO: Delete off of S3 as well
-      flash.now[:notice] = 'Mosaic successfully deleted.'
+      # success
+      respond_with status: 204, nothing: true
     elsif @user.mosaics.last
       @user.mosaics.last.delete
       # TODO: Delete off of S3 as well
-      flash.now[:notice] = 'Mosaic successfully deleted.'
+      # success
+      respond_with @user, status: 204
     else
-      flash.now[:alert] = 'Problem occured while deleting the mosaic.'
-      status            = 401 
+      # failure
+      respond_with @user, status: 401
     end
-
-    status ||= 200
-    redirect_to new_picture_path, status: status
   end
 
   private
     def picture_params
-      params.require(:picture).permit(:compositions, :bases)
+      params.require(:picture).permit(:user_id, :compositions, :bases)
     end
 
     def clean_ids(ids)

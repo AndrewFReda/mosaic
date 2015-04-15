@@ -1,79 +1,60 @@
 class UsersController < ApplicationController
   include Histogramr
-  before_action :bypass_auth, only: [:new, :new_login]
 
-  def new
-    @user = User.new
-  end
+  respond_to :json, only: [:create, :show, :update_password]
 
-  def show
-    @user = User.find params[:id]
-  end
+  # Rails API back-end for Backbone front-end
 
+  # Creates User without creating Session
+  # Explicit call to create Session required
   def create
     @user = User.new user_params
 
     if @user.save
-      @user.set_session_id(session)
-      redirect_to new_picture_path
+      respond_with @user
     else
       if @user.errors[:email].empty?
-        flash.now[:alert] = 'Password and confirmation do not match.'
-        redirect_to new_user_path, status: 401
+        # password and confirmation do not match
+        respond_with @user, status: 401
       else
-        flash.now[:alert] = 'User with this email already exists.'
-        redirect_to new_user_path, status: 400
+        # user with this email already exists
+        respond_with @user, status: 400
       end
     end
   end
 
-  def logout
-    @user = current_user
-    @user.unset_session_id(session)
-    redirect_to login_user_path
+  def show
+    # TODO: Should this just be 'current_user' instead?
+    @user = User.find params[:id]
+    respond_with @user
   end
 
-  def new_login
-    @user = User.new
-  end
+  def update_password
+    # TODO: Should this just be 'current_user' instead?
+    @user = User.find user_params[:id]
 
-  def login
-    @user = User.find_by(email: user_params[:email])
-    if @user and @user.authenticate(user_params[:password])
-      @user.set_session_id(session)
-      flash.now[:notice] = "Welcome back, #{@user.email}."
-      render '/pictures/new'
-    else
-      @user = User.new
-      flash.now[:alert] = 'Invalid email or password.'
-      render 'new_login', status: 401
-    end
-  end
-
-  def change_password
-    @user  = current_user
-    status = nil
-
+    # Currently not sending any statuses correctly...
     if user_params[:password] == user_params[:password_confirmation]
-      if @user and @user.authenticate(user_params[:password])
-        if @user.update(password: params[:user][:new_password])
-          flash.now[:notice] = 'Successfully updated password.'
-          status = 200
+      if @user.authenticate user_params[:password]
+        if @user.update(password: user_params[:new_password])
+          # success
+          respond_with nothing: true, status: 204
         else
-          flash.now[:alert] = 'Failed to update password.'
-          status = 500
+          # failure to update password
+          respond_with @user, status: 500
         end
       else
-        flash.now[:alert] = 'Password is incorrect.'
-        status = 401
+        # password is incorrect
+        respond_with @user, status: 401
       end
     else
-      flash.now[:alert] = 'Password and confirmation do not match.'
-      status = 401
+      # password and confirmation do not match
+      respond_with @user, status: 401
     end
-
-    render new_picture_path, status: status
   end
+
+
+  ################################### Not implemented ###################################
 
 
   # TODO: Fix problem where all IDs to be deleted are sent as the :composition_picture_ids in addition
@@ -89,8 +70,7 @@ class UsersController < ApplicationController
     @user.delete_base_pictures base_ids
     @user.delete_mosaics mosaic_ids
 
-    flash.now[:notice] = 'Successfully deleted pictures.'
-    render 'show'
+    respond_with @user
   end
 
   def upload_pictures
@@ -99,21 +79,12 @@ class UsersController < ApplicationController
     @user.add_composition_pictures_from_tempfiles params[:user][:compositions]
     @user.add_base_pictures_from_tempfiles params[:user][:bases]
 
-    flash.now[:notice] = 'Images successfully uploaded.'
-    render 'pictures/new'
+    respond_with @user
   end
 
   private
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :password_digest, :composition_picture_ids, :base_picture_ids, :mosaic_ids)
-    end
-
-    def bypass_auth
-      if current_user
-        redirect_to new_picture_path
-      else
-        # Do nothing.
-      end
+      params.require(:user).permit(:email, :password, :password_confirmation, :new_password, :password_digest, :composition_picture_ids, :base_picture_ids, :mosaic_ids)
     end
 
     # TODO: Fix this hack work around for "" being sent along with ids
