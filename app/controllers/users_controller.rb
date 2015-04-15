@@ -30,9 +30,9 @@ class UsersController < ApplicationController
     @user = current_user
 
     # Currently not sending any statuses correctly...
-    if params[:password] == params[:password_confirmation]
-      if @user and @user.authenticate(params[:password])
-        if @user.update(password: params[:new_password])
+    if user_params[:password] == user_params[:password_confirmation]
+      if @user.authenticate user_params[:password]
+        if @user.update(password: user_params[:new_password])
           # success
           respond_with @user, status: 200
         else
@@ -82,8 +82,7 @@ class UsersController < ApplicationController
 
   private
     def user_params
-      #params.require(:user).permit(:email, :password, :password_confirmation, :password_digest, :composition_picture_ids, :base_picture_ids, :mosaic_ids)
-      params.permit(:email, :password, :password_confirmation, :password_digest, :composition_picture_ids, :base_picture_ids, :mosaic_ids)
+      params.require(:user).permit(:email, :password, :password_confirmation, :new_password, :password_digest, :composition_picture_ids, :base_picture_ids, :mosaic_ids)
     end
 
     # TODO: Fix this hack work around for "" being sent along with ids

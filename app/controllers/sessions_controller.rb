@@ -2,8 +2,9 @@ class SessionsController < ApplicationController
   respond_to :json, only: [:create, :destroy, :show]
 
   def create
-    @user = User.find_by(email: params[:session][:email])
-    if @user and @user.authenticate(params[:session][:password])
+    @user = User.find_by(email: session_params[:email])
+
+    if @user and @user.authenticate(session_params[:password])
       sign_in @user
       # Using respond_with results in:
       # => NoMethodError - undefined method `user_url' for #<SessionsController:0x007fea19a7aed0>
@@ -33,6 +34,10 @@ class SessionsController < ApplicationController
   end
 
   private
+    def session_params
+      params.require(:session).permit(:email, :password)
+    end
+
     def sign_in(user)
       session[:user_id] = @user.id
     end
