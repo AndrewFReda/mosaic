@@ -3,9 +3,10 @@ class CreatePictures < ActiveRecord::Migration
     create_table :pictures do |t|
 
       t.string :name
-      t.integer :composition_id
-      t.integer :base_id
-      t.integer :mosaic_id
+      t.string :url
+      t.belongs_to :user, index: true
+      # handles basic form of single table inheritance
+      t.string :type
 
       t.timestamps
     end
