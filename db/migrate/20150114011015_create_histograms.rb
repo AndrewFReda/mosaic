@@ -6,6 +6,5 @@ class CreateHistograms < ActiveRecord::Migration
       t.belongs_to :picture, index: true
       t.timestamps
     end
-    
   end
 end

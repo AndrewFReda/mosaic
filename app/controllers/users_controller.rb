@@ -5,9 +5,11 @@ class UsersController < ApplicationController
 
   # Rails API back-end for Backbone front-end
 
+  # Creates User without creating Session
+  # Explicit call to create Session required
   def create
     @user = User.new user_params
-    
+
     if @user.save
       respond_with @user
     else
@@ -22,6 +24,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    # TODO: Should this just be 'current_user' instead?
     @user = User.find params[:id]
     respond_with @user
   end
@@ -49,6 +52,9 @@ class UsersController < ApplicationController
       respond_with @user, status: 401
     end
   end
+
+
+  ################################### Not implemented ###################################
 
 
   # TODO: Fix problem where all IDs to be deleted are sent as the :composition_picture_ids in addition
