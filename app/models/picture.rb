@@ -1,6 +1,9 @@
 class Picture < ActiveRecord::Base
   has_one :histogram, dependent: :destroy
-
+  belongs_to :user
+  # disable Single Table Inheritance
+  self.inheritance_column = :_type_disabled
+  
   # Create Image as attachment to this model using Paperclip.
   # On Picture.save, store on Amazon S3 at url, with path derived from User/Picture keys
   # Interpretted by Paperclip (see initializers/paperclip.rb)
@@ -8,6 +11,12 @@ class Picture < ActiveRecord::Base
 
   # Validate the attached image is image/jpg, image/png, etc
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
+
+  scope :composition_pictures, -> { where(type: 'composition') }
+  scope :base_pictures, -> { where(type: 'base') }
+  scope :mosaics, -> { where(type: 'mosaic') }
+
+
 
   def set_from_tempfile(temp)
     file  = File.open(temp.tempfile)

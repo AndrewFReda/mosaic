@@ -1,1 +1,1 @@
-<%= @model.get('name') %>
+<img src="<%= @model.get('url') %>">

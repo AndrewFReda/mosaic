@@ -5,10 +5,11 @@ Rails.application.routes.draw do
 
   # Naming the resource singularly enables you to leave off the :id
   resource :session, only: [:create, :destroy, :show]
-  resources :users
+  resources :users do
+    resources :pictures
+  end
 
-  get 'users/:id/pictures/mosaics', to: 'users#mosaics'
-  put 'users/:id/change_password', to: 'users#change_password'
+  put 'users/:id/password', to: 'users#update_password'
 
 =begin
 

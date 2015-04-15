@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   include Histogramr
 
-  respond_to :json, only: [:create, :show, :mosaics, :change_password]
+  respond_to :json, only: [:create, :show, :update_password]
 
   # Rails API back-end for Backbone front-end
 
@@ -26,13 +26,14 @@ class UsersController < ApplicationController
     respond_with @user
   end
 
-  def change_password
-    @user = current_user
+  def update_password
+    # TODO: Should this just be 'current_user' instead?
+    @user = User.find user_params[:id]
 
     # Currently not sending any statuses correctly...
-    if params[:password] == params[:password_confirmation]
-      if @user and @user.authenticate(params[:password])
-        if @user.update(password: params[:new_password])
+    if user_params[:password] == user_params[:password_confirmation]
+      if @user.authenticate user_params[:password]
+        if @user.update(password: user_params[:new_password])
           # success
           respond_with @user, status: 200
         else
@@ -75,15 +76,9 @@ class UsersController < ApplicationController
     respond_with @user
   end
 
-  def mosaics
-    @user = current_user
-    respond_with @user.composition_pictures
-  end
-
   private
     def user_params
-      #params.require(:user).permit(:email, :password, :password_confirmation, :password_digest, :composition_picture_ids, :base_picture_ids, :mosaic_ids)
-      params.permit(:email, :password, :password_confirmation, :password_digest, :composition_picture_ids, :base_picture_ids, :mosaic_ids)
+      params.require(:user).permit(:email, :password, :password_confirmation, :new_password, :password_digest, :composition_picture_ids, :base_picture_ids, :mosaic_ids)
     end
 
     # TODO: Fix this hack work around for "" being sent along with ids

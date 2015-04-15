@@ -1,6 +1,17 @@
 class PicturesController < ApplicationController
   include Histogramr
 
+  respond_to :json, only: [:index]
+
+  def index
+    # TODO: Should this just be 'current_user' instead?
+    @user = User.find params[:user_id]
+    respond_with @user.pictures
+  end
+
+
+  ################################### Not implemented ###################################
+
   def create
     @user = current_user
     
@@ -51,7 +62,7 @@ class PicturesController < ApplicationController
 
   private
     def picture_params
-      params.require(:picture).permit(:compositions, :bases)
+      params.require(:picture).permit(:user_id, :compositions, :bases)
     end
 
     def clean_ids(ids)
