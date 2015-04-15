@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   include Histogramr
 
-  respond_to :json, only: [:create, :show, :mosaics, :change_password]
+  respond_to :json, only: [:create, :show, :update_password]
 
   # Rails API back-end for Backbone front-end
 
@@ -26,8 +26,9 @@ class UsersController < ApplicationController
     respond_with @user
   end
 
-  def change_password
-    @user = current_user
+  def update_password
+    # TODO: Should this just be 'current_user' instead?
+    @user = User.find user_params[:id]
 
     # Currently not sending any statuses correctly...
     if user_params[:password] == user_params[:password_confirmation]
@@ -73,11 +74,6 @@ class UsersController < ApplicationController
     @user.add_base_pictures_from_tempfiles params[:user][:bases]
 
     respond_with @user
-  end
-
-  def mosaics
-    @user = current_user
-    respond_with @user.composition_pictures
   end
 
   private
