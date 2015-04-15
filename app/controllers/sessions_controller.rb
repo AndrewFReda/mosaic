@@ -25,11 +25,9 @@ class SessionsController < ApplicationController
 
   def show
     if signed_in?
-      #respond_with status: 204, nothing: true
-      render json: nil, status: 204
+      respond_with current_user
     else
-      #respond_with status: 404, nothing: true
-      render json: nil, status: 404
+      render nothing: true, status: 404
     end
   end
 
