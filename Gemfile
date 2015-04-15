@@ -11,6 +11,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'backbone-on-rails'
 gem 'lodash-rails'
+gem 'jquery-fileupload-rails'
 
 gem 'jbuilder', '~> 2.0'
 

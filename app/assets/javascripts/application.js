@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-fileupload
 //= require bootstrap-sprockets
 
 // Removed loading of tree, instead load controller specific files
