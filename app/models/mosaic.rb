@@ -1,5 +1,4 @@
 class Mosaic < ActiveRecord::Base
-#  has_one :mosaic, class_name: 'Picture', dependent: :destroy
 
   # Determine aspect ratio of this Mosaic based on given ImageMagick image
   def set_grid_from_image(image)

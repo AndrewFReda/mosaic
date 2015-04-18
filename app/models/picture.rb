@@ -12,10 +12,10 @@ class Picture < ActiveRecord::Base
   # Validate the attached image is image/jpg, image/png, etc
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
 
+  # TODO: Move into user Model since picture types are relevant in relation to user
   scope :composition_pictures, -> { where(type: 'composition') }
   scope :base_pictures, -> { where(type: 'base') }
   scope :mosaics, -> { where(type: 'mosaic') }
-
 
 
   def set_from_tempfile(temp)
