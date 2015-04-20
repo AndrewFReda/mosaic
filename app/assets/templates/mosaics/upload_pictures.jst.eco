@@ -19,12 +19,12 @@
 
     <div class="form-group">
       <label for="composition-pictures-input">Composition Pictures</label>
-      <input type="file" id="composition-pictures-input" data-picture-type="composition" multiple>
+      <input type="file" name="file" id="composition-pictures-input" data-picture-type="composition" multiple>
     </div>
 
     <div class="form-group">
       <label for="base-pictures-input">Base Pictures</label>
-      <input type="file" id="base-pictures-input" data-picture-type="base" multiple>
+      <input type="file" name="file" id="base-pictures-input" data-picture-type="base" multiple>
     </div>
 
     <div class='upload-form-footer'>
