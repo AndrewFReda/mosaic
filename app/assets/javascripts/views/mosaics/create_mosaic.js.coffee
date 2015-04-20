@@ -3,6 +3,4 @@ class App.Views.CreateMosaic extends Backbone.View
 
   render: =>
     @$el.html(@template())
-    view = new App.Views.UploadPictures()
-    @$el.append(view.render().el)
     this
