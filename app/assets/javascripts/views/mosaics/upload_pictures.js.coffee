@@ -18,8 +18,8 @@ class App.Views.UploadPictures extends Backbone.View
     false
 
 
-  setUpS3UploadHooks: (i, elem) =>
-    fileInput = $(elem)
+  setUpS3UploadHooks: (i, el) =>
+    fileInput = $(el)
     fileInput.fileupload(
       forceIframeTransport: true    # IMPORTANT. You will get 405 Method Not Allowed if you don't add this.
       autoUpload: true
