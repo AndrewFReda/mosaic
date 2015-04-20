@@ -1,7 +1,7 @@
 class PicturesController < ApplicationController
   include Histogramr
 
-  respond_to :json, only: [:index]
+  respond_to :json, only: [:index, :create]
 
   def index
     # TODO: Should this just be 'current_user' instead?
@@ -9,17 +9,33 @@ class PicturesController < ApplicationController
     respond_with @user.pictures
   end
 
+  def create
+    #@user         = User.find(params[:user_id])
+    @picture      = Picture.new picture_params
+    @picture.user = current_user
+    @picture.url  = "https://s3.amazonaws.com/#{ENV['S3_BUCKET']}/#{@picture.user.email}/#{@picture.type}/#{@picture.name}"
+    @s3_upload    = S3Upload.new({ picture: @picture })
+
+    if @picture.save
+      render json: {
+        key:          "#{@picture.user.email}/#{@picture.type}/#{@picture.name}",
+        policy:       @s3_upload.policy_document(), 
+        signature:    @s3_upload.signature(),
+        content_type: @picture.getContentType(),
+        access_key:   ENV['S3_ACCESS_KEY']
+      }
+    else
+      respond_with @picture, status: 500
+    end
+  end
+
+  private
+
+    def picture_params
+      params.require(:picture).permit(:name, :type, :user_id)
+    end
 
   ################################### Not implemented ###################################
-
-  def create
-    @user = current_user
-    
-    @user.add_composition_pictures_from_tempfiles params[:user][:compositions]
-    @user.add_base_pictures_from_tempfiles params[:user][:bases]
-
-    respond_with @user
-  end
 
   def create_mosaic
     @user = current_user
@@ -60,15 +76,10 @@ class PicturesController < ApplicationController
     end
   end
 
-  private
-    def picture_params
-      params.require(:picture).permit(:user_id, :compositions, :bases)
-    end
-
-    def clean_ids(ids)
-      # TODO: Fix this hack work around for "" being sent along with ids
-      # http://stackoverflow.com/questions/14054164/rails-simple-form-getting-an-empty-string-from-checkbox-collection
-      ids.delete_if { |comp_id| comp_id.empty? }
-    end
+  def clean_ids(ids)
+    # TODO: Fix this hack work around for "" being sent along with ids
+    # http://stackoverflow.com/questions/14054164/rails-simple-form-getting-an-empty-string-from-checkbox-collection
+    ids.delete_if { |comp_id| comp_id.empty? }
+  end
 
 end
