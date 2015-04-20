@@ -142,3 +142,20 @@ body {
   }
 }
 
+
+/***** UPLOAD PAGE *****/
+.upload-form {
+  max-width: 380px;
+  padding: 0px 35px 45px;
+  margin: 0 auto;
+
+  .upload-form-footer {
+
+    button {
+      margin-top: 4px;
+      width: 100%;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  }
+}

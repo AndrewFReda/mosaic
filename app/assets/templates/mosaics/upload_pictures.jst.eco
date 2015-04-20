@@ -1,3 +1,35 @@
-<div id='upload-pictures'>
-  <h4> Upload </h4>
-</div>
+<!-- Bleh, just leave this here for now.... -->
+<form id="file_upload" method="POST" enctype="multipart/form-data">
+  <input type="hidden" name="key">
+  <input type="hidden" name="AWSAccessKeyID" value="#{ENV['S3_ACCESS_KEY']}">
+  <input type="hidden" name="acl" value="private">
+  <input type="hidden" name="success_action_status" value="200">
+  <input type="hidden" name="policy">
+  <input type="hidden" name="signature">
+
+  <div class="file-upload-content">
+    <div class="file-upload-progress"> </div>
+  </div>
+
+  <div class="file-upload">
+
+    <header class='upload-form-header'>
+      <h1> Upload </h1>
+    </header>
+
+    <div class="form-group">
+      <label for="composition-pictures-input">Composition Pictures</label>
+      <input type="file" id="composition-pictures-input" data-picture-type="composition" multiple>
+    </div>
+
+    <div class="form-group">
+      <label for="base-pictures-input">Base Pictures</label>
+      <input type="file" id="base-pictures-input" data-picture-type="base" multiple>
+    </div>
+
+    <div class='upload-form-footer'>
+      <button id='upload-btn' class='btn btn-large btn-primary'> Upload </button>
+    </div>
+  </div>
+
+</form>
