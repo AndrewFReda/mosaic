@@ -1,15 +1,12 @@
 <!-- Bleh, just leave this here for now.... -->
 <form id="file_upload" method="POST" enctype="multipart/form-data">
   <input type="hidden" name="key">
-  <input type="hidden" name="AWSAccessKeyID" value="#{ENV['S3_ACCESS_KEY']}">
-  <input type="hidden" name="acl" value="private">
-  <input type="hidden" name="success_action_status" value="200">
+  <input type="hidden" name="AWSAccessKeyID">
+  <input type="hidden" name="acl" value="public-read">
+  <input type="hidden" name="success_action_status" value="201">
   <input type="hidden" name="policy">
   <input type="hidden" name="signature">
-
-  <div class="file-upload-content">
-    <div class="file-upload-progress"> </div>
-  </div>
+  <input type="hidden" name="Content-Type">
 
   <div class="file-upload">
 
