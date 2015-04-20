@@ -40,8 +40,8 @@ Rails.application.configure do
     :use_timestamp => false,
     :s3_credentials => {
       :bucket => ENV['S3_BUCKET'],
-      :access_key_id => ENV['S3_KEY'],
-      :secret_access_key => ENV['S3_SECRET']
+      :access_key_id => ENV['S3_ACCESS_KEY'],
+      :secret_access_key => ENV['S3_SECRET_ACCESS_KEY']
     }
   }
 end
