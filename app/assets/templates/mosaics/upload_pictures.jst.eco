@@ -24,9 +24,5 @@
       <input type="file" name="file" id="base-pictures-input" data-picture-type="base" multiple>
     </div>
 
-    <div class='upload-form-footer'>
-      <button id='upload-btn' class='btn btn-large btn-primary'> Upload </button>
-    </div>
   </div>
-
 </form>

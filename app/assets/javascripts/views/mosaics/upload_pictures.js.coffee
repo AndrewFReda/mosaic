@@ -6,17 +6,10 @@ class App.Views.UploadPictures extends Backbone.View
   initialize: ->
     @session = @model
 
-  events:
-    'click #file_upload button': 'upload'
-
   render: =>
     @$el.html(@template())
     @$('#file_upload').find("input:file").each(@setUpS3UploadHooks)
     this
-
-  upload: (e) ->
-    false
-
 
   setUpS3UploadHooks: (i, el) =>
     fileInput = $(el)
