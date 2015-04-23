@@ -1,3 +1,30 @@
-<div id='upload-pictures'>
-  <h4> Upload </h4>
-</div>
+<!-- Bleh, just leave this here for now.... -->
+<form id="file_upload" method="POST" enctype="multipart/form-data">
+  <input type="hidden" name="key">
+  <input type="hidden" name="AWSAccessKeyID">
+  <input type="hidden" name="acl" value="public-read">
+  <input type="hidden" name="success_action_status" value="201">
+  <input type="hidden" name="policy">
+  <input type="hidden" name="signature">
+  <input type="hidden" name="Content-Type">
+
+  <div class="file-upload">
+
+    <header class='upload-form-header'>
+      <h1> Upload </h1>
+    </header>
+
+    <div class="btn btn-success fileinput-button">
+      <i class='glyphicon glyphicon-plus'></i>
+      <span> Add Composition Pictures... </span>
+      <input type="file" name="file" id="composition-pictures-input" data-picture-type="composition" multiple>
+    </div>
+
+    <div class="btn btn-success fileinput-button">
+      <i class='glyphicon glyphicon-plus'></i>
+      <span> Add Base Pictures... </span>
+      <input type="file" name="file" id="base-pictures-input" data-picture-type="base" multiple>
+    </div>
+
+  </div>
+</form>

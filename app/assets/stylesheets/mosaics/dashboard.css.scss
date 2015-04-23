@@ -1,0 +1,81 @@
+/***** DASHBOARD PAGE *****/
+
+.dashboard {
+  #sign-out {
+    float: right;
+    color: red;
+    font-weight: bold;
+    font-style: italic;
+
+    &:hover {
+      /* text-decoration: none; */
+    }
+  }
+
+  /***** SIDE NAV *****/
+  .side-nav {
+    padding-left: 0px;
+
+    .active a {
+      background-color: gray !important;
+    }
+  }
+
+  /***** MOSAICS PAGE *****/
+  .mosaics {
+    padding-left: 0px;
+    list-style-type: none;
+
+    .mosaic {
+      display: inline;
+      
+      img {
+        width: 45%;
+        margin: 1px;
+        /* border: 1px solid gray;
+        vertical-align: top; */
+
+        &:hover {
+          border: 1px solid rgba(68, 83, 142, 0.74);
+        }
+      }
+    }
+  }
+
+  /***** PROFILE PAGE *****/
+
+  .profile {
+    .form-control {
+      font-size: 14px;
+      height: auto;    
+      padding: 6px;
+
+      &:focus {
+        z-index: 2;
+      }
+    }
+
+    input {
+      margin: 0 auto;
+      width: 60%;
+    }
+
+    .save {
+      margin-top: 2px;
+      width: 60%;
+      font-weight: bold;
+    }
+  }
+}
+
+
+/***** UPLOAD PAGE *****/
+.upload-form {
+  max-width: 380px;
+  padding: 0px 35px 45px;
+  margin: 0 auto;
+
+  .fileinput-button {
+    margin-bottom: 2px;
+  }
+}

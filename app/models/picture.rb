@@ -33,4 +33,9 @@ class Picture < ActiveRecord::Base
     img            = Image.read(file).first    
     self.histogram.set_hue_from_image(img)
   end
+
+  def getContentType
+    extension = name.split('.').last
+    "image/#{extension}"
+  end
 end

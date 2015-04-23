@@ -7,5 +7,4 @@ class App.Models.User extends Backbone.Model
   toJSON: ->
     data = {}
     data[@name] = _.clone(@attributes)
-    console.log(data)
     data

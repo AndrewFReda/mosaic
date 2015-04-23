@@ -15,5 +15,5 @@ class App.Views.Mosaics extends Backbone.View
     this
 
   renderMosaic: (mosaic) =>
-    view = new App.Views.ShowPicture(model: mosaic, tagName: 'li', className: 'mosaic')
+    view = new App.Views.ShowThumbnail(model: mosaic, tagName: 'li', className: 'mosaic')
     @$el.append(view.render().el)

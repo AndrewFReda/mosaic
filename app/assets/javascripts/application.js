@@ -12,10 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery-fileupload
+//= require jquery-fileupload/basic-plus
 //= require bootstrap-sprockets
 
-// Removed loading of tree, instead load controller specific files
 //= require lodash
 //= require backbone
 //= require mosaics

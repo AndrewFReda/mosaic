@@ -5,5 +5,4 @@ class App.Collections.Pictures extends Backbone.Collection
   toJSON: ->
     data = {}
     data[@name] = _.clone(@attributes)
-    console.log(data)
     data

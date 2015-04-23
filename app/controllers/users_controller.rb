@@ -31,7 +31,7 @@ class UsersController < ApplicationController
 
   def update_password
     # TODO: Should this just be 'current_user' instead?
-    @user = User.find user_params[:id]
+    @user = User.find params[:id]
 
     # Currently not sending any statuses correctly...
     if user_params[:password] == user_params[:password_confirmation]
@@ -53,6 +53,10 @@ class UsersController < ApplicationController
     end
   end
 
+  private
+    def user_params
+      params.require(:user).permit(:email, :password, :password_confirmation, :new_password, :password_digest)
+    end
 
   ################################### Not implemented ###################################
 
@@ -82,10 +86,7 @@ class UsersController < ApplicationController
     respond_with @user
   end
 
-  private
-    def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :new_password, :password_digest, :composition_picture_ids, :base_picture_ids, :mosaic_ids)
-    end
+  
 
     # TODO: Fix this hack work around for "" being sent along with ids
     # http://stackoverflow.com/questions/14054164/rails-simple-form-getting-an-empty-string-from-checkbox-collection

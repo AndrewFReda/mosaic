@@ -29,7 +29,7 @@ class App.Views.SideNav extends Backbone.View
     false
 
   manageContent: (e) ->
-    view = new App.Views.ManageContent()
+    view = new App.Views.ManageContent(model: @session)
     $('#dashboard-content').html(view.render().el)
     false
 

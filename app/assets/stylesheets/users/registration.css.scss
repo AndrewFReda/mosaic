@@ -1,0 +1,49 @@
+/***** REGISTRATION PAGE *****/
+.registration-form {
+  max-width: 380px;
+  padding: 15px 35px 45px;
+  margin: 0 auto;
+
+  .input-group {
+    .form-control {
+      font-size: 18px;
+      height: auto;    
+      padding: 10px;
+
+      &:focus {
+        z-index: 2;
+      }
+    }
+
+    .input-group-addon {
+      min-width:40px;
+      font-weight: bold;
+      font-size: 18px;
+      text-align:center;
+    }
+  }
+
+  .registration-form-footer {
+
+    button {
+      margin-top: 4px;
+      width: 100%;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  }
+}
+
+.registration-nav {
+  li {
+    width: 50%;
+
+    a { 
+      color: black;
+    }
+  }
+
+  .active {
+    font-weight: bold;
+  }
+}
