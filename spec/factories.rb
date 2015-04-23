@@ -1,12 +1,18 @@
 FactoryGirl.define do
-  factory :user do
-    email    'testingemailaccount@testingemailaddress.com'
-    password 'somepassword'
+  factory :histogram do
+    dominant_hue 1
   end
 
   factory :picture do
+    histogram
     name 'yoyoyotestpicture.png'
     type 'composition'
-    user_id 1
+  end
+
+  factory :user do
+    picture
+    sequence(:email) { |n| "testingemailaccount#{n}@testingemailaddress.com" }
+    password 'somepassword'
+    password_confirmation { password }
   end
 end
