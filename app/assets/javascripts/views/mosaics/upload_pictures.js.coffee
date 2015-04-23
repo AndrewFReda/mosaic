@@ -15,6 +15,7 @@ class App.Views.UploadPictures extends Backbone.View
     fileInput = $(el)
     fileInput.fileupload(
       autoUpload: true
+      replaceFileInput: false
       url: "https://afr-mosaic.s3.amazonaws.com"
 
       add: (e, data) =>
