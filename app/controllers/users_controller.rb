@@ -3,8 +3,6 @@ class UsersController < ApplicationController
 
   respond_to :json, only: [:create, :show, :update_password]
 
-  # Rails API back-end for Backbone front-end
-
   # Creates User without creating Session
   # Explicit call to create Session required
   def create
