@@ -6,21 +6,15 @@ class SessionsController < ApplicationController
 
     if @user and @user.authenticate(session_params[:password])
       sign_in @user
-      # Using respond_with results in:
-      # => NoMethodError - undefined method `user_url' for #<SessionsController:0x007fea19a7aed0>
       render json: @user, status: 200
     else
-      # Using respond_with results in:
-      # => ArgumentError - Nil location provided. Can't build URI.
-      # See: 
-      # => http://stackoverflow.com/questions/14677646/respond-with-argumenterror-nil-location-provided-cant-build-uri
       render json: nil, status: 401
     end
   end
 
   def destroy
     sign_out()
-    respond_with status: 204, nothing: true
+    render nothing: true, status: 204
   end
 
   def show

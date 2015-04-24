@@ -34,7 +34,6 @@ class User < ActiveRecord::Base
   def add_mosaic_from_IM_image(mosaic)
 
     name  = "#{DateTime.now.to_s}-mosaic.jpg"
-    # TODO: NOT SURE WHERE TO WRITE TO YET...
     path  = "public/images/#{name}"
     mosaic.write(path)
 

@@ -56,11 +56,12 @@ class UsersController < ApplicationController
       params.require(:user).permit(:email, :password, :password_confirmation, :new_password, :password_digest)
     end
 
+
+
+
   ################################### Not implemented ###################################
 
 
-  # TODO: Fix problem where all IDs to be deleted are sent as the :composition_picture_ids in addition
-  #       to their other types
   def delete_pictures
     @user = current_user
 
@@ -84,11 +85,8 @@ class UsersController < ApplicationController
     respond_with @user
   end
 
-  
-
-    # TODO: Fix this hack work around for "" being sent along with ids
-    # http://stackoverflow.com/questions/14054164/rails-simple-form-getting-an-empty-string-from-checkbox-collection
-    def clean_ids(ids)
-      ids.delete_if { |id| id.empty? }
-    end
+  # http://stackoverflow.com/questions/14054164/rails-simple-form-getting-an-empty-string-from-checkbox-collection
+  def clean_ids(ids)
+    ids.delete_if { |id| id.empty? }
+  end
 end

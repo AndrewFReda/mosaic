@@ -35,6 +35,8 @@ class PicturesController < ApplicationController
       params.require(:picture).permit(:name, :type, :user_id)
     end
 
+
+
   ################################### Not implemented ###################################
 
   def create_mosaic
@@ -62,12 +64,10 @@ class PicturesController < ApplicationController
     if params[:mosaic] and params[:mosaic][:id]
       @picture = Picture.find(params[:mosaic][:id])
       @picture.destroy
-      # TODO: Delete off of S3 as well
       # success
       respond_with status: 204, nothing: true
     elsif @user.mosaics.last
       @user.mosaics.last.delete
-      # TODO: Delete off of S3 as well
       # success
       respond_with @user, status: 204
     else
@@ -76,9 +76,8 @@ class PicturesController < ApplicationController
     end
   end
 
+  # http://stackoverflow.com/questions/14054164/rails-simple-form-getting-an-empty-string-from-checkbox-collection
   def clean_ids(ids)
-    # TODO: Fix this hack work around for "" being sent along with ids
-    # http://stackoverflow.com/questions/14054164/rails-simple-form-getting-an-empty-string-from-checkbox-collection
     ids.delete_if { |comp_id| comp_id.empty? }
   end
 

@@ -1,6 +1,6 @@
 <ul class='registration-nav nav nav-tabs'>
   <li role="presentation" id='login-nav'><a href="#">Login</a></li>
-  <li role="presentation" id='sign-up-nav' ><a href="#">Sign Up</a></li>
+  <li role="presentation" id='sign-up-nav'><a href="#">Sign Up</a></li>
 </ul>
 
 <div id='registration-forms'>
