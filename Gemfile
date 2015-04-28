@@ -28,7 +28,6 @@ gem 'fog'
 # Code quality
 gem 'rubocop'
 
-
 # Not used yet
 # gem 'omniauth'
 # gem 'omniauth-facebook'
@@ -42,6 +41,9 @@ group :test do
   gem 'simplecov', :require => false
   gem 'factory_girl_rails'
   gem 'webmock'
+  gem 'database_cleaner'
+  #gem 'gaurd-rspec'
+  #gem 'rb-fsevent'
 end
 
 group :development do

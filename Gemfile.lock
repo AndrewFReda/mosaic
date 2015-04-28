@@ -76,6 +76,7 @@ GEM
     columnize (0.8.9)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
+    database_cleaner (1.4.1)
     debug_inspector (0.0.2)
     debugger-linecache (1.2.0)
     diff-lcs (1.2.5)
@@ -353,6 +354,7 @@ DEPENDENCIES
   binding_of_caller
   bootstrap-sass
   coffee-rails (~> 4.0.0)
+  database_cleaner
   dotenv-rails
   factory_girl_rails
   fog
