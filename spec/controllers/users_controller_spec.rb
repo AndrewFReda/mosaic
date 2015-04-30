@@ -25,16 +25,17 @@ RSpec.describe UsersController, type: :controller do
     end
 
     context 'when given an invalid user ID' do
-      let(:invalid_id) { -1 }
+      # Stub method to ensure ID will be invalid
+      before(:example) { allow(User).to receive(:find).and_raise(ActiveRecord::RecordNotFound) }
 
       it 'responds with an HTTP 404' do
-        get :show, { id: invalid_id }
+        get :show, { id: user.id }
 
         expect(response).to have_http_status(404)
       end
 
       it 'responds with a JSON error message' do
-        get :show, { id: invalid_id }
+        get :show, { id: user.id }
 
         expect(parsed_response.keys.first).to eq('errors')
         expect(parsed_response.values.first).to eq("Unable to find User with ID: #{user.id}")
