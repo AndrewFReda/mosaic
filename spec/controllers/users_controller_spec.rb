@@ -48,7 +48,7 @@ RSpec.describe UsersController, type: :controller do
       it 'responds with an HTTP 200' do
         post :create, user: { email: new_user.email, password: new_user.password, password_confirmation: new_user.password_confirmation }
 
-        expect(response).to have_http_status(200)
+        expect(response).to have_http_status(201)
       end
 
       it 'responds with JSON for newly created user' do

@@ -43,7 +43,7 @@ RSpec.describe PicturesController, type: :controller do
       it 'responds with an HTTP 200' do
         post :create, { user_id: user.id, picture: { name: picture.name, url: picture.url, type: picture.type, histogram: picture.histogram } }
         
-        expect(response).to have_http_status(200)
+        expect(response).to have_http_status(201)
       end
 
       it 'responds with JSON for access information to upload pictures to S3' do

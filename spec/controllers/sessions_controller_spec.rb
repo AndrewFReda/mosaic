@@ -55,7 +55,7 @@ RSpec.describe SessionsController, type: :controller do
       it 'responds with an HTTP 200' do
         post :create, session: { email: user.email, password: user.password }
 
-        expect(response).to have_http_status(200)
+        expect(response).to have_http_status(201)
       end
 
       it 'responds with JSON for the newly logged in user' do
