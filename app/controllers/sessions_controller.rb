@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
       sign_in @user
       render json: @user, status: 200
     else
-      render json: nil, status: 401
+      render json: { errors: 'Unable to create session' }, status: 401
     end
   end
 

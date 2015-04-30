@@ -26,7 +26,7 @@ class PicturesController < ApplicationController
         access_key:   ENV['S3_ACCESS_KEY']
       }, status: 200
     else
-      respond_with @picture, status: 500
+      render json: { errors: 'Unable to create picture' }, status: 500
     end
   end
 

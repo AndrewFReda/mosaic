@@ -17,14 +17,14 @@ class UsersController < ApplicationController
     @user = User.new user_params
 
     if @user.save
-      respond_with @user
+      respond_with @user, status: 200
     else
       if @user.errors[:email].empty?
         # password and confirmation do not match
-        respond_with @user, status: 401
+        render json: { errors: @user.errors.full_messages.first }, status: 401
       else
         # user with this email already exists
-        respond_with @user, status: 400
+        render json: { errors: @user.errors.full_messages.first }, status: 400
       end
     end
   end
@@ -40,15 +40,15 @@ class UsersController < ApplicationController
           respond_with nothing: true, status: 204
         else
           # failure to update password
-          respond_with @user, status: 500
+          render json: { errors: 'Failed to update password' }, status: 500
         end
       else
         # password is incorrect
-        respond_with @user, status: 401
+        render json: { errors: 'Password is incorrect' }, status: 401
       end
     else
       # password and confirmation do not match
-      respond_with @user, status: 401
+      render json: { errors: 'Password and confirmation do not match' }, status: 401
     end
   end
 
