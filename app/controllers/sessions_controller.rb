@@ -6,7 +6,6 @@ class SessionsController < ApplicationController
       respond_with current_user, status: 200
     else
       render json: { errors: 'Session does not exist' }, status: 404
-      #head :not_found # status: 404
     end
   end
 
@@ -16,7 +15,7 @@ class SessionsController < ApplicationController
 
     if @user and @user.authenticate(session_params[:password])
       sign_in @user
-      render json: @user, status: 200
+      render json: @user, status: 201
     else
       render json: { errors: 'Unable to create session' }, status: 401
     end

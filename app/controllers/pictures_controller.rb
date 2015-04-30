@@ -24,7 +24,7 @@ class PicturesController < ApplicationController
         signature:    @s3_upload.signature(),
         content_type: @picture.getContentType(),
         access_key:   ENV['S3_ACCESS_KEY']
-      }, status: 200
+      }, status: 201
     else
       render json: { errors: 'Unable to create picture' }, status: 500
     end

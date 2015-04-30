@@ -17,7 +17,7 @@ class UsersController < ApplicationController
     @user = User.new user_params
 
     if @user.save
-      respond_with @user, status: 200
+      respond_with @user, status: 201
     else
       if @user.errors[:email].empty?
         # password and confirmation do not match
