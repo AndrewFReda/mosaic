@@ -16,13 +16,16 @@ FactoryGirl.define do
     password 'somepassword'
     password_confirmation { password }
 
-    # See FactorGirl documentation: has_many
-    transient do
-      picture_count 3
-    end
+    # user_with_pictures will create post data after the user has been created
+    factory :user_with_pictures do
+      # See FactorGirl documentation: has_many
+      transient do
+        picture_count 3
+      end
 
-    after(:create) do |user, evaluator|
-      create_list(:picture, evaluator.picture_count, user: user)
+      after(:create) do |user, evaluator|
+        create_list(:picture, evaluator.picture_count, user: user)
+      end
     end
   end
 end
