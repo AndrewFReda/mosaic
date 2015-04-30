@@ -10,11 +10,11 @@ class PicturesController < ApplicationController
   end
 
   def create
-    #@user         = User.find(params[:user_id])
     @picture      = Picture.new picture_params
-    @picture.user = current_user
+    # TODO: Should this just be 'current_user' instead?
+    @picture.user = User.find params[:user_id]
     @picture.url  = "https://s3.amazonaws.com/#{ENV['S3_BUCKET']}/#{@picture.user.email}/#{@picture.type}/#{@picture.name}"
-    @s3_upload    = S3Upload.new({ picture: @picture })
+    @s3_upload    = S3Upload.new picture: @picture
 
     if @picture.save
       render json: {

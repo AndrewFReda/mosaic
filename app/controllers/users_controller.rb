@@ -1,7 +1,13 @@
 class UsersController < ApplicationController
   include Histogramr
 
-  respond_to :json, only: [:create, :show, :update_password]
+  respond_to :json, only: [:show, :create, :update_password]
+
+  def show
+    # TODO: Should this just be 'current_user' instead?
+    @user = User.find params[:id]
+    respond_with @user, status: 200
+  end
 
   # Creates User without creating Session
   # Explicit call to create Session required
@@ -21,20 +27,13 @@ class UsersController < ApplicationController
     end
   end
 
-  def show
-    # TODO: Should this just be 'current_user' instead?
-    @user = User.find params[:id]
-    respond_with @user
-  end
-
   def update_password
     # TODO: Should this just be 'current_user' instead?
     @user = User.find params[:id]
 
-    # Currently not sending any statuses correctly...
     if user_params[:password] == user_params[:password_confirmation]
       if @user.authenticate user_params[:password]
-        if @user.update(password: user_params[:new_password])
+        if @user.update password: user_params[:new_password]
           # success
           respond_with nothing: true, status: 204
         else

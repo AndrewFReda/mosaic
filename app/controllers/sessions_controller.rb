@@ -1,8 +1,18 @@
 class SessionsController < ApplicationController
-  respond_to :json, only: [:create, :destroy, :show]
+  respond_to :json, only: [:show, :create, :destroy]
 
+  def show
+    if signed_in?
+      respond_with current_user, status: 200
+    else
+      render json: { errors: 'Session does not exist' }, status: 404
+      #head :not_found # status: 404
+    end
+  end
+
+  # TODO: Create session token to pass to user for authenticated requests
   def create
-    @user = User.find_by(email: session_params[:email])
+    @user = User.find_by email: session_params[:email]
 
     if @user and @user.authenticate(session_params[:password])
       sign_in @user
@@ -17,12 +27,6 @@ class SessionsController < ApplicationController
     render nothing: true, status: 204
   end
 
-  def show
-    if signed_in?
-      respond_with current_user
-    else
-      render nothing: true, status: 404
-    end
   end
 
   private
