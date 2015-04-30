@@ -6,7 +6,8 @@ class PicturesController < ApplicationController
   def index
     # TODO: Should this just be 'current_user' instead?
     @user = User.find params[:user_id]
-    respond_with @user.pictures
+    @pictures = @user.pictures
+    respond_with @pictures, status: 200
   end
 
   def create
@@ -23,7 +24,7 @@ class PicturesController < ApplicationController
         signature:    @s3_upload.signature(),
         content_type: @picture.getContentType(),
         access_key:   ENV['S3_ACCESS_KEY']
-      }
+      }, status: 200
     else
       respond_with @picture, status: 500
     end

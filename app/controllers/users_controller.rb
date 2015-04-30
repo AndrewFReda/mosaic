@@ -7,6 +7,8 @@ class UsersController < ApplicationController
     # TODO: Should this just be 'current_user' instead?
     @user = User.find params[:id]
     respond_with @user, status: 200
+  rescue ActiveRecord::RecordNotFound
+    render json: { errors: "Unable to find User with ID: #{params[:id]}" }, status: 404
   end
 
   # Creates User without creating Session
