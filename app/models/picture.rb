@@ -11,6 +11,7 @@ class Picture < ActiveRecord::Base
 
   # Validate the attached image is image/jpg, image/png, etc
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
+  validates :name, presence: true
 
   # TODO: Move into user Model since picture types are relevant in relation to user
   scope :composition_pictures, -> { where(type: 'composition') }
