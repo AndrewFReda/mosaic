@@ -1,6 +1,5 @@
 module Uploadr
   extend ActiveSupport::Concern
-  #TODO: Upload only .jpg or .png
 
   # UPLOAD HELPERS
   def upload_composition
@@ -12,7 +11,6 @@ module Uploadr
       name     = "#{DateTime.now.to_s}-#{temp.original_filename}"
       file     = File.open(temp.tempfile)
       @picture = Picture.new(name: name, image: file, composition_id: @user.id)
-      # TODO: Consider moving this into Picture's initialize or save method
       @picture.set_histogram_from_file(file)
       file.close
 
@@ -48,7 +46,6 @@ module Uploadr
   def upload_mosaic(mosaic)
     @user = current_user
     name  = "#{DateTime.now.to_s}-mosaic.jpg"
-    # NOT SURE WHERE TO WRITE TO JUST YET...
     path  = "public/images/#{name}"
     
     mosaic.write(path)

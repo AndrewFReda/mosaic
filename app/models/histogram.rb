@@ -1,6 +1,7 @@
 class Histogram < ActiveRecord::Base
   belongs_to :picture
 
+###### NOT IMPLEMENTED ##############
   # Set this Histogram's dominant hue from given ImageMagick image
   def set_hue_from_image(img)
     num_colors = 8

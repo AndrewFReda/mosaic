@@ -20,7 +20,6 @@ class App.Views.UploadPictures extends Backbone.View
 
       add: (e, data) =>
         $.ajax
-          # TODO: Dynamically create URL
           url: "/users/#{@session.id}/pictures"
           type: 'POST'
           dataType: 'json'

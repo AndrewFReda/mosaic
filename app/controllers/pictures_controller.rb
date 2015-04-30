@@ -6,15 +6,16 @@ class PicturesController < ApplicationController
   def index
     # TODO: Should this just be 'current_user' instead?
     @user = User.find params[:user_id]
-    respond_with @user.pictures
+    @pictures = @user.pictures
+    respond_with @pictures, status: 200
   end
 
   def create
-    #@user         = User.find(params[:user_id])
     @picture      = Picture.new picture_params
-    @picture.user = current_user
+    # TODO: Should this just be 'current_user' instead?
+    @picture.user = User.find params[:user_id]
     @picture.url  = "https://s3.amazonaws.com/#{ENV['S3_BUCKET']}/#{@picture.user.email}/#{@picture.type}/#{@picture.name}"
-    @s3_upload    = S3Upload.new({ picture: @picture })
+    @s3_upload    = S3Upload.new picture: @picture
 
     if @picture.save
       render json: {
@@ -23,9 +24,9 @@ class PicturesController < ApplicationController
         signature:    @s3_upload.signature(),
         content_type: @picture.getContentType(),
         access_key:   ENV['S3_ACCESS_KEY']
-      }
+      }, status: 201
     else
-      respond_with @picture, status: 500
+      render json: { errors: 'Unable to create picture' }, status: 500
     end
   end
 
@@ -34,6 +35,8 @@ class PicturesController < ApplicationController
     def picture_params
       params.require(:picture).permit(:name, :type, :user_id)
     end
+
+
 
   ################################### Not implemented ###################################
 
@@ -62,12 +65,10 @@ class PicturesController < ApplicationController
     if params[:mosaic] and params[:mosaic][:id]
       @picture = Picture.find(params[:mosaic][:id])
       @picture.destroy
-      # TODO: Delete off of S3 as well
       # success
       respond_with status: 204, nothing: true
     elsif @user.mosaics.last
       @user.mosaics.last.delete
-      # TODO: Delete off of S3 as well
       # success
       respond_with @user, status: 204
     else
@@ -76,9 +77,8 @@ class PicturesController < ApplicationController
     end
   end
 
+  # http://stackoverflow.com/questions/14054164/rails-simple-form-getting-an-empty-string-from-checkbox-collection
   def clean_ids(ids)
-    # TODO: Fix this hack work around for "" being sent along with ids
-    # http://stackoverflow.com/questions/14054164/rails-simple-form-getting-an-empty-string-from-checkbox-collection
     ids.delete_if { |comp_id| comp_id.empty? }
   end
 

@@ -1,34 +1,29 @@
 class SessionsController < ApplicationController
-  respond_to :json, only: [:create, :destroy, :show]
+  respond_to :json, only: [:show, :create, :destroy]
 
+  def show
+    if signed_in?
+      respond_with current_user, status: 200
+    else
+      render json: { errors: 'Session does not exist' }, status: 404
+    end
+  end
+
+  # TODO: Create session token to pass to user for authenticated requests
   def create
-    @user = User.find_by(email: session_params[:email])
+    @user = User.find_by email: session_params[:email]
 
     if @user and @user.authenticate(session_params[:password])
       sign_in @user
-      # Using respond_with results in:
-      # => NoMethodError - undefined method `user_url' for #<SessionsController:0x007fea19a7aed0>
-      render json: @user, status: 200
+      render json: @user, status: 201
     else
-      # Using respond_with results in:
-      # => ArgumentError - Nil location provided. Can't build URI.
-      # See: 
-      # => http://stackoverflow.com/questions/14677646/respond-with-argumenterror-nil-location-provided-cant-build-uri
-      render json: nil, status: 401
+      render json: { errors: 'Unable to create session' }, status: 401
     end
   end
 
   def destroy
     sign_out()
-    respond_with status: 204, nothing: true
-  end
-
-  def show
-    if signed_in?
-      respond_with current_user
-    else
-      render nothing: true, status: 404
-    end
+    head status: 204
   end
 
   private

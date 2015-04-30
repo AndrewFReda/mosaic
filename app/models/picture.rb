@@ -11,13 +11,19 @@ class Picture < ActiveRecord::Base
 
   # Validate the attached image is image/jpg, image/png, etc
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
+  validates :name, presence: true
 
   # TODO: Move into user Model since picture types are relevant in relation to user
   scope :composition_pictures, -> { where(type: 'composition') }
   scope :base_pictures, -> { where(type: 'base') }
   scope :mosaics, -> { where(type: 'mosaic') }
 
+  def getContentType
+    extension = name.split('.').last
+    "image/#{extension}"
+  end
 
+###### NOT IMPLEMENTED ##############
   def set_from_tempfile(temp)
     file  = File.open(temp.tempfile)
     fname = "#{DateTime.now.to_s}-#{temp.original_filename}"    
@@ -32,10 +38,5 @@ class Picture < ActiveRecord::Base
     self.histogram = Histogram.new
     img            = Image.read(file).first    
     self.histogram.set_hue_from_image(img)
-  end
-
-  def getContentType
-    extension = name.split('.').last
-    "image/#{extension}"
   end
 end

@@ -1,9 +1,15 @@
 class UsersController < ApplicationController
   include Histogramr
 
-  respond_to :json, only: [:create, :show, :update_password]
+  respond_to :json, only: [:show, :create, :update_password]
 
-  # Rails API back-end for Backbone front-end
+  def show
+    # TODO: Should this just be 'current_user' instead?
+    @user = User.find params[:id]
+    respond_with @user, status: 200
+  rescue ActiveRecord::RecordNotFound
+    render json: { errors: "Unable to find User with ID: #{params[:id]}" }, status: 404
+  end
 
   # Creates User without creating Session
   # Explicit call to create Session required
@@ -11,45 +17,38 @@ class UsersController < ApplicationController
     @user = User.new user_params
 
     if @user.save
-      respond_with @user
+      respond_with @user, status: 201
     else
       if @user.errors[:email].empty?
         # password and confirmation do not match
-        respond_with @user, status: 401
+        render json: { errors: @user.errors.full_messages.first }, status: 401
       else
         # user with this email already exists
-        respond_with @user, status: 400
+        render json: { errors: @user.errors.full_messages.first }, status: 400
       end
     end
-  end
-
-  def show
-    # TODO: Should this just be 'current_user' instead?
-    @user = User.find params[:id]
-    respond_with @user
   end
 
   def update_password
     # TODO: Should this just be 'current_user' instead?
     @user = User.find params[:id]
 
-    # Currently not sending any statuses correctly...
     if user_params[:password] == user_params[:password_confirmation]
       if @user.authenticate user_params[:password]
-        if @user.update(password: user_params[:new_password])
+        if @user.update password: user_params[:new_password]
           # success
-          respond_with nothing: true, status: 204
+          head status: 204
         else
           # failure to update password
-          respond_with @user, status: 500
+          render json: { errors: 'Failed to update password' }, status: 500
         end
       else
         # password is incorrect
-        respond_with @user, status: 401
+        render json: { errors: 'Password is incorrect' }, status: 401
       end
     else
       # password and confirmation do not match
-      respond_with @user, status: 401
+      render json: { errors: 'Password and confirmation do not match' }, status: 401
     end
   end
 
@@ -58,11 +57,12 @@ class UsersController < ApplicationController
       params.require(:user).permit(:email, :password, :password_confirmation, :new_password, :password_digest)
     end
 
+
+
+
   ################################### Not implemented ###################################
 
 
-  # TODO: Fix problem where all IDs to be deleted are sent as the :composition_picture_ids in addition
-  #       to their other types
   def delete_pictures
     @user = current_user
 
@@ -86,11 +86,8 @@ class UsersController < ApplicationController
     respond_with @user
   end
 
-  
-
-    # TODO: Fix this hack work around for "" being sent along with ids
-    # http://stackoverflow.com/questions/14054164/rails-simple-form-getting-an-empty-string-from-checkbox-collection
-    def clean_ids(ids)
-      ids.delete_if { |id| id.empty? }
-    end
+  # http://stackoverflow.com/questions/14054164/rails-simple-form-getting-an-empty-string-from-checkbox-collection
+  def clean_ids(ids)
+    ids.delete_if { |id| id.empty? }
+  end
 end

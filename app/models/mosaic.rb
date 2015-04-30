@@ -1,5 +1,6 @@
 class Mosaic < ActiveRecord::Base
 
+###### NOT IMPLEMENTED ##############
   # Determine aspect ratio of this Mosaic based on given ImageMagick image
   def set_grid_from_image(image)
     if image.columns > image.rows
