@@ -1,5 +1,7 @@
 RSpec.describe SessionsController, type: :controller do
   let(:user) { FactoryGirl.create :user }
+  # Parse response JSON into variable
+  let(:parsed_response) { JSON.parse response.body }
   # Designate all requests as JSON
   before(:example) { request.accept = "application/json" }
 
@@ -7,10 +9,6 @@ RSpec.describe SessionsController, type: :controller do
   def login(login_user)
     #post :create, session: { email: user.email, password: user.password }
     session[:user_id] = login_user.id
-  end
-
-  def json_response
-    JSON.parse(response.body)
   end
 
   # Tests
@@ -42,8 +40,8 @@ RSpec.describe SessionsController, type: :controller do
       it 'responds with a JSON error message' do
         get :show
 
-        expect(json_response.keys.first).to eq('errors')
-        expect(json_response.values.first).to eq('Session does not exist')
+        expect(parsed_response.keys.first).to eq('errors')
+        expect(parsed_response.values.first).to eq('Session does not exist')
       end
     end
   end
@@ -84,8 +82,8 @@ RSpec.describe SessionsController, type: :controller do
       it 'responds with a JSON error messagge' do
         post :create, session: { email: wrong_email, password: user.password }
 
-        expect(json_response.keys.first).to eq('errors')
-        expect(json_response.values.first).to eq('Unable to create session')
+        expect(parsed_response.keys.first).to eq('errors')
+        expect(parsed_response.values.first).to eq('Unable to create session')
       end
     end
 
@@ -101,8 +99,8 @@ RSpec.describe SessionsController, type: :controller do
       it 'responds with a JSON error message' do
         post :create, session: { email: user.email, password: wrong_password }
 
-        expect(json_response.keys.first).to eq('errors')
-        expect(json_response.values.first).to eq('Unable to create session')
+        expect(parsed_response.keys.first).to eq('errors')
+        expect(parsed_response.values.first).to eq('Unable to create session')
       end
     end
   end

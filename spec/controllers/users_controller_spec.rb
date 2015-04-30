@@ -1,11 +1,9 @@
 RSpec.describe UsersController, type: :controller do
+  # Parse response JSON into variable
+  let(:parsed_response) { JSON.parse response.body }
   # Designate all requests as JSON
   before(:example) { request.accept = "application/json" }
 
-  # Helper methods
-  def json_response
-    JSON.parse(response.body)
-  end
 
   # Tests
   ### Show ###
@@ -40,8 +38,8 @@ RSpec.describe UsersController, type: :controller do
       it 'responds with a JSON error message' do
         get :show, { id: invalid_id }
 
-        expect(json_response.keys.first).to eq('errors')
-        expect(json_response.values.first).to eq("Unable to find User with ID: #{invalid_id}")
+        expect(parsed_response.keys.first).to eq('errors')
+        expect(parsed_response.values.first).to eq("Unable to find User with ID: #{user.id}")
       end
     end
   end
@@ -92,8 +90,8 @@ RSpec.describe UsersController, type: :controller do
       it 'responds with a JSON error message' do
         post :create, user: { email: user.email, password: user.password, password_confirmation: user.password_confirmation }
 
-        expect(json_response.keys.first).to eq('errors')
-        expect(json_response.values.first).to eq('Email has already been taken')
+        expect(parsed_response.keys.first).to eq('errors')
+        expect(parsed_response.values.first).to eq('Email has already been taken')
       end
     end
 
@@ -110,8 +108,8 @@ RSpec.describe UsersController, type: :controller do
       it 'responds with a JSON error message' do
         post :create, user: { email: user.email, password: user.password, password_confirmation: wrong_confirmation }
 
-        expect(json_response.keys.first).to eq('errors')
-        expect(json_response.values.first).to eq("Password confirmation doesn't match Password")
+        expect(parsed_response.keys.first).to eq('errors')
+        expect(parsed_response.values.first).to eq("Password confirmation doesn't match Password")
       end
     end
   end
@@ -148,8 +146,8 @@ RSpec.describe UsersController, type: :controller do
       it 'responds with a JSON error message' do
         put :update_password, { id: user.id, user: { password: user.password, password_confirmation: altered_password, new_password: altered_password } }
 
-        expect(json_response.keys.first).to eq('errors')
-        expect(json_response.values.first).to eq('Password and confirmation do not match')
+        expect(parsed_response.keys.first).to eq('errors')
+        expect(parsed_response.values.first).to eq('Password and confirmation do not match')
       end
     end
 
@@ -163,8 +161,8 @@ RSpec.describe UsersController, type: :controller do
       it 'responds with a JSON error message' do
         put :update_password, { id: user.id, user: { password: altered_password, password_confirmation: altered_password, new_password: altered_password } }
 
-        expect(json_response.keys.first).to eq('errors')
-        expect(json_response.values.first).to eq('Password is incorrect')
+        expect(parsed_response.keys.first).to eq('errors')
+        expect(parsed_response.values.first).to eq('Password is incorrect')
       end
     end
   end

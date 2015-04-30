@@ -1,13 +1,11 @@
 RSpec.describe PicturesController, type: :controller do
   let(:user) { FactoryGirl.create :user }
   let(:picture) { FactoryGirl.build :picture }
+  # Parse response JSON into variable
+  let(:parsed_response) { JSON.parse response.body }
   # Designate all requests as JSON
   before(:example) { request.accept = "application/json" }
 
-  # Helper methods
-  def json_response
-    JSON.parse(response.body)
-  end
 
   # Tests
   ### Index ###
@@ -45,7 +43,7 @@ RSpec.describe PicturesController, type: :controller do
       it 'responds with JSON for access information to upload pictures to S3' do
         post :create, { user_id: user.id, picture: { name: picture.name, url: picture.url, type: picture.type, histogram: picture.histogram } }
         
-        s3_keys = json_response.keys
+        s3_keys = parsed_response.keys
         expect(s3_keys).to eq(['key', 'policy', 'signature', 'content_type', 'access_key'])
       end
     end
@@ -60,8 +58,8 @@ RSpec.describe PicturesController, type: :controller do
       it 'responds with a JSON error message' do
         post :create, { user_id: user.id, picture: { type: picture.type } }
 
-        expect(json_response.keys.first).to   eq('errors')
-        expect(json_response.values.first).to eq('Unable to create picture')
+        expect(parsed_response.keys.first).to   eq('errors')
+        expect(parsed_response.values.first).to eq('Unable to create picture')
       end
     end
   end
