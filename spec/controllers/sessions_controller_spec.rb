@@ -1,9 +1,12 @@
 RSpec.describe SessionsController, type: :controller do
-  let(:user) { FactoryGirl.create :user }
   # Parse response JSON into variable
   let(:parsed_response) { JSON.parse response.body }
   # Designate all requests as JSON
   before(:example) { request.accept = "application/json" }
+
+  # Using create because of important logic between users and sessions
+  # Can build_stubbed instead then stub all calls to find User
+  let(:user) { FactoryGirl.create :user }
 
   # Helper methods
   def login(login_user)

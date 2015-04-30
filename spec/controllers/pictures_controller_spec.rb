@@ -1,15 +1,18 @@
 RSpec.describe PicturesController, type: :controller do
-  let(:user) { FactoryGirl.create :user }
-  let(:picture) { FactoryGirl.build :picture }
   # Parse response JSON into variable
   let(:parsed_response) { JSON.parse response.body }
   # Designate all requests as JSON
   before(:example) { request.accept = "application/json" }
 
+  # Stub User.find since it is outside scope of tests
+  # Needed for create since no User exists due to build_stubbed :user 
+  before(:example) { allow(User).to receive(:find).and_return(user) }
 
   # Tests
   ### Index ###
   describe '#index' do
+    let(:user) { FactoryGirl.create :user_with_pictures }
+
     context 'when given a valid user ID' do
       it 'responds with an HTTP 200' do
         get :index, { user_id: user.id }
@@ -33,6 +36,9 @@ RSpec.describe PicturesController, type: :controller do
 
   ### Create ###
   describe '#create' do
+    let(:user)    { FactoryGirl.build_stubbed :user }
+    let(:picture) { FactoryGirl.build :picture }
+
     context 'when given valid Pictures attributes' do
       it 'responds with an HTTP 200' do
         post :create, { user_id: user.id, picture: { name: picture.name, url: picture.url, type: picture.type, histogram: picture.histogram } }
