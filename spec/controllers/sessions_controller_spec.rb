@@ -10,7 +10,6 @@ RSpec.describe SessionsController, type: :controller do
 
   # Helper methods
   def login(login_user)
-    #post :create, session: { email: user.email, password: user.password }
     session[:user_id] = login_user.id
   end
 
