@@ -23,13 +23,13 @@ RSpec.describe PicturesController, type: :controller do
       it 'responds with JSON for pictures belonging to given user' do
         get :index, { user_id: user.id }
 
-        # TODO: Catch times with a stubbed method?
-        response_pictures = []
-        json_response.each do |pic|
-          response_pictures << FactoryGirl.build(:picture, pic)
-        end
+        # It makes more sense to check if API returned JSON correctly instead of checking
+        #   if JSON can be massaged into correct format. 
+        # response_pictures = parsed_response.collect { |p| FactoryGirl.build(:picture, p) }
+        # expect(response_pictures).to eq(user.pictures)
 
-        expect(response_pictures).to eq(user.pictures)
+        expect(response.body).not_to be_empty
+        expect(response.body).to eq(user.pictures.to_json)
       end
     end
   end

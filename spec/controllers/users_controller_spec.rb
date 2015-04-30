@@ -20,9 +20,7 @@ RSpec.describe UsersController, type: :controller do
       it 'responds with JSON for given User' do
         get :show, { id: user.id }
 
-        response_user = FactoryGirl.build(:user, json_response)
-
-        expect(response_user).to eq(user)
+        expect(response.body).to eq(user.to_json)
       end
     end
 
@@ -54,19 +52,17 @@ RSpec.describe UsersController, type: :controller do
       end
 
       it 'responds with JSON for newly created user' do
-
-        # TODO: Catch times with a stubbed method?
-        user_attrs = user.attributes
-        #user_attrs['id'] = json_response['id']
-        #user_attrs['created_at'] = json_response['created_at']#user.created_at.iso8601(3)
-        #user_attrs['updated_at'] = json_response['updated_at']#user.updated_at.iso8601(3)
-        #user_attrs['password_digest'] = json_response['password_digest']
         post :create, user: { email: new_user.email, password: new_user.password, password_confirmation: new_user.password_confirmation }
 
-        # TODO: Figure out how build from FactoryGirl
-        response_user = FactoryGirl.build(:user, json_response)
+        # TODO: Make expect() ignore cases instead?
+        new_user.update({
+          id: parsed_response['id'],
+          created_at: parsed_response['created_at'],
+          updated_at: parsed_response['updated_at'],
+          password_digest: parsed_response['password_digest']
+        })
 
-        expect(response_user).to eq(user)
+        expect(response.body).to include(new_user.to_json)
       end
 
       it 'does not create a new session' do

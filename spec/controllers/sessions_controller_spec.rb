@@ -29,7 +29,7 @@ RSpec.describe SessionsController, type: :controller do
       it 'responds with JSON for the signed in user' do
         get :show
 
-        expect(response.body).to eq(user.attributes.to_json)
+        expect(response.body).to eq(user.to_json)
       end
     end
 
@@ -61,7 +61,7 @@ RSpec.describe SessionsController, type: :controller do
       it 'responds with JSON for the newly logged in user' do
         post :create, session: { email: user.email, password: user.password }
 
-        expect(response.body).to eq(user.attributes.to_json)
+        expect(response.body).to eq(user.to_json)
       end
 
       it 'sets session ID to user ID' do
