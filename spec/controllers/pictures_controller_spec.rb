@@ -1,61 +1,68 @@
-RSpec.describe PicturesController do
-  
-  describe '#new' do
-    it 'returns an HTTP 200' do
-      get :new
+RSpec.describe PicturesController, type: :controller do
+  let(:user) { FactoryGirl.create :user }
+  let(:picture) { FactoryGirl.build :picture }
+  # Designate all requests as JSON
+  before(:example) { request.accept = "application/json" }
 
-      expect(response.status).to eq(200)
+  # Helper methods
+  def json_response
+    JSON.parse(response.body)
+  end
+
+  # Tests
+  ### Index ###
+  describe '#index' do
+    context 'when given a valid user ID' do
+      it 'responds with an HTTP 200' do
+        get :index, { user_id: user.id }
+
+        expect(response).to have_http_status(200)
+      end
+
+      it 'responds with JSON for pictures belonging to given user' do
+        get :index, { user_id: user.id }
+
+        # TODO: Catch times with a stubbed method?
+        response_pictures = []
+        json_response.each do |pic|
+          response_pictures << FactoryGirl.build(:picture, pic)
+        end
+
+        expect(response_pictures).to eq(user.pictures)
+      end
     end
   end
 
-  describe '#show' do
-    it 'returns an HTTP 200' do
-      User.create(email: 'newaccount1@test.com', password: 1, password_confirmation: 1)
-      Picture.create(mosaic_id: 1)
-      get :show, id: 1
-
-      expect(response.status).to eq(200)
-    end
-  end
-
-  describe '#delete_mosaic' do
-    it 'returns an HTTP 200 when specifying ID' do
-      user = User.create(email: 'newaccount1@test.com', password: 1, password_confirmation: 1)
-      Picture.create(mosaic_id: 1)
-
-      delete :delete_mosaic, mosaic: { id: 1 }
-
-      expect(response.status).to eq(200)
-    end
-
-    it 'returns an HTTP 200 even when NOT specifying ID' do
-      user = User.create(email: 'newaccount1@test.com', password: 1, password_confirmation: 1)
-      session[:user_id] = user.id
-      Picture.create(mosaic_id: 1)
-
-      delete :delete_mosaic
-
-      expect(response.status).to eq(200)
-    end
-
-    it 'returns an HTTP 401 when NOT specifying ID and user has no mosaics' do
-      user = User.create(email: 'newaccount1@test.com', password: 1, password_confirmation: 1)
-      session[:user_id] = user.id
-
-      delete :delete_mosaic, id: 1
-
-      expect(response.status).to eq(401)
-    end
-  end
-
+  ### Create ###
   describe '#create' do
-    it '' do
+    context 'when given valid Pictures attributes' do
+      it 'responds with an HTTP 200' do
+        post :create, { user_id: user.id, picture: { name: picture.name, url: picture.url, type: picture.type, histogram: picture.histogram } }
+        
+        expect(response).to have_http_status(200)
+      end
+
+      it 'responds with JSON for access information to upload pictures to S3' do
+        post :create, { user_id: user.id, picture: { name: picture.name, url: picture.url, type: picture.type, histogram: picture.histogram } }
+        
+        s3_keys = json_response.keys
+        expect(s3_keys).to eq(['key', 'policy', 'signature', 'content_type', 'access_key'])
+      end
+    end
+
+    context 'when not given valid name for Picture' do
+      it 'responds with HTTP 500' do
+        post :create, { user_id: user.id, picture: { type: picture.type } }
+
+        expect(response).to have_http_status(500)
+      end
+
+      it 'responds with a JSON error message' do
+        post :create, { user_id: user.id, picture: { type: picture.type } }
+
+        expect(json_response.keys.first).to   eq('errors')
+        expect(json_response.values.first).to eq('Unable to create picture')
+      end
     end
   end
-
-  describe '#upload' do
-    it '' do
-    end
-  end
-
 end
