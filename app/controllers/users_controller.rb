@@ -37,7 +37,7 @@ class UsersController < ApplicationController
       if @user.authenticate user_params[:password]
         if @user.update password: user_params[:new_password]
           # success
-          respond_with nothing: true, status: 204
+          head status: 204
         else
           # failure to update password
           render json: { errors: 'Failed to update password' }, status: 500

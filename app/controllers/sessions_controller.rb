@@ -24,9 +24,7 @@ class SessionsController < ApplicationController
 
   def destroy
     sign_out()
-    render nothing: true, status: 204
-  end
-
+    head status: 204
   end
 
   private
