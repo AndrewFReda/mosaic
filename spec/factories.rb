@@ -5,14 +5,24 @@ FactoryGirl.define do
 
   factory :picture do
     histogram
-    name 'yoyoyotestpicture.png'
+    sequence(:name) { |n| "_testpicture#{n}.png" }
+    url 'test_url'
     type 'composition'
   end
 
   factory :user do
-    picture
-    sequence(:email) { |n| "testingemailaccount#{n}@testingemailaddress.com" }
+
+    sequence(:email) { |n| "_testemail#{n}@testhost.com" }
     password 'somepassword'
     password_confirmation { password }
+
+    # See FactorGirl documentation: has_many
+    transient do
+      picture_count 3
+    end
+
+    after(:create) do |user, evaluator|
+      create_list(:picture, evaluator.picture_count, user: user)
+    end
   end
 end
