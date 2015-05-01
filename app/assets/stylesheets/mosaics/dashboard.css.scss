@@ -1,5 +1,4 @@
 /***** DASHBOARD PAGE *****/
-
 .dashboard {
   #sign-out {
     float: right;
@@ -32,8 +31,6 @@
       img {
         width: 45%;
         margin: 1px;
-        /* border: 1px solid gray;
-        vertical-align: top; */
 
         &:hover {
           border: 1px solid rgba(68, 83, 142, 0.74);
@@ -43,7 +40,6 @@
   }
 
   /***** PROFILE PAGE *****/
-
   .profile {
     .form-control {
       font-size: 14px;
