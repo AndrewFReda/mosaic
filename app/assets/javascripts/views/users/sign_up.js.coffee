@@ -1,8 +1,6 @@
 class App.Views.SignUp extends Backbone.View
   template: JST['users/sign_up']
 
-  className: 'registration-form'
-
   events:
     'click #sign-up-btn': 'signUp'
 

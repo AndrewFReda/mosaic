@@ -1,7 +1,15 @@
-<ul class='registration-nav nav nav-tabs'>
-  <li role="presentation" id='login-nav'><a href="#">Login</a></li>
-  <li role="presentation" id='sign-up-nav'><a href="#">Sign Up</a></li>
-</ul>
+<div class='row'>
+  <div class='col-xs-12'>
+    <ul id='registration-nav' class='nav nav-tabs'>
+      <li role="presentation" class='registration-nav-item' id='registration-nav-login'><a href="#">Login</a></li>
+      <li role="presentation" class='registration-nav-item' id='registration-nav-sign-up'><a href="#">Sign Up</a></li>
+    </ul>
+  </div>
+</div>
 
-<div id='registration-forms'>
+<div class='row'>
+  <div class='col-xs-12'>
+    <div id='registration-form'>
+    </div>
+  </div>
 </div>
