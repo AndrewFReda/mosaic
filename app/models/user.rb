@@ -7,8 +7,16 @@ class User < ActiveRecord::Base
                     uniqueness: { case_sensitive: false }
  
   validates :password, length: { minimum: 1 }
-
+  
   has_many :pictures, dependent: :destroy
+
+  def find_pictures_by(attrs)
+    if attrs[:type]
+      self.pictures.where type: attrs[:type]
+    else
+      self.pictures
+    end
+  end
 
 ###### NOT IMPLEMENTED ##############
   def add_composition_pictures_from_tempfiles(temps)
