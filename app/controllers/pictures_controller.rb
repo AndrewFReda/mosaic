@@ -2,6 +2,7 @@ class PicturesController < ApplicationController
   include Histogramr
 
   respond_to :json, only: [:index, :create]
+  before_action :verify_picture_type, only: [:index]
 
   def index
     # TODO: Should this just be 'current_user' instead?
@@ -30,6 +31,14 @@ class PicturesController < ApplicationController
 
     def picture_params
       params.require(:picture).permit(:name, :type, :user_id)
+    end
+
+    def verify_picture_type
+      permitted_types = Set.new ['composition', 'base', 'mosaic', nil]
+
+      unless permitted_types.include? params[:type]
+        render json: { errors: 'Type must be one of: composition, base, mosaic' }, status: 404
+      end
     end
 
 
