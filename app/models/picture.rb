@@ -11,17 +11,22 @@ class Picture < ActiveRecord::Base
 
   # Validate the attached image is image/jpg, image/png, etc
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
-  validates :name, presence: true
-
-  # TODO: Move into user Model since picture types are relevant in relation to user
-  scope :composition_pictures, -> { where(type: 'composition') }
-  scope :base_pictures, -> { where(type: 'base') }
-  scope :mosaics, -> { where(type: 'mosaic') }
+  validates :name, :type, presence: true
+  validate :type_checker
 
   def getContentType
     extension = name.split('.').last
     "image/#{extension}"
   end
+
+  private
+    def type_checker
+      permitted_types = Set.new ['composition', 'base', 'mosaic']
+      
+      unless permitted_types.include? type
+        errors.add(:type, "must be one of: composition, base, mosaic")
+      end
+    end
 
 ###### NOT IMPLEMENTED ##############
   def set_from_tempfile(temp)

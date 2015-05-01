@@ -1,5 +1,5 @@
 <!-- Bleh, just leave this here for now.... -->
-<form id="file_upload" method="POST" enctype="multipart/form-data">
+<form class="file_upload" method="POST" enctype="multipart/form-data">
   <input type="hidden" name="key">
   <input type="hidden" name="AWSAccessKeyID">
   <input type="hidden" name="acl" value="public-read">
@@ -8,23 +8,24 @@
   <input type="hidden" name="signature">
   <input type="hidden" name="Content-Type">
 
-  <div class="file-upload">
+  <div class='row fileinput-container'>
+    <div class='col-xs-12'>
 
-    <header class='upload-form-header'>
-      <h1> Upload </h1>
-    </header>
+      <div class='fileinput-header'>
+        <div class='fileinput-title'>
+          <h4> Pictures </h4>
+        </div>
 
-    <div class="btn btn-success fileinput-button">
-      <i class='glyphicon glyphicon-plus'></i>
-      <span> Add Composition Pictures... </span>
-      <input type="file" name="file" id="composition-pictures-input" data-picture-type="composition" multiple>
+        <div class="btn fileinput-button">
+          <i class='glyphicon glyphicon-plus'></i>
+          <span> Upload </span>
+          <input type="file" name="file" multiple>
+        </div>
+      </div>
+
+      <ul class='upload-picture-list'>
+      </ul>
+
     </div>
-
-    <div class="btn btn-success fileinput-button">
-      <i class='glyphicon glyphicon-plus'></i>
-      <span> Add Base Pictures... </span>
-      <input type="file" name="file" id="base-pictures-input" data-picture-type="base" multiple>
-    </div>
-
   </div>
 </form>

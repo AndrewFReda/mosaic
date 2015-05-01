@@ -1,0 +1,15 @@
+<div class='row'>
+  <div class='col-xs-12'>
+    <ul id='manage-content-nav' class='nav nav-tabs'>
+      <li role="presentation" class='manage-content-nav-item' id='manage-content-nav-composition'><a href="#">Composition</a></li>
+      <li role="presentation" class='manage-content-nav-item' id='manage-content-nav-base'><a href="#">Base</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class='row'>
+  <div class='col-xs-12'>
+    <div id='manage-content-body'>
+    </div>
+  </div>
+</div>

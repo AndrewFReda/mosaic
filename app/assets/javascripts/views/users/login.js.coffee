@@ -1,7 +1,5 @@
 class App.Views.Login extends Backbone.View
   template: JST['users/login']
-
-  className: 'registration-form'
     
   events:
     'click #login-btn': 'login'
