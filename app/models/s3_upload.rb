@@ -13,11 +13,14 @@ class S3Upload
   
   def format_return_info
     {
-      key:          "#{@picture.user.email}/#{@picture.type}/#{@picture.name}",
-      policy:       policy_document(), 
-      signature:    signature(),
-      content_type: @picture.getContentType(),
-      access_key:   ENV['S3_ACCESS_KEY']
+      s3_upload: {
+          key:          "#{@picture.user.email}/#{@picture.type}/#{@picture.name}",
+          policy:       policy_document(), 
+          signature:    signature(),
+          content_type: @picture.getContentType(),
+          access_key:   ENV['S3_ACCESS_KEY']
+      },
+      picture: @picture.attributes
     }
   end
 

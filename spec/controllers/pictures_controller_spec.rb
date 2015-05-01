@@ -114,7 +114,9 @@ RSpec.describe PicturesController, type: :controller do
       it 'responds with JSON for access information to upload pictures to S3' do
         post :create, { user_id: user.id, picture: { name: picture.name, url: picture.url, type: picture.type, histogram: picture.histogram } }
         
-        s3_keys = parsed_response.keys
+        upload_keys = parsed_response.keys
+        s3_keys     = parsed_response['s3_upload'].keys
+        expect(upload_keys).to eq(['s3_upload', 'picture'])
         expect(s3_keys).to eq(['key', 'policy', 'signature', 'content_type', 'access_key'])
       end
     end
