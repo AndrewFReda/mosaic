@@ -6,7 +6,7 @@ class App.Views.Mosaics extends Backbone.View
   initialize: ->
     @session        = @model
     @collection     = new App.Collections.Pictures()
-    @collection.url = '/users/' + @session.id + '/pictures'
+    @collection.url = '/users/' + @session.id + '/pictures?type=mosaic'
     @listenTo(@collection, 'add', @renderMosaic)
     @collection.fetch()
 
@@ -17,3 +17,4 @@ class App.Views.Mosaics extends Backbone.View
   renderMosaic: (mosaic) =>
     view = new App.Views.ShowThumbnail(model: mosaic, tagName: 'li', className: 'mosaic')
     @$el.append(view.render().el)
+    this
