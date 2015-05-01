@@ -119,18 +119,25 @@ RSpec.describe PicturesController, type: :controller do
       end
     end
 
-    context 'when not given valid name for Picture' do
+    context 'when given invalid Picture attributes' do
       it 'responds with HTTP 500' do
         post :create, { user_id: user.id, picture: { type: picture.type } }
 
         expect(response).to have_http_status(500)
       end
 
-      it 'responds with a JSON error message' do
+      it 'responds with appropriate JSON error message' do
         post :create, { user_id: user.id, picture: { type: picture.type } }
 
         expect(parsed_response.keys.first).to   eq('errors')
-        expect(parsed_response.values.first).to eq('Unable to create picture')
+        expect(parsed_response.values.first).to eq("Name can't be blank")
+      end
+
+      it 'responds with appropriate JSON error message' do
+        post :create, { user_id: user.id, picture: { name: '_fake.png', type: '_fake_type' } }
+
+        expect(parsed_response.keys.first).to   eq('errors')
+        expect(parsed_response.values.first).to eq('Type must be one of: composition, base, mosaic')
       end
     end
   end
