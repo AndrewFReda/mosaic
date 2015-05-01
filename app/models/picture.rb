@@ -13,10 +13,6 @@ class Picture < ActiveRecord::Base
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
   validates :name, presence: true
 
-  # TODO: Move into user Model since picture types are relevant in relation to user
-  scope :composition_pictures, -> { where(type: 'composition') }
-  scope :base_pictures, -> { where(type: 'base') }
-  scope :mosaics, -> { where(type: 'mosaic') }
 
   def getContentType
     extension = name.split('.').last
