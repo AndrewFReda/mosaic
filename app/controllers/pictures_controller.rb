@@ -7,7 +7,7 @@ class PicturesController < ApplicationController
   def index
     # TODO: Should this just be 'current_user' instead?
     @user = User.find params[:user_id]
-    @pictures = @user.pictures
+    @pictures = @user.find_pictures_by type: params[:type]
     respond_with @pictures, status: 200
   rescue ActiveRecord::RecordNotFound
     render json: { errors: "Unable to find User with ID: #{params[:user_id]}" }, status: 404
