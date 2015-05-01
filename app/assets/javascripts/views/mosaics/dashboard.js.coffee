@@ -11,10 +11,10 @@ class App.Views.Dashboard extends Backbone.View
 
   render: =>
     @$el.html(@template())
-    view = new App.Views.Mosaics(model: @session)
-    @$('#dashboard-content').html(view.render().el)
     view = new App.Views.SideNav(model: @session)
     @$('#dashboard-side-nav').html(view.render().el)
+    view = new App.Views.Mosaics(model: @session)
+    @$('#dashboard-content').html(view.render().el)
     this
 
   signOut: ->
