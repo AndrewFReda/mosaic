@@ -1,5 +1,5 @@
 <!-- Bleh, just leave this here for now.... -->
-<form id="file_upload" method="POST" enctype="multipart/form-data">
+<form class="file_upload" method="POST" enctype="multipart/form-data">
   <input type="hidden" name="key">
   <input type="hidden" name="AWSAccessKeyID">
   <input type="hidden" name="acl" value="public-read">
@@ -13,39 +13,18 @@
 
       <div class='fileinput-header'>
         <div class='fileinput-title'>
-          <h4> Composition Pictures </h4>
+          <h4> Pictures </h4>
         </div>
 
         <div class="btn fileinput-button">
           <i class='glyphicon glyphicon-plus'></i>
-          <span> Add </span>
-          <input type="file" name="file" id="composition-pictures-input" data-picture-type="composition" multiple>
+          <span> Upload </span>
+          <input type="file" name="file" multiple>
         </div>
       </div>
 
-      <ul id='composition-picture-list' class='upload-picture-list'>
+      <ul class='upload-picture-list'>
       </ul>
-
-    </div>
-  </div>
-
-  <div class='row fileinput-container'>
-    <div class='col-xs-12'>
-
-      <div class='fileinput-header'>
-        <div class='fileinput-title'>
-          <h4> Base Pictures </h4>
-        </div>
-
-        <div class="btn fileinput-button">
-          <i class='glyphicon glyphicon-plus'></i>
-          <span> Add </span>
-          <input type="file" name="file" id="base-pictures-input" data-picture-type="base" multiple>
-        </div>
-      </div>
-
-      <div id='base-picture-list' class='upload-picture-list'>
-      </div>
 
     </div>
   </div>
