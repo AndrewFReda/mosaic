@@ -5,10 +5,23 @@ class App.Views.UploadPictures extends Backbone.View
 
   initialize: ->
     @session = @model
+    @collection     = new App.Collections.Pictures()
+    @collection.url = '/users/' + @session.id + '/pictures'
+    @listenTo(@collection, 'add', @renderPicture)
+    @collection.fetch()
 
   render: =>
     @$el.html(@template())
+    @collection.forEach(@renderPicture)
     @$('#file_upload').find("input:file").each(@setUpS3UploadHooks)
+    this
+
+  renderPicture: (picture) =>
+    view = new App.Views.ShowThumbnail(model: picture, tagName: 'li', className: 'upload-picture-thumbnail')
+    if picture.attributes['type'] == 'composition'
+      @$('#composition-picture-list').append(view.render().el)
+    else
+      @$('#base-picture-list').append(view.render().el)
     this
 
   setUpS3UploadHooks: (i, el) =>

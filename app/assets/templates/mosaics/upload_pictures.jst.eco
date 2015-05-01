@@ -8,23 +8,45 @@
   <input type="hidden" name="signature">
   <input type="hidden" name="Content-Type">
 
-  <div class="file-upload">
+  <div class='row fileinput-container'>
+    <div class='col-xs-12'>
 
-    <header class='upload-form-header'>
-      <h1> Upload </h1>
-    </header>
+      <div class='fileinput-header'>
+        <div class='fileinput-title'>
+          <h4> Composition Pictures </h4>
+        </div>
 
-    <div class="btn btn-success fileinput-button">
-      <i class='glyphicon glyphicon-plus'></i>
-      <span> Add Composition Pictures... </span>
-      <input type="file" name="file" id="composition-pictures-input" data-picture-type="composition" multiple>
+        <div class="btn fileinput-button">
+          <i class='glyphicon glyphicon-plus'></i>
+          <span> Add </span>
+          <input type="file" name="file" id="composition-pictures-input" data-picture-type="composition" multiple>
+        </div>
+      </div>
+
+      <ul id='composition-picture-list' class='upload-picture-list'>
+      </ul>
+
     </div>
+  </div>
 
-    <div class="btn btn-success fileinput-button">
-      <i class='glyphicon glyphicon-plus'></i>
-      <span> Add Base Pictures... </span>
-      <input type="file" name="file" id="base-pictures-input" data-picture-type="base" multiple>
+  <div class='row fileinput-container'>
+    <div class='col-xs-12'>
+
+      <div class='fileinput-header'>
+        <div class='fileinput-title'>
+          <h4> Base Pictures </h4>
+        </div>
+
+        <div class="btn fileinput-button">
+          <i class='glyphicon glyphicon-plus'></i>
+          <span> Add </span>
+          <input type="file" name="file" id="base-pictures-input" data-picture-type="base" multiple>
+        </div>
+      </div>
+
+      <div id='base-picture-list' class='upload-picture-list'>
+      </div>
+
     </div>
-
   </div>
 </form>
