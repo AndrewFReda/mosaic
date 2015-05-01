@@ -1,0 +1,54 @@
+/***** MANAGE CONTENT PAGE *****/
+#manage-content-nav {
+  li a { 
+    color: black;
+  }
+
+  .active {
+    font-weight: bold;
+  }
+}
+
+.upload-form {
+  max-width: 90%;
+  margin: 0 auto;
+
+  .fileinput-header {
+    overflow: hidden;
+    border-bottom: 1px solid gray;
+    margin-bottom: 4px;
+
+    .fileinput-title {
+      float: left;
+
+      h4 {
+        margin-bottom: 0px;
+      }
+    }
+
+    .fileinput-button {
+      float: right;
+
+      span {
+        font-weight: bold;
+      }
+    }
+  }
+
+  .upload-picture-list {
+    padding-left: 0px;
+
+    .upload-picture-thumbnail {
+      display: inline;
+      
+      img {
+        width: 30%;
+        margin: 1px;
+
+        &:hover {
+          border: 1px solid rgba(68, 83, 142, 0.74);
+        }
+      }
+    }
+  }
+}
