@@ -18,13 +18,7 @@ class PicturesController < ApplicationController
     @s3_upload    = S3Upload.new picture: @picture
 
     if @picture.save
-      render json: {
-        key:          "#{@picture.user.email}/#{@picture.type}/#{@picture.name}",
-        policy:       @s3_upload.policy_document(), 
-        signature:    @s3_upload.signature(),
-        content_type: @picture.getContentType(),
-        access_key:   ENV['S3_ACCESS_KEY']
-      }, status: 201
+      render json: @s3_upload.format_return_info, status: 201
     else
       render json: { errors: 'Unable to create picture' }, status: 500
     end
