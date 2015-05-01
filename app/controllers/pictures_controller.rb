@@ -8,6 +8,8 @@ class PicturesController < ApplicationController
     @user = User.find params[:user_id]
     @pictures = @user.pictures
     respond_with @pictures, status: 200
+  rescue ActiveRecord::RecordNotFound
+    render json: { errors: "Unable to find User with ID: #{params[:user_id]}" }, status: 404
   end
 
   def create
@@ -20,7 +22,7 @@ class PicturesController < ApplicationController
     if @picture.save
       render json: @s3_upload.format_return_info, status: 201
     else
-      render json: { errors: 'Unable to create picture' }, status: 500
+      render json: { errors: @picture.errors.full_messages.first }, status: 500
     end
   end
 
