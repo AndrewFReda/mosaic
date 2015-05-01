@@ -35,7 +35,6 @@ class App.Views.UploadPictures extends Backbone.View
           dataType: 'json'
           data: { picture: { name: data.files[0].name, type: @type } }
           success: (retdata) =>
-            console.log(retdata)
             @picture = new App.Models.Picture(retdata.picture)
             # after we created our document in rails, it is going to send back JSON of the key,
             # policy, and signature.  We will put these into our form before it gets submitted to amazon.
