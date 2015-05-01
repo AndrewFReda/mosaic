@@ -1,44 +1,42 @@
 class App.Views.SideNav extends Backbone.View
   template: JST['mosaics/side_nav']
 
-  tagName: 'ul'
-  className: 'side-nav'
-
   events:
     'click .side-nav-item': 'toggleActiveNav'
-    'click #view-mosaics-nav': 'viewMosaics'
-    'click #create-mosaics-nav': 'createMosaics'
-    'click #manage-content-nav': 'manageContent'
-    'click #manage-profile-nav': 'manageProfile'
+    'click #side-nav-view-mosaics': 'renderViewMosaics'
+    'click #side-nav-create-mosaics': 'renderCreateMosaics'
+    'click #side-nav-manage-content': 'renderManageContent'
+    'click #side-nav-manage-profile': 'renderManageProfile'
     
   initialize: ->
     @session = @model
 
   render: ->
     @$el.html(@template())
+    @$('#side-nav-view-mosaics').addClass('active')
     this
-
-  viewMosaics: (e) ->
-    view = new App.Views.Mosaics(model: @session)
-    $('#dashboard-content').html(view.render().el)
-    false
-
-  createMosaics: (e) ->
-    view = new App.Views.CreateMosaic()
-    $('#dashboard-content').html(view.render().el)
-    false
-
-  manageContent: (e) ->
-    view = new App.Views.ManageContent(model: @session)
-    $('#dashboard-content').html(view.render().el)
-    false
-
-  manageProfile: (e) ->
-    view = new App.Views.Profile(model: @session)
-    $('#dashboard-content').html(view.render().el)
-    false
 
   toggleActiveNav: (e) ->
     @$('.side-nav-item').removeClass('active')
     $(e.currentTarget).addClass('active')
     false
+
+  renderDashboardBody: (view) ->
+    $('#dashboard-body').html(view.render().el)
+    false
+
+  renderViewMosaics: (e) ->
+    view = new App.Views.Mosaics(model: @session)
+    @renderDashboardBody(view)
+
+  renderCreateMosaics: (e) ->
+    view = new App.Views.CreateMosaic()
+    @renderDashboardBody(view)
+
+  renderManageContent: (e) ->
+    view = new App.Views.ManageContent(model: @session)
+    @renderDashboardBody(view)
+
+  renderManageProfile: (e) ->
+    view = new App.Views.Profile(model: @session)
+    @renderDashboardBody(view)
