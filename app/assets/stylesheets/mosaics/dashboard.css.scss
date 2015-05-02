@@ -56,10 +56,24 @@
       width: 60%;
     }
 
-    .save {
-      margin-top: 2px;
-      width: 60%;
-      font-weight: bold;
+    .profile-header {
+      overflow: hidden;
+      border-bottom: 1px solid gray;
+      margin-bottom: 4px;
+
+      .profile-title {
+        float: left;
+      }
+
+      .update {
+        float: right;
+        background: transparent;
+        font-weight: bold;
+      }
+    }
+
+    .textfield-error {
+      border: 1px solid red;
     }
   }
 }
