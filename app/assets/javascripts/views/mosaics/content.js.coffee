@@ -1,4 +1,4 @@
-class App.Views.content extends Backbone.View
+class App.Views.Content extends Backbone.View
   template: JST['mosaics/content']
 
   events:
@@ -23,14 +23,14 @@ class App.Views.content extends Backbone.View
     $(e.currentTarget).addClass('active')
     false
 
-  rendercontentBody: (view) ->
+  renderContentBody: (view) ->
     @$('#content-body').html(view.render().el)
     false
 
   renderUploadBase: ->
     view = new App.Views.UploadPictures(model: @session, collection: @collection, type: 'base')
-    @rendercontentBody(view)
+    @renderContentBody(view)
 
   renderUploadComposition: ->
     view = new App.Views.UploadPictures(model: @session, collection: @collection, type: 'composition')
-    @rendercontentBody(view)
+    @renderContentBody(view)
