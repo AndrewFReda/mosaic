@@ -1,4 +1,3 @@
-<!-- Bleh, just leave this here for now.... -->
 <form class="file_upload" method="POST" enctype="multipart/form-data">
   <input type="hidden" name="key">
   <input type="hidden" name="AWSAccessKeyID">
@@ -8,24 +7,20 @@
   <input type="hidden" name="signature">
   <input type="hidden" name="Content-Type">
 
-  <div class='row fileinput-container'>
-    <div class='col-xs-12'>
+  <div class='fileinput-header'>
+    <div class='fileinput-title'>
+      <h4> Pictures </h4>
+    </div>
 
-      <div class='fileinput-header'>
-        <div class='fileinput-title'>
-          <h4> Pictures </h4>
-        </div>
-
-        <div class="btn fileinput-button">
-          <i class='glyphicon glyphicon-plus'></i>
-          <span> Upload </span>
-          <input type="file" name="file" multiple>
-        </div>
-      </div>
-
-      <ul class='upload-picture-list'>
-      </ul>
-
+    <!-- TODO: Center button vertically -->
+    <div class="btn fileinput-button">
+      <i class='glyphicon glyphicon-plus'></i>
+      <span> Upload </span>
+      <input type="file" name="file" multiple>
     </div>
   </div>
+
+  <ul class='upload-picture-list'>
+  </ul>
+
 </form>
