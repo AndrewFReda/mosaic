@@ -22,13 +22,10 @@ class App.Views.SignUp extends Backbone.View
 
   handleSignUpSuccess: (model, resp, opts) =>
     @session = new App.Models.Session()
-    @session.set
+    @session.create
       email: model.get('email')
       password: model.get('password')
-    @session.save(null,
-      success: @session.handleLoginSuccess
-      error: @session.handleLoginFailure
-    )
+
 
   handleSignUpFailure: (model, resp, opts) =>
     console.log('handleSignUpFailure')
