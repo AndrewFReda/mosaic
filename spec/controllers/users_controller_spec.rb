@@ -106,51 +106,53 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
-  ### Update Password ###
-  describe '#update_password' do
-    let (:altered_password) { "altered-#{user.password}" }
+  ### Update ###
+  describe '#update' do
+    let(:altered_email)    { "altered-#{user.email}" }
+    let(:altered_password) { "altered-#{user.password}" }
 
      context 'when given valid User authentication information' do
       it 'responds with an HTTP 204' do
-        put :update_password, { id: user.id, user: { password: user.password, password_confirmation: user.password_confirmation, new_password: altered_password } }
+        put :update, { id: user.id, user: { email: user.email, password: user.password, new_password: altered_password } }
 
         expect(response).to have_http_status(204)
       end
 
       it 'responds with no content' do
-        put :update_password, { id: user.id, user: { password: user.password, password_confirmation: user.password_confirmation, new_password: altered_password } }
+        put :update, { id: user.id, user: { email: user.email, password: user.password, new_password: altered_password } }
 
         expect(response.body).to eq('')
       end
 
-      it 'updates password for given User' do
+      it 'updates all given attributes for given User' do
+        put :update, { id: user.id, user: { email: altered_email, password: user.password, new_password: altered_password } }
+
+        get :show, id: user.id
+        expect(parsed_response['email']).to eq(altered_email)
+
+        # Hacky workaround test to ensure password changed
+        put :update, { id: user.id, user: { email: user.email, password: altered_password } }
+        get :show, id: user.id
+        expect(parsed_response['email']).to eq(altered_email)
       end
-    end
 
-    context 'when given password and confirmation do not match' do
-      it 'responds with am HTTP 401' do
-        put :update_password, { id: user.id, user: { password: user.password, password_confirmation: altered_password, new_password: altered_password } }
-
-        expect(response).to have_http_status(401)
-      end
-
-      it 'responds with a JSON error message' do
-        put :update_password, { id: user.id, user: { password: user.password, password_confirmation: altered_password, new_password: altered_password } }
-
-        expect(parsed_response.keys.first).to eq('errors')
-        expect(parsed_response.values.first).to eq('Password and confirmation do not match')
+      it 'updates only given attributes for given User' do
+        put :update, { id: user.id, user: { password: user.password, new_password: altered_password } }
+        
+        get :show, id: user.id
+        expect(parsed_response['email']).to eq(user.email)
       end
     end
 
     context 'when given password is incorrect' do
       it 'responds with an HTTP 401' do
-        put :update_password, { id: user.id, user: { password: altered_password, password_confirmation: altered_password, new_password: altered_password } }
+        put :update, { id: user.id, user: { password: altered_password, new_password: altered_password } }
 
         expect(response).to have_http_status(401)
       end
 
       it 'responds with a JSON error message' do
-        put :update_password, { id: user.id, user: { password: altered_password, password_confirmation: altered_password, new_password: altered_password } }
+        put :update, { id: user.id, user: { password: altered_password, new_password: altered_password, new_password_confirmation: altered_password } }
 
         expect(parsed_response.keys.first).to eq('errors')
         expect(parsed_response.values.first).to eq('Password is incorrect')
