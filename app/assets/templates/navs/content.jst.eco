@@ -1,0 +1,4 @@
+<ul class='nav nav-tabs'>
+  <li role="presentation" class='content-nav-item' id='content-nav-composition'><a href="#">Composition</a></li>
+  <li role="presentation" class='content-nav-item' id='content-nav-base'><a href="#">Base</a></li>
+</ul>

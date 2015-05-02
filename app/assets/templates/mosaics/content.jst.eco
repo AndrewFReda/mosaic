@@ -1,9 +1,7 @@
 <div class='row'>
   <div class='col-xs-12'>
-    <ul id='content-nav' class='nav nav-tabs'>
-      <li role="presentation" class='content-nav-item' id='content-nav-composition'><a href="#">Composition</a></li>
-      <li role="presentation" class='content-nav-item' id='content-nav-base'><a href="#">Base</a></li>
-    </ul>
+    <div id='content-nav'>
+    </div>
   </div>
 </div>
 
