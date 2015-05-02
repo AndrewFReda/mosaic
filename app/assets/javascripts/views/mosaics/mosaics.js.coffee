@@ -1,7 +1,7 @@
 class App.Views.Mosaics extends Backbone.View
 
   tagName: 'ul'
-  className: 'mosaics'
+  id: 'mosaics'
 
   initialize: ->
     @session        = @model
