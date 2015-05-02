@@ -1,4 +1,4 @@
-<ul id='side-nav' class="nav nav-pills nav-stacked">
+<ul class="nav nav-pills nav-stacked">
   <li role="presentation" class='side-nav-item' id='side-nav-mosaics'><a href="#">View</a></li>
   <li role="presentation" class='side-nav-item' id='side-nav-create'><a href="#">Create</a></li>
   <li role="presentation" class='side-nav-item' id='side-nav-content'><a href="#">Content</a></li>

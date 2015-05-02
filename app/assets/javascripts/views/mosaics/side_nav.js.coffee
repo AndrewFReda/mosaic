@@ -1,6 +1,8 @@
 class App.Views.SideNav extends Backbone.View
   template: JST['mosaics/side_nav']
 
+  id: 'side-nav'
+
   events:
     'click .side-nav-item': 'toggleActiveNav'
     'click #side-nav-mosaics': 'renderMosaics'
