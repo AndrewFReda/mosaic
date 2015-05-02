@@ -1,5 +1,5 @@
 class App.Views.SideNav extends Backbone.View
-  template: JST['mosaics/side_nav']
+  template: JST['navs/side_nav']
 
   id: 'side-nav'
 
@@ -20,7 +20,7 @@ class App.Views.SideNav extends Backbone.View
 
   toggleActiveNav: (e) ->
     @$('.side-nav-item').removeClass('active')
-    $(e.currentTarget).addClass('active')
+    @$(e.currentTarget).addClass('active')
     false
 
   renderDashboardBody: (view) ->
