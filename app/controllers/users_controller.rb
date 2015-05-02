@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   include Histogramr
 
-  respond_to :json, only: [:show, :create, :update_password]
+  respond_to :json, only: [:show, :create, :update]
 
   def show
     # TODO: Should this just be 'current_user' instead?
@@ -29,26 +29,20 @@ class UsersController < ApplicationController
     end
   end
 
-  def update_password
+  def update
     # TODO: Should this just be 'current_user' instead?
     @user = User.find params[:id]
+    email = user_params[:email]        || @user.email
+    pswrd = user_params[:new_password] || @user.password
 
-    if user_params[:password] == user_params[:password_confirmation]
-      if @user.authenticate user_params[:password]
-        if @user.update password: user_params[:new_password]
-          # success
-          head status: 204
-        else
-          # failure to update password
-          render json: { errors: 'Failed to update password' }, status: 500
-        end
+    if @user.authenticate user_params[:password]
+      if @user.update email: email, password: pswrd
+        head status: 204
       else
-        # password is incorrect
-        render json: { errors: 'Password is incorrect' }, status: 401
+        render json: { errors: @user.errors.full_messages }, status: 500
       end
     else
-      # password and confirmation do not match
-      render json: { errors: 'Password and confirmation do not match' }, status: 401
+      render json: { errors: 'Password is incorrect' }, status: 401
     end
   end
 

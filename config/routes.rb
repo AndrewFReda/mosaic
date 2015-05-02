@@ -9,8 +9,6 @@ Rails.application.routes.draw do
     resources :pictures
   end
 
-  put 'users/:id/password', to: 'users#update_password'
-
 =begin
 
   delete 'users/delete_pictures', to: 'users#delete_pictures', as: 'delete_pictures'
