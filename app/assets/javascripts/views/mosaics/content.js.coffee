@@ -1,10 +1,10 @@
-class App.Views.ManageContent extends Backbone.View
-  template: JST['mosaics/manage_content']
+class App.Views.content extends Backbone.View
+  template: JST['mosaics/content']
 
   events:
-    'click .manage-content-nav-item': 'toggleActiveNav'
-    'click #manage-content-nav-base': 'renderUploadBase'
-    'click #manage-content-nav-composition': 'renderUploadComposition'
+    'click .content-nav-item': 'toggleActiveNav'
+    'click #content-nav-base': 'renderUploadBase'
+    'click #content-nav-composition': 'renderUploadComposition'
 
   initialize: ->
     @session = @model
@@ -15,22 +15,22 @@ class App.Views.ManageContent extends Backbone.View
   render: =>
     @$el.html(@template())
     @renderUploadComposition()
-    @$('#manage-content-nav-composition').addClass('active')
+    @$('#content-nav-composition').addClass('active')
     this
 
   toggleActiveNav: (e) ->
-    @$('.manage-content-nav-item').removeClass('active')
+    @$('.content-nav-item').removeClass('active')
     $(e.currentTarget).addClass('active')
     false
 
-  renderManageContentBody: (view) ->
-    @$('#manage-content-body').html(view.render().el)
+  rendercontentBody: (view) ->
+    @$('#content-body').html(view.render().el)
     false
 
   renderUploadBase: ->
     view = new App.Views.UploadPictures(model: @session, collection: @collection, type: 'base')
-    @renderManageContentBody(view)
+    @rendercontentBody(view)
 
   renderUploadComposition: ->
     view = new App.Views.UploadPictures(model: @session, collection: @collection, type: 'composition')
-    @renderManageContentBody(view)
+    @rendercontentBody(view)

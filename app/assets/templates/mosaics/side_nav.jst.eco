@@ -1,6 +1,6 @@
 <ul id='side-nav' class="nav nav-pills nav-stacked">
-  <li role="presentation" class='side-nav-item' id='side-nav-view-mosaics'><a href="#">View</a></li>
-  <li role="presentation" class='side-nav-item' id='side-nav-create-mosaics'><a href="#">Create</a></li>
-  <li role="presentation" class='side-nav-item' id='side-nav-manage-content'><a href="#">Content</a></li>
-  <li role="presentation" class='side-nav-item' id='side-nav-manage-profile'><a href="#">Profile</a></li>
+  <li role="presentation" class='side-nav-item' id='side-nav-mosaics'><a href="#">View</a></li>
+  <li role="presentation" class='side-nav-item' id='side-nav-create'><a href="#">Create</a></li>
+  <li role="presentation" class='side-nav-item' id='side-nav-content'><a href="#">Content</a></li>
+  <li role="presentation" class='side-nav-item' id='side-nav-profile'><a href="#">Profile</a></li>
 </ul>

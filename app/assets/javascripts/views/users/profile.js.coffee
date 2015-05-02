@@ -25,7 +25,7 @@ class App.Views.Profile extends Backbone.View
         password: @$('#profile-old-password').val()
         new_password: @$('#profile-new-password').val()
       @user.save(null,
-        success: -> console.log('nice update bro')
+        success: -> console.log('nice update')
         error: -> console.log('FAILURE')
       )
     else

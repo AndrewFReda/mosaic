@@ -3,17 +3,17 @@ class App.Views.SideNav extends Backbone.View
 
   events:
     'click .side-nav-item': 'toggleActiveNav'
-    'click #side-nav-view-mosaics': 'renderViewMosaics'
-    'click #side-nav-create-mosaics': 'renderCreateMosaics'
-    'click #side-nav-manage-content': 'renderManageContent'
-    'click #side-nav-manage-profile': 'renderManageProfile'
+    'click #side-nav-mosaics': 'renderMosaics'
+    'click #side-nav-create': 'renderCreate'
+    'click #side-nav-content': 'renderContent'
+    'click #side-nav-profile': 'renderProfile'
     
   initialize: ->
     @session = @model
 
   render: ->
     @$el.html(@template())
-    @$('#side-nav-view-mosaics').addClass('active')
+    @$('#side-nav-mosaics').addClass('active')
     this
 
   toggleActiveNav: (e) ->
@@ -25,18 +25,18 @@ class App.Views.SideNav extends Backbone.View
     $('#dashboard-body').html(view.render().el)
     false
 
-  renderViewMosaics: (e) ->
+  renderMosaics: (e) ->
     view = new App.Views.Mosaics(model: @session)
     @renderDashboardBody(view)
 
-  renderCreateMosaics: (e) ->
-    view = new App.Views.CreateMosaic()
+  renderCreate: (e) ->
+    view = new App.Views.Create()
     @renderDashboardBody(view)
 
-  renderManageContent: (e) ->
-    view = new App.Views.ManageContent(model: @session)
+  renderContent: (e) ->
+    view = new App.Views.Content(model: @session)
     @renderDashboardBody(view)
 
-  renderManageProfile: (e) ->
+  renderProfile: (e) ->
     view = new App.Views.Profile(model: @session)
     @renderDashboardBody(view)
