@@ -1,7 +1,7 @@
 class App.Views.Profile extends Backbone.View
   template: JST['users/profile']
 
-  className: 'profile'
+  id: 'profile'
 
   events:
     'click .update': 'updateUser'

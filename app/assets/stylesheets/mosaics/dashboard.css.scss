@@ -1,5 +1,5 @@
 /***** DASHBOARD PAGE *****/
-.dashboard {
+#dashboard {
   #sign-out {
     float: right;
     color: red;
@@ -19,7 +19,7 @@
   }
 
   /***** MOSAICS PAGE *****/
-  .mosaics {
+  #mosaics {
     padding-left: 0px;
     list-style-type: none;
 
@@ -38,7 +38,7 @@
   }
 
   /***** PROFILE PAGE *****/
-  .profile {
+  #profile {
     .form-control {
       font-size: 14px;
       height: auto;    
