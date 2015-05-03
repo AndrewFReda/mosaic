@@ -1,5 +1,6 @@
 class App.Views.Profile extends Backbone.View
   template: JST['application/profile']
+  # TODO: Break into UsersEdit view
 
   id: 'profile'
 
