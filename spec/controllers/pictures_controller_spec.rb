@@ -144,14 +144,47 @@ RSpec.describe PicturesController, type: :controller do
     end
   end
 
-  ### Destroy ###
+  ##### UPDATE #####
+  describe '#update' do
+    let(:picture) { FactoryGirl.create :picture } 
+
+    context 'when given all valid Picture attributes' do
+      let(:updated_name) { "updated_#{picture.name}" }
+
+      it 'responds with an HTTP 204' do
+        put :update, { user_id: user.id, id: picture.id, picture: { id: picture.id, name: updated_name } }
+
+        expect(response).to have_http_status(204)
+      end
+
+      it 'responds with no JSON content' do
+        put :update, { user_id: user.id, id: picture.id, picture: { id: picture.id, name: updated_name }}
+
+        expect(response.body).to eq('')
+      end
+    end
+
+    context 'when given invalid Picture attributes to update' do
+      let(:updated_name) { "" }
+
+      it 'responds with an HTTP 500' do
+        put :update, { user_id: user.id, id: picture.id, picture: { id: picture.id, name: updated_name }}
+
+        expect(response).to have_http_status(500)
+      end
+
+      it 'responds with a JSON error message' do
+        put :update, { user_id: user.id, id: picture.id, picture: { id: picture.id, name: updated_name }}        
+
+        expect(parsed_response.keys.first).to   eq('errors')
+        expect(parsed_response.values.first).to eq("Name can't be blank")
+      end
+    end
+  end
+
+  ##### DESTROY #####
   describe '#destroy' do
-    let(:user)    { FactoryGirl.build_stubbed :user }
-
-    # Stub User.find since it is outside scope of tests
-    # Needed for create since no User exists due to build_stubbed :user 
-    before(:example) { allow(User).to receive(:find).and_return(user) }
-
+    let(:picture) { FactoryGirl.create :picture }
     # TODO: Make tests more robust
     context 'when given valid Picture' do
       let(:picture) { FactoryGirl.create :picture }
@@ -170,13 +203,22 @@ RSpec.describe PicturesController, type: :controller do
     end
 
     # TODO: Fix tests
-    context 'when given valid Picture but delete fails' do
-      let(:picture) { FactoryGirl.create :picture } 
+    #context 'when given valid Picture but destroy fails' do
+    #  before(:example) { allow(Picture).to receive(:destroy).and_return(false) }
 
-      it 'responds with an HTTP 500' do
-        delete :destroy, { user_id: user.id, id: picture.id }
+    #  it 'responds with an HTTP 500' do
+    #    delete :destroy, { user_id: user.id, id: picture.id }
 
-        expect(response).to have_http_status(500)
+    #    expect(response).to have_http_status(500)
+    #  end
+
+    #  it 'responds with JSON error message' do
+    #    delete :destroy, { user_id: user.id, id: picture.id }
+
+    #    expect(response.body).to eq('')
+    #  end
+    #end
+  end
       end
 
       it 'responds with JSON error message' do
