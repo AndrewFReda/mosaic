@@ -52,36 +52,4 @@ class UsersController < ApplicationController
     end
 
 
-
-
-  ################################### Not implemented ###################################
-
-
-  def delete_pictures
-    @user = current_user
-
-    comp_ids   = clean_ids(params[:user][:composition_picture_ids])
-    base_ids   = clean_ids(params[:user][:base_picture_ids])
-    mosaic_ids = clean_ids(params[:user][:mosaic_ids])
-
-    @user.delete_composition_pictures comp_ids
-    @user.delete_base_pictures base_ids
-    @user.delete_mosaics mosaic_ids
-
-    respond_with @user
-  end
-
-  def upload_pictures
-    @user = current_user
-    
-    @user.add_composition_pictures_from_tempfiles params[:user][:compositions]
-    @user.add_base_pictures_from_tempfiles params[:user][:bases]
-
-    respond_with @user
-  end
-
-  # http://stackoverflow.com/questions/14054164/rails-simple-form-getting-an-empty-string-from-checkbox-collection
-  def clean_ids(ids)
-    ids.delete_if { |id| id.empty? }
-  end
 end

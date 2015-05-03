@@ -5,7 +5,6 @@ class ApplicationController < ActionController::Base
 
   respond_to :html, only: [:index]
 
-
   # placeholder method for backbone
   def index
   end

@@ -17,8 +17,8 @@ class App.Views.SignUp extends Backbone.View
       password: @$('.user-password').val(),
       password_confirmation: @$('.user-password-confirmation').val()
     @user.save(null,
-      success: @handleSignUpSuccess, #@user.handleSignUpSuccess
-      error: @handleSignUpFailure    #@user.handleSignUpFailure 
+      success: @handleSignUpSuccess,
+      error: @handleSignUpFailure
     )
     false
 
