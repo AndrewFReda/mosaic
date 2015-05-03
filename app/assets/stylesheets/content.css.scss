@@ -2,39 +2,15 @@
 .upload-form {
   max-width: 90%;
   margin: 0 auto;
-
-  .file-upload-header {
-    overflow: hidden;
-    border-bottom: 1px solid gray;
-    margin-bottom: 4px;
-
-    .file-upload-title {
-      float: left;
-    }
-
-    .fileinput-button {
-      float: right;
-
-      span {
-        font-weight: bold;
-      }
-    }
-  }
-
-  .picture-list {
-    padding-left: 0px;
-
-    .picture-thumbnail {
-      display: inline;
-      
-      img {
-        width: 30%;
-        margin: 1px;
-
-        &:hover {
-          border: 1px solid rgba(68, 83, 142, 0.74);
+  
+  .upload-picture-list {
+    .picture-list {
+      .picture-thumbnail {
+        img {
+          width: 30%;
         }
       }
     }
   }
 }
+

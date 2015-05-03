@@ -13,5 +13,5 @@ class App.Views.PicturesIndex extends Backbone.View
     this
 
   renderPicture: (picture) =>
-    view = new App.Views.PicturesShow(model: picture, className: 'picture-thumbnail')
+    view = new App.Views.PicturesShow(model: picture, className: 'picture picture-thumbnail')
     @$el.append(view.render().el)

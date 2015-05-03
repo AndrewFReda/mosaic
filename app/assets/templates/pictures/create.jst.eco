@@ -8,16 +8,18 @@
   <input type="hidden" name="Content-Type">
 
   <div class='file-upload-header'>
-    <div class='file-upload-title'>
-      <h4> Pictures </h4>
-    </div>
+    <div class='page-title'>
+      <div class='title-text'>
+        <span> Pictures </span>
+      </div>
 
-    <!-- TODO: Center button vertically -->
-    <!-- Buton requires name 'fileinput-button' -->
-    <div class="btn fileinput-button">
-      <i class='glyphicon glyphicon-plus'></i>
-      <span> Upload </span>
-      <input type="file" name="file" multiple>
+      <!-- TODO: Center button vertically -->
+      <!-- Buton requires name 'fileinput-button' -->
+      <div class="btn title-button fileinput-button">
+        <i class='glyphicon glyphicon-plus'></i>
+        <span> Upload </span>
+        <input type="file" name="file" multiple>
+      </div>
     </div>
   </div>
 

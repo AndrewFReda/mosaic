@@ -1,5 +1,7 @@
-<div id='gallery-title'>
-  <h4> Mosaics </h4>
+<div class='page-title'>
+  <div class="title-text">
+    <span> Mosaics <span>
+  </div>
 </div>
 
 <div id='gallery-picture-list'>
