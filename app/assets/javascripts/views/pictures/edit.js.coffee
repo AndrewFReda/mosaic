@@ -22,6 +22,7 @@ class App.Views.PicturesEdit extends Backbone.View
 
   # TODO: Update on S3 as well
   updatePicture: (e) ->
+    @model.urlRoot = "users/#{@model.get('user_id')}/pictures"
     @model.set
       name: $('.edit-name').val()
     @model.save(null,
@@ -36,7 +37,7 @@ class App.Views.PicturesEdit extends Backbone.View
 
   # TODO: Delete off S3 as well
   deletePicture: (e) =>
-    @model.urlRoot = "users/#{@model.attributes['user_id']}/pictures"
+    @model.urlRoot = "users/#{@model.get('user_id')}/pictures"
     @model.destroy({
       wait: true
 
