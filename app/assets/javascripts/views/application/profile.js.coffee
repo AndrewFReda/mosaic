@@ -1,5 +1,5 @@
 class App.Views.Profile extends Backbone.View
-  template: JST['users/profile']
+  template: JST['application/profile']
 
   id: 'profile'
 
