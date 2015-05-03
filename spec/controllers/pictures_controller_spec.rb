@@ -122,7 +122,7 @@ RSpec.describe PicturesController, type: :controller do
     end
 
     context 'when given invalid Picture attributes' do
-      it 'responds with HTTP 500' do
+      it 'responds with an HTTP 500' do
         post :create, { user_id: user.id, picture: { type: picture.type } }
 
         expect(response).to have_http_status(500)
@@ -140,6 +140,65 @@ RSpec.describe PicturesController, type: :controller do
 
         expect(parsed_response.keys.first).to   eq('errors')
         expect(parsed_response.values.first).to eq('Type must be one of: composition, base, mosaic')
+      end
+    end
+  end
+
+  ### Destroy ###
+  describe '#destroy' do
+    let(:user)    { FactoryGirl.build_stubbed :user }
+
+    # Stub User.find since it is outside scope of tests
+    # Needed for create since no User exists due to build_stubbed :user 
+    before(:example) { allow(User).to receive(:find).and_return(user) }
+
+    # TODO: Make tests more robust
+    context 'when given valid Picture' do
+      let(:picture) { FactoryGirl.create :picture }
+
+      it 'responds with an HTTP 204' do
+        delete :destroy, { user_id: user.id, id: picture.id }
+
+        expect(response).to have_http_status(204)
+      end
+
+      it 'responds with no JSON' do
+        delete :destroy, { user_id: user.id, id: picture.id }
+
+        expect(response.body).to eq('')
+      end
+    end
+
+    # TODO: Fix tests
+    context 'when given valid Picture but delete fails' do
+      let(:picture) { FactoryGirl.create :picture } 
+
+      it 'responds with an HTTP 500' do
+        delete :destroy, { user_id: user.id, id: picture.id }
+
+        expect(response).to have_http_status(500)
+      end
+
+      it 'responds with JSON error message' do
+        delete :destroy, { user_id: user.id, id: picture.id }
+
+        expect(response.body).to eq('')
+      end
+    end
+
+    # TODO: Fix tests
+    context 'when given invalid Picture' do
+      let(:invalid_id) { -1 }
+      it 'responds with an HTTP 500' do
+        delete :destroy, { user_id: user.id, id: invalid_id }
+
+        expect(response).to have_http_status(500)
+      end
+
+      it 'responds with JSON error message' do
+        delete :destroy, { user_id: user.id, id: invalid_id }
+
+        expect(response.body).to eq('')
       end
     end
   end
