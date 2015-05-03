@@ -1,30 +1,24 @@
 .nav {
   .active {
     font-weight: bold;
+
+    a {
+      background-color: gray !important;
+    }
   }
 }
 
 /***** REGISTRATION NAV *****/
 #registration-nav {
   li {
-    width: 50%;
-
-    a { 
-      color: black;
-    }
+    width: 49%;
   }
 }
 
 /***** SIDE NAV *****/
 #side-nav {
-  .active a {
-    background-color: gray !important;
-  }
 }
 
 /***** CONTENT PAGE *****/
 #content-nav {
-  .active a {
-    background-color: gray !important;
-  }
 }
