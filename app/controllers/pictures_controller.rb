@@ -3,20 +3,17 @@ class PicturesController < ApplicationController
 
   respond_to :json, only: [:index, :create]
   before_action :verify_picture_type, only: [:index]
+  # TODO: Update tests to test 'find_user' once and not repeatedly for every endpoint
+  before_action :find_user
 
   def index
-    # TODO: Should this just be 'current_user' instead?
-    @user = User.find params[:user_id]
     @pictures = @user.find_pictures_by type: params[:type]
     respond_with @pictures, status: 200
-  rescue ActiveRecord::RecordNotFound
-    render json: { errors: "Unable to find User with ID: #{params[:user_id]}" }, status: 404
   end
 
   def create
     @picture      = Picture.new picture_params
-    # TODO: Should this just be 'current_user' instead?
-    @picture.user = User.find params[:user_id]
+    @picture.user = @user
     @picture.url  = "https://s3.amazonaws.com/#{ENV['S3_BUCKET']}/#{@picture.user.email}/#{@picture.type}/#{@picture.name}"
     @s3_upload    = S3Upload.new picture: @picture
 
@@ -31,6 +28,13 @@ class PicturesController < ApplicationController
 
     def picture_params
       params.require(:picture).permit(:name, :type, :user_id)
+    end
+
+    def find_user
+      # TODO: Should this just be 'current_user' instead?
+      @user = User.find params[:user_id]
+    rescue ActiveRecord::RecordNotFound
+      render json: { errors: "Unable to find User with ID: #{params[:user_id]}" }, status: 404
     end
 
     def verify_picture_type
