@@ -1,11 +1,12 @@
 class PicturesController < ApplicationController
   include Histogramr
 
-  respond_to :json, only: [:index, :create]
-  before_action :verify_picture_type, only: [:index]
-  # TODO: Update tests to test 'find_user' once and not repeatedly for every endpoint
+  before_action :verify_picture_type
   before_action :find_user
+  before_action :find_picture, only: [:update, :destroy]
 
+  respond_to :json, only: [:index, :create, :update, :destroy]
+  
   def index
     @pictures = @user.find_pictures_by type: params[:type]
     respond_with @pictures, status: 200
@@ -24,10 +25,32 @@ class PicturesController < ApplicationController
     end
   end
 
+  def update
+    if @picture.update picture_params
+      head status: 204
+    else
+      render json: { errors: @picture.errors.full_messages.first }, status: 500
+    end
+  end
+
+  def destroy
+    if @picture.destroy
+      head status: 204
+    else
+      render json: { errors: @picture.errors.full_messages.first }, status: 500
+    end
+  end
+
   private
 
     def picture_params
       params.require(:picture).permit(:name, :type, :user_id)
+    end
+
+    def find_picture
+      @picture = Picture.find params[:id]
+    rescue ActiveRecord::RecordNotFound
+      render json: { errors: "Unable to find Picture with ID: #{params[:id]}" }, status: 404
     end
 
     def find_user
