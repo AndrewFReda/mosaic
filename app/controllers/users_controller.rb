@@ -1,11 +1,10 @@
 class UsersController < ApplicationController
   include Histogramr
 
+  before_action :find_user, only: [:show, :update]
   respond_to :json, only: [:show, :create, :update]
 
   def show
-    # TODO: Should this just be 'current_user' instead?
-    @user = User.find params[:id]
     respond_with @user, status: 200
   rescue ActiveRecord::RecordNotFound
     render json: { errors: "Unable to find User with ID: #{params[:id]}" }, status: 404
@@ -30,8 +29,6 @@ class UsersController < ApplicationController
   end
 
   def update
-    # TODO: Should this just be 'current_user' instead?
-    @user = User.find params[:id]
     email = user_params[:email]        || @user.email
     pswrd = user_params[:new_password] || @user.password
 
@@ -51,5 +48,11 @@ class UsersController < ApplicationController
       params.require(:user).permit(:email, :password, :password_confirmation, :new_password, :password_digest)
     end
 
+    def find_user
+      # TODO: Should this just be 'current_user' instead?
+      @user = User.find params[:id]
+    rescue ActiveRecord::RecordNotFound
+      render json: { errors: "Unable to find User with ID: #{params[:id]}" }, status: 404
+    end
 
 end
