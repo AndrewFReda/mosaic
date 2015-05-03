@@ -1,9 +1,11 @@
 /***** GALLERY PAGE *****/
-#gallery-picture-list {
-  .picture-list {
-    .picture-thumbnail {
-      img {
-        width: 45%;
+#gallery {
+  #gallery-picture-list {
+    .picture-list {
+      .picture-thumbnail {
+        img {
+          width: 45%;
+        }
       }
     }
   }

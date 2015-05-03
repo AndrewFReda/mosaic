@@ -1,15 +1,16 @@
 /***** CONTENT PAGE *****/
-.upload-form {
-  margin: 0 auto;
-  
-  .upload-picture-list {
-    .picture-list {
-      .picture-thumbnail {
-        img {
-          width: 30%;
+#content {
+  .upload-form {
+    margin: 0 auto;
+    
+    .upload-picture-list {
+      .picture-list {
+        .picture-thumbnail {
+          img {
+            width: 30%;
+          }
         }
       }
     }
   }
 }
-

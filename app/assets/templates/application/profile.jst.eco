@@ -4,7 +4,7 @@
   </div>
 
   <!-- TODO: Center button vertically -->
-  <button class="title-button update btn"> 
+  <button class="title-button btn update-btn"> 
     <i class='glyphicon glyphicon-check'></i> 
     <span> Update </span>
   </button>

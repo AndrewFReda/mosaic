@@ -4,7 +4,7 @@ class App.Views.Profile extends Backbone.View
   id: 'profile'
 
   events:
-    'click .update': 'updateUser'
+    'click .update-btn': 'updateUser'
 
   initialize: ->
     @user = new App.Models.User({ id: @model.get('id') })
