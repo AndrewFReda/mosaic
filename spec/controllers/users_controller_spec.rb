@@ -7,8 +7,9 @@ RSpec.describe UsersController, type: :controller do
   let(:user)     { FactoryGirl.create :user }
   let(:new_user) { FactoryGirl.build  :user}
 
-  # Tests
-  ### Show ###
+  # --- Tests --- #
+
+  ##### SHOW #####
   describe '#show' do
     context 'when given a valid user ID' do
       it 'responds with an HTTP 200' do
@@ -43,9 +44,9 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
-  ### Create ###
+  ##### CREATE #####
   describe '#create' do
-     context 'when given valid User attributes with no user existing for email' do
+     context 'when given a  User that does not exist with given email' do
       it 'responds with an HTTP 200' do
         post :create, user: { email: new_user.email, password: new_user.password, password_confirmation: new_user.password_confirmation }
 
@@ -73,7 +74,7 @@ RSpec.describe UsersController, type: :controller do
       end
     end
 
-    context 'when a user already exists with given email' do
+    context 'when given a User that already exists with given email' do
       it 'responds with an HTTP 400' do
         post :create, user: { email: user.email, password: user.password, password_confirmation: user.password_confirmation }
 
@@ -106,7 +107,7 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
-  ### Update ###
+  ##### UPDATE #####
   describe '#update' do
     let(:altered_email)    { "altered-#{user.email}" }
     let(:altered_password) { "altered-#{user.password}" }

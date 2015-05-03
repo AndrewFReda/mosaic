@@ -4,17 +4,18 @@ RSpec.describe SessionsController, type: :controller do
   # Designate all requests as JSON
   before(:example) { request.accept = "application/json" }
 
-  # Using create because of important logic between users and sessions
-  # Can build_stubbed instead then stub all calls to find User
+  # Using create to test important logic between users and sessions
   let(:user) { FactoryGirl.create :user }
 
-  # Helper methods
+  # Helper method to simulate 'loggin in'
   def login(login_user)
     session[:user_id] = login_user.id
   end
+  
 
-  # Tests
-  ### Show ###
+  # --- Tests --- #
+
+  ##### SHOW #####
   describe '#show' do
     context 'when a user is signed in' do
       before(:each) { login(user) }
@@ -48,7 +49,7 @@ RSpec.describe SessionsController, type: :controller do
     end
   end
 
-  ### Create ###
+  ##### CREATE #####
   describe '#create' do
     context 'when a user exists for given email and password' do
       it 'responds with an HTTP 200' do
@@ -107,7 +108,7 @@ RSpec.describe SessionsController, type: :controller do
     end
   end
 
-  ### Destroy ###
+  ##### DESTROY #####
   describe '#destroy' do
     context 'when a user is logged in' do
       before(:each) { login(user) }

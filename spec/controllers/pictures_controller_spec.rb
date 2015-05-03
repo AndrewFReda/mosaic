@@ -4,12 +4,14 @@ RSpec.describe PicturesController, type: :controller do
   # Designate all requests as JSON
   before(:example) { request.accept = "application/json" }
 
+  let(:user) { FactoryGirl.build_stubbed :user }
   # Stub User.find since it is outside scope of tests
-  # Needed for create since no User exists due to build_stubbed :user 
   before(:example) { allow(User).to receive(:find).and_return(user) }
 
-  # Tests
-  ### Index ###
+
+  # --- Tests --- #
+
+  ##### INDEX #####
   describe '#index' do
     let(:user) { FactoryGirl.create :user_with_pictures }
 
@@ -63,24 +65,6 @@ RSpec.describe PicturesController, type: :controller do
       end
     end
 
-    context 'when given an invalid user ID' do
-      # Stub method to ensure ID will be invalid
-      before(:example) { allow(User).to receive(:find).and_raise(ActiveRecord::RecordNotFound) }
-
-      it 'responds with an HTTP 404' do
-        get :index, { user_id: user.id }
-
-        expect(response).to have_http_status(404)
-      end
-
-      it 'responds with a JSON error message' do
-        get :index, { user_id: user.id }
-
-        expect(parsed_response.keys.first).to eq('errors')
-        expect(parsed_response.values.first).to eq("Unable to find User with ID: #{user.id}")
-      end
-    end
-
     context 'when given a valid user ID and invalid picture type' do
       let(:invalid_type) { '_fake_type' }
 
@@ -99,9 +83,8 @@ RSpec.describe PicturesController, type: :controller do
     end
   end
 
-  ### Create ###
+  ##### CREATE #####
   describe '#create' do
-    let(:user)    { FactoryGirl.build_stubbed :user }
     let(:picture) { FactoryGirl.build :picture }
 
     context 'when given valid Pictures attributes' do
@@ -122,7 +105,7 @@ RSpec.describe PicturesController, type: :controller do
     end
 
     context 'when given invalid Picture attributes' do
-      it 'responds with HTTP 500' do
+      it 'responds with an HTTP 500' do
         post :create, { user_id: user.id, picture: { type: picture.type } }
 
         expect(response).to have_http_status(500)
@@ -140,6 +123,152 @@ RSpec.describe PicturesController, type: :controller do
 
         expect(parsed_response.keys.first).to   eq('errors')
         expect(parsed_response.values.first).to eq('Type must be one of: composition, base, mosaic')
+      end
+    end
+  end
+
+  ##### UPDATE #####
+  describe '#update' do
+    let(:picture) { FactoryGirl.create :picture } 
+
+    context 'when given all valid Picture attributes' do
+      let(:updated_name) { "updated_#{picture.name}" }
+
+      it 'responds with an HTTP 204' do
+        put :update, { user_id: user.id, id: picture.id, picture: { id: picture.id, name: updated_name } }
+
+        expect(response).to have_http_status(204)
+      end
+
+      it 'responds with no JSON content' do
+        put :update, { user_id: user.id, id: picture.id, picture: { id: picture.id, name: updated_name }}
+
+        expect(response.body).to eq('')
+      end
+    end
+
+    context 'when given invalid Picture attributes to update' do
+      let(:updated_name) { "" }
+
+      it 'responds with an HTTP 500' do
+        put :update, { user_id: user.id, id: picture.id, picture: { id: picture.id, name: updated_name }}
+
+        expect(response).to have_http_status(500)
+      end
+
+      it 'responds with a JSON error message' do
+        put :update, { user_id: user.id, id: picture.id, picture: { id: picture.id, name: updated_name }}        
+
+        expect(parsed_response.keys.first).to   eq('errors')
+        expect(parsed_response.values.first).to eq("Name can't be blank")
+      end
+    end
+  end
+
+  ##### DESTROY #####
+  describe '#destroy' do
+    let(:picture) { FactoryGirl.create :picture }
+    # TODO: Make tests more robust
+    context 'when given valid Picture' do
+      it 'responds with an HTTP 204' do
+        delete :destroy, { user_id: user.id, id: picture.id }
+
+        expect(response).to have_http_status(204)
+      end
+
+      it 'responds with no JSON' do
+        delete :destroy, { user_id: user.id, id: picture.id }
+
+        expect(response.body).to eq('')
+      end
+    end
+
+    # TODO: Fix tests
+    #context 'when given valid Picture but destroy fails' do
+    #  before(:example) { allow(Picture).to receive(:destroy).and_return(false) }
+
+    #  it 'responds with an HTTP 500' do
+    #    delete :destroy, { user_id: user.id, id: picture.id }
+
+    #    expect(response).to have_http_status(500)
+    #  end
+
+    #  it 'responds with JSON error message' do
+    #    delete :destroy, { user_id: user.id, id: picture.id }
+
+    #    expect(response.body).to eq('')
+    #  end
+    #end
+  end
+
+
+  # --- before_action Tests --- #
+  
+  ##### FIND_USER #####
+  describe('.find_user') do
+    context 'when given an invalid user ID' do
+      let(:picture) { FactoryGirl.build_stubbed :picture }
+      # Stub method to ensure ID will be invalid
+      before(:example) { allow(User).to receive(:find).and_raise(ActiveRecord::RecordNotFound) }
+
+      it '#index responds with an HTTP 404' do
+        get :index, { user_id: user.id }
+
+        expect(response).to have_http_status(404)
+      end
+
+      it '#create responds with an HTTP 404' do
+        post :create, { user_id: user.id }
+
+        expect(response).to have_http_status(404)
+      end
+
+      it '#update responds with an HTTP 404' do
+        get :update, { user_id: user.id, id: picture.id }
+
+        expect(response).to have_http_status(404)
+      end
+
+      it '#destroy responds with an HTTP 404' do
+        delete :destroy, { user_id: user.id, id: picture.id }
+
+        expect(response).to have_http_status(404)
+      end
+
+      it 'responds with a JSON error message' do
+        get :index, { user_id: user.id }
+
+        expect(parsed_response.keys.first).to eq('errors')
+        expect(parsed_response.values.first).to eq("Unable to find User with ID: #{user.id}")
+      end
+    end
+  end
+
+  ##### FIND_PICTURE #####
+  describe('.find_picture') do
+    context 'when given invalid Picture to update' do
+      let(:user) { FactoryGirl.create :user }
+      let(:picture) { FactoryGirl.build_stubbed :picture }
+      # Stub method to ensure ID will be invalid
+      before(:example) { allow(Picture).to receive(:find).and_raise(ActiveRecord::RecordNotFound) }
+
+      it '#update responds with an HTTP 500' do
+        put :update, { user_id: user.id, id: picture.id, picture: { name: picture.name } }
+
+        expect(response).to have_http_status(404)
+      end
+
+      it '#destroy responds with an HTTP 500' do
+        delete :destroy, { user_id: user.id, id: picture.id }
+
+        expect(response).to have_http_status(404)
+      end
+
+      it 'responds with a JSON error message' do
+        put :update, { user_id: user.id, id: picture.id, picture: { name: picture.name } }
+
+        expect(parsed_response.keys.first).to   eq('errors')
+        expect(parsed_response.values.first).to eq("Unable to find Picture with ID: #{picture.id}")
       end
     end
   end

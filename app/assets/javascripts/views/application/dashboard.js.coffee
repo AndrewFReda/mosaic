@@ -1,7 +1,7 @@
 class App.Views.Dashboard extends Backbone.View
-  template: JST['mosaics/dashboard']
+  template: JST['application/dashboard']
 
-  className: 'dashboard'
+  id: 'dashboard'
 
   events:
     'click #sign-out': 'signOut'
@@ -13,8 +13,8 @@ class App.Views.Dashboard extends Backbone.View
     @$el.html(@template())
     view = new App.Views.SideNav(model: @session)
     @$('#dashboard-side-nav').html(view.render().el)
-    view = new App.Views.Mosaics(model: @session)
-    @$('#dashboard-content').html(view.render().el)
+    view = new App.Views.Gallery(model: @session)
+    @$('#dashboard-body').html(view.render().el)
     this
 
   signOut: ->

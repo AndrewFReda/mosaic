@@ -1,6 +1,8 @@
 class App.Views.SignUp extends Backbone.View
   template: JST['users/sign_up']
 
+  id: 'sign-up-form'
+
   events:
     'click #sign-up-btn': 'signUp'
 
@@ -15,20 +17,17 @@ class App.Views.SignUp extends Backbone.View
       password: @$('.user-password').val(),
       password_confirmation: @$('.user-password-confirmation').val()
     @user.save(null,
-      success: @handleSignUpSuccess, #@user.handleSignUpSuccess
-      error: @handleSignUpFailure    #@user.handleSignUpFailure 
+      success: @handleSignUpSuccess,
+      error: @handleSignUpFailure
     )
     false
 
   handleSignUpSuccess: (model, resp, opts) =>
     @session = new App.Models.Session()
-    @session.set
+    @session.create
       email: model.get('email')
       password: model.get('password')
-    @session.save(null,
-      success: @session.handleLoginSuccess
-      error: @session.handleLoginFailure
-    )
+
 
   handleSignUpFailure: (model, resp, opts) =>
     console.log('handleSignUpFailure')

@@ -14,6 +14,7 @@ gem 'jquery-rails'
 gem 'backbone-on-rails'
 gem 'lodash-rails'
 gem 'jquery-fileupload-rails'
+gem 'jquery-ui-rails'
 gem 'bootstrap-sass'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer'

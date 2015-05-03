@@ -1,22 +1,20 @@
 class PicturesController < ApplicationController
   include Histogramr
 
-  respond_to :json, only: [:index, :create]
-  before_action :verify_picture_type, only: [:index]
+  before_action :verify_picture_type
+  before_action :find_user
+  before_action :find_picture, only: [:update, :destroy]
 
+  respond_to :json, only: [:index, :create, :update, :destroy]
+  
   def index
-    # TODO: Should this just be 'current_user' instead?
-    @user = User.find params[:user_id]
     @pictures = @user.find_pictures_by type: params[:type]
     respond_with @pictures, status: 200
-  rescue ActiveRecord::RecordNotFound
-    render json: { errors: "Unable to find User with ID: #{params[:user_id]}" }, status: 404
   end
 
   def create
     @picture      = Picture.new picture_params
-    # TODO: Should this just be 'current_user' instead?
-    @picture.user = User.find params[:user_id]
+    @picture.user = @user
     @picture.url  = "https://s3.amazonaws.com/#{ENV['S3_BUCKET']}/#{@picture.user.email}/#{@picture.type}/#{@picture.name}"
     @s3_upload    = S3Upload.new picture: @picture
 
@@ -27,10 +25,39 @@ class PicturesController < ApplicationController
     end
   end
 
+  def update
+    if @picture.update picture_params
+      head status: 204
+    else
+      render json: { errors: @picture.errors.full_messages.first }, status: 500
+    end
+  end
+
+  def destroy
+    if @picture.destroy
+      head status: 204
+    else
+      render json: { errors: @picture.errors.full_messages.first }, status: 500
+    end
+  end
+
   private
 
     def picture_params
       params.require(:picture).permit(:name, :type, :user_id)
+    end
+
+    def find_picture
+      @picture = Picture.find params[:id]
+    rescue ActiveRecord::RecordNotFound
+      render json: { errors: "Unable to find Picture with ID: #{params[:id]}" }, status: 404
+    end
+
+    def find_user
+      # TODO: Should this just be 'current_user' instead?
+      @user = User.find params[:user_id]
+    rescue ActiveRecord::RecordNotFound
+      render json: { errors: "Unable to find User with ID: #{params[:user_id]}" }, status: 404
     end
 
     def verify_picture_type
