@@ -1,5 +1,5 @@
 class App.Views.Registration extends Backbone.View
-  template: JST['users/registration']
+  template: JST['application/registration']
 
   id: 'registration'
     

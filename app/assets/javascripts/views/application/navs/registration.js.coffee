@@ -1,5 +1,5 @@
 class App.Views.RegistrationNav extends Backbone.View
-  template: JST['navs/registration']
+  template: JST['application/navs/registration']
 
   events:
     'click .registration-nav-item': 'toggleActiveNav'
@@ -15,10 +15,6 @@ class App.Views.RegistrationNav extends Backbone.View
     @$('.registration-nav-item').removeClass('active')
     @$(e.currentTarget).addClass('active')
 
-  renderRegistrationForm: (view) ->
-    $('#registration-form').html(view.render().el)
-    this
-
   renderLogin: (e) ->
     view = new App.Views.Login()
     @renderRegistrationForm(view)
@@ -26,3 +22,6 @@ class App.Views.RegistrationNav extends Backbone.View
   renderSignUp: (e) ->
     view = new App.Views.SignUp()
     @renderRegistrationForm(view)
+
+  renderRegistrationForm: (view) ->
+    $('#registration-form').html(view.render().el)
