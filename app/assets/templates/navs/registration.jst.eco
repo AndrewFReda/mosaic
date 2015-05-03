@@ -1,4 +1,0 @@
-<ul class='nav nav-tabs'>
-  <li role="presentation" class='registration-nav-item' id='registration-nav-login'><a href="#">Login</a></li>
-  <li role="presentation" class='registration-nav-item' id='registration-nav-sign-up'><a href="#">Sign Up</a></li>
-</ul>
