@@ -1,6 +1,6 @@
 <ul class="nav nav-pills nav-stacked">
   <li role="presentation" class='side-nav-item' id='side-nav-gallery'><a href="#">Gallery</a></li>
-  <li role="presentation" class='side-nav-item' id='side-nav-create'><a href="#">Create</a></li>
+  <li role="presentation" class='side-nav-item' id='side-nav-designer'><a href="#">Designer</a></li>
   <li role="presentation" class='side-nav-item' id='side-nav-content'><a href="#">Content</a></li>
   <li role="presentation" class='side-nav-item' id='side-nav-profile'><a href="#">Profile</a></li>
 </ul>
