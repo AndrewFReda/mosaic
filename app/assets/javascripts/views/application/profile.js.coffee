@@ -8,6 +8,7 @@ class App.Views.Profile extends Backbone.View
 
   initialize: ->
     @user = new App.Models.User({ id: @model.get('id') })
+    @user.url = "/users/#{@user.get('id')}"
     @user.fetch()
     @listenTo(@user, 'change', @render)
 
@@ -16,18 +17,23 @@ class App.Views.Profile extends Backbone.View
     this
 
   updateUser: ->
-    @$('#profile-body input').removeClass('textfield-error')
+    @$('#profile-body input').removeClass('error')
+    old_password = @$('#profile-old-password')
+    new_password = @$('#profile-new-password')
+    confirmation = @$('#profile-new-password-confirmation')
 
-    if @$('#profile-new-password').val() == @$('#profile-new-password-confirmation').val()
-      @user.url = '/users/' + @user.get('id')
-      @user.set
-        email: @$('#profile-email').val()
-        password: @$('#profile-old-password').val()
-        new_password: @$('#profile-new-password').val()
-      @user.save(null,
-        success: -> console.log('nice update')
-        error: -> console.log('FAILURE')
-      )
+    if new_password.val() != confirmation.val()
+      new_password.addClass('error')
+      confirmation.addClass('error')
     else
-      @$('#profile-new-password').addClass('textfield-error')
-      @$('#profile-new-password-confirmation').addClass('textfield-error')
+      @user.save({
+          password: @$('#profile-old-password').val()
+          new_password: new_password.val()
+        },
+        success: (model, resp, opts) => 
+          $('#profile-body input').addClass('success')
+
+        error: (model, resp, opts) =>
+          if resp['status'] == 401
+            $('#profile-old-password').addClass('error')
+      )
