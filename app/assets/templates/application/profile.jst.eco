@@ -1,14 +1,17 @@
-<header class='profile-header'>
-  <div class='profile-title'>
-    <h4> Update Information </h4>
+<div id='profile-header' class='page-title'>
+  <div class='title-text'>
+    <span> Update Information </span>
   </div>
 
   <!-- TODO: Center button vertically -->
-  <button class="update btn"> <i class='glyphicon glyphicon-check'></i> Update </button>
-</header>
+  <button class="title-button update btn"> 
+    <i class='glyphicon glyphicon-check'></i> 
+    <span> Update </span>
+  </button>
+</div>
 
-<div class='profile-body'>
-  <input type='text' class='form-control' id='profile-email' value="<%= @user.get('email') %>" placeholder="Email"></input>
+<div id='profile-body'>
+  <input type='text' disabled='true' class='form-control' id='profile-email' value="<%= @user.get('email') %>" placeholder="Email"></input>
   <input type='password' class="form-control" id='profile-old-password' placeholder="Old Password"></input>
   <input type='password' class="form-control" id='profile-new-password' placeholder="New Password"></input>  
   <input type='password' class="form-control" id='profile-new-password-confirmation' placeholder="Confirm New Password"></input>

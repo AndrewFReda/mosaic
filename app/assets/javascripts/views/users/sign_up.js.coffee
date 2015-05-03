@@ -30,4 +30,9 @@ class App.Views.SignUp extends Backbone.View
 
 
   handleSignUpFailure: (model, resp, opts) =>
-    console.log('handleSignUpFailure')
+    @$('.input-group input').removeClass('error')
+    if resp['status'] == 401
+      @$('.user-password').addClass('error')
+      @$('.user-password-confirmation').addClass('error')
+    else
+      @$('.user-email').addClass('error')

@@ -15,6 +15,5 @@ class App.Models.Session extends Backbone.Model
     $('#container').html(view.render().el)
 
   handleLoginFailure: (model, resp, opts) =>
-    #@$('.user-email').addClass('error')
-    #@$('.user-password').addClass('error')
-    #@$('.user-password-confirmation').addClass('error')
+    $('.user-email').addClass('error')
+    $('.user-password').addClass('error')

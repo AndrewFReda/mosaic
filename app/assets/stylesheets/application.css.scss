@@ -20,7 +20,9 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-/***** GENERAL LAYOUT *****/
+/***** GENERAL / SHARED STYLES *****/
+
+/***** Layout *****/
 #container {
   max-width: 660px;
   margin-top: 100px;
@@ -28,8 +30,66 @@
   text-align: center;
   background-color: #fff;
   border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 10px;
 }
 
 body {
   background: #eee !important;  
+}
+
+/***** Textfield Modifiers *****/
+.hidden {
+  display: none;
+}
+
+.error {
+  border: 1px solid red;
+  color: red;
+}
+
+.success {
+  border: 1px solid green;
+  color: green;
+}
+
+/***** Page Headings *****/
+.page-title {
+  padding-bottom: 6px;
+  border-bottom: 1px solid gray;
+  margin-bottom: 4px;
+  margin-top: 4px;
+  overflow: hidden;
+  width: 100%;
+
+  .title-text {
+    float: left;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .title-button {
+    float: right;
+    background: transparent;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    font-weight: bold;
+  }
+}
+
+/***** Picture Lists *****/
+.picture-list {
+  padding-left: 0px; 
+  list-style-type: none;
+
+  .picture {
+    display: inline;
+    
+    img {
+      margin: 1px;
+
+      &:hover {
+        border: 1px solid rgba(68, 83, 142, 0.74);
+      }
+    }
+  }
 }

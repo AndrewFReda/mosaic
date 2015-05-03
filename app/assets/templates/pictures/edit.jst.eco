@@ -1,0 +1,18 @@
+<img class='img-rounded' src="<%= @picture.get('url') %>">
+
+<hr>
+
+<div class='input-container hidden'>
+  <input type='text' class='edit-name form-control' placeholder='Name' value="<%= @picture.get('name') %>" >
+</div>
+
+<div class='picture-edit-footer'>
+  <button class='btn edit-btn'> 
+    <i class='glyphicon glyphicon-pencil'></i> 
+    <div class='btn-text'> Edit </div>
+  </button>
+  <button class='btn delete-btn'> 
+    <i class='glyphicon glyphicon-remove'></i>
+    <div class='btn-text'> Delete </div>
+  </button>
+</div>
