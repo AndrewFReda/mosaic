@@ -24,7 +24,7 @@
 
 /***** CONTENT PAGE *****/
 #content-nav {
-  li a { 
-    color: black;
+  .active a {
+    background-color: gray !important;
   }
 }
