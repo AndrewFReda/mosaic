@@ -17,7 +17,7 @@ class App.Views.PicturesShow extends Backbone.View
     view = new App.Views.PicturesEdit(model: @model)
     $(view.render().el).dialog(
       resizable: false
-      show: 'slideDown'
+      show: { effect: 'fade', duration: 200 }
       modal: true
       width: 500
 

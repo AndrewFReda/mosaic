@@ -15,10 +15,10 @@ class App.Views.PicturesEdit extends Backbone.View
     this
 
   prepareEditForm: (e) ->
-    @$('.input-container').removeClass('hidden')
     @$('.edit-btn .glyphicon').switchClass('glyphicon-pencil', 'glyphicon-ok')
     @$('.edit-btn .btn-text').text('Update')
     @$('.edit-btn').switchClass('edit-btn', 'update-btn')
+    @$('.input-container').removeClass('hidden')
 
   # TODO: Update on S3 as well
   updatePicture: (e) ->

@@ -15,7 +15,7 @@
     width: 60%;
   }
 
-  .profile-header {
+  #profile-header {
     overflow: hidden;
     border-bottom: 1px solid gray;
     margin-bottom: 4px;
@@ -29,9 +29,5 @@
       background: transparent;
       font-weight: bold;
     }
-  }
-
-  .textfield-error {
-    border: 1px solid red;
   }
 }
