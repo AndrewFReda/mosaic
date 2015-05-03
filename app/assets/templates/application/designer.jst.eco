@@ -1,20 +1,20 @@
 <div class='page-title'>
   <div class='title-text'>
-    <span> Create </span>
+    <span> Designer </span>
   </div>
 
   <!-- TODO: Center button vertically -->
-  <button class="title-button begin btn"> 
+  <button class="title-button btn begin-btn"> 
     <i class='glyphicon glyphicon-arrow-right'></i> 
     <span> Begin </span>
   </button>
 </div>
 
-<input type='text' id='create-composition-pictures' class='hidden'>
-<input type='text' id='create-base-pictures' class='hidden'>
+<input type='text' id='designer-composition' class='hidden'>
+<input type='text' id='designer-base' class='hidden'>
 
-<div id='create-body'>
-  <div id='create-explaination'>
+<div id='designer-body'>
+  <div id='designer-explaination'>
     <p>
     This will explain what Mosaics is all about.
     </br>
