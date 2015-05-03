@@ -1,4 +1,4 @@
-<form class="file_upload" method="POST" enctype="multipart/form-data">
+<form class="file-upload" method="POST" enctype="multipart/form-data">
   <input type="hidden" name="key">
   <input type="hidden" name="AWSAccessKeyID">
   <input type="hidden" name="acl" value="public-read">
@@ -7,12 +7,13 @@
   <input type="hidden" name="signature">
   <input type="hidden" name="Content-Type">
 
-  <div class='fileinput-header'>
-    <div class='fileinput-title'>
+  <div class='file-upload-header'>
+    <div class='file-upload-title'>
       <h4> Pictures </h4>
     </div>
 
     <!-- TODO: Center button vertically -->
+    <!-- Buton requires name 'fileinput-button' -->
     <div class="btn fileinput-button">
       <i class='glyphicon glyphicon-plus'></i>
       <span> Upload </span>
@@ -20,7 +21,7 @@
     </div>
   </div>
 
-  <ul class='upload-picture-list'>
-  </ul>
+  <div class='upload-picture-list'>
+  </div>
 
 </form>
