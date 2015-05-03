@@ -20,7 +20,9 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-/***** GENERAL LAYOUT *****/
+/***** GENERAL / SHARED STYLES *****/
+
+/***** Layout *****/
 #container {
   max-width: 660px;
   margin-top: 100px;
@@ -35,6 +37,7 @@ body {
   background: #eee !important;  
 }
 
+/***** Textfield Modifiers *****/
 .hidden {
   display: none;
 }
