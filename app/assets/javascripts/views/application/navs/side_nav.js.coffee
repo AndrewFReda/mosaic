@@ -27,7 +27,7 @@ class App.Views.SideNav extends Backbone.View
     @renderDashboardBody(view)
 
   renderCreate: (e) ->
-    view = new App.Views.Create()
+    view = new App.Views.Create(model: @session)
     @renderDashboardBody(view)
 
   renderContent: (e) ->
