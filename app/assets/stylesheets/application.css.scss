@@ -35,48 +35,6 @@ body {
   background: #eee !important;  
 }
 
-.picture-edit-dialog {
-  width: 100%;
-
-  img {
-    max-width: 100%;
-    max-height: 400px;
-    display: block;
-    margin: auto;
-  }
-
-  .picture-edit-footer {
-    float: right;
-
-    button {
-      background: transparent;
-      border: none;
-      font-weight: bold;
-
-      .glyphicon {
-        float: left;
-        // TODO: Align center
-        vertical-align: bottom;
-      }
-
-      .btn-text {
-        float: right;
-        // TODO: Align center
-        vertical-align: bottom;
-      }
-
-      &:focus {
-        outline: none;
-      }
-    }
-  }
-}
-
-.ui-dialog-titlebar {
-  display: none;
-}
-
-
 .hidden {
   display: none;
 }
