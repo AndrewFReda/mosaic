@@ -1,0 +1,30 @@
+.nav {
+  .active {
+    font-weight: bold;
+  }
+}
+
+/***** REGISTRATION NAV *****/
+#registration-nav {
+  li {
+    width: 50%;
+
+    a { 
+      color: black;
+    }
+  }
+}
+
+/***** SIDE NAV *****/
+#side-nav {
+  .active a {
+    background-color: gray !important;
+  }
+}
+
+/***** CONTENT PAGE *****/
+#content-nav {
+  li a { 
+    color: black;
+  }
+}

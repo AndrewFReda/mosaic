@@ -1,24 +1,14 @@
 /***** CONTENT PAGE *****/
-#content-nav {
-  li a { 
-    color: black;
-  }
-
-  .active {
-    font-weight: bold;
-  }
-}
-
 .upload-form {
   max-width: 90%;
   margin: 0 auto;
 
-  .fileinput-header {
+  .file-upload-header {
     overflow: hidden;
     border-bottom: 1px solid gray;
     margin-bottom: 4px;
 
-    .fileinput-title {
+    .file-upload-title {
       float: left;
     }
 
@@ -34,7 +24,7 @@
   .upload-picture-list {
     padding-left: 0px;
 
-    .upload-picture-thumbnail {
+    .picture {
       display: inline;
       
       img {

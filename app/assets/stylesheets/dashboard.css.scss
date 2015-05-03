@@ -1,0 +1,13 @@
+/***** DASHBOARD PAGE *****/
+#dashboard {
+  #sign-out {
+    float: right;
+    color: red;
+    font-weight: bold;
+    font-style: italic;
+
+    &:hover {
+      /* text-decoration: none; */
+    }
+  }
+}

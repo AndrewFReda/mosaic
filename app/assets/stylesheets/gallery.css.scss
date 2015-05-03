@@ -1,0 +1,25 @@
+/***** GALLERY PAGE *****/
+#gallery {
+  padding-left: 0px;
+  list-style-type: none;
+
+  #gallery-title {
+    border-bottom: 1px solid gray;
+    margin-bottom: 4px;
+    width: 100%;
+    text-align: left;
+  }
+
+  .mosaic {
+    display: inline;
+    
+    img {
+      width: 45%;
+      margin: 1px;
+
+      &:hover {
+        border: 1px solid rgba(68, 83, 142, 0.74);
+      }
+    }
+  }
+}
