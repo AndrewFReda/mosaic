@@ -1,0 +1,12 @@
+<div class='page-sub-title' id='mosaics-create-header'>
+  <div class='title-text'>
+    <p> Select the pictures your mosaic will be composed of: </p>
+  </div>
+  <button class='btn title-button continue-button'>
+    <i class='glyphicon glyphicon-arrow-right'></i> 
+    <span> Continue </span>
+  </button>
+</div>
+
+<div id='mosaics-create-picture-list'>
+</div>

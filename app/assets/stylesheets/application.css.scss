@@ -77,6 +77,34 @@ body {
     padding-top: 0px;
     padding-bottom: 0px;
     font-weight: bold;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.page-sub-title {
+  width: 100%;
+  float: right;
+  font-style: italic;
+
+  .title-text {
+    float: left;
+    font-size: 14px;
+    font-weight: italic;
+  }
+
+  .title-button {
+    float: right;
+    background: transparent;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    font-weight: bold;
+
+    &:focus {
+      outline: none;
+    }
   }
 }
 
