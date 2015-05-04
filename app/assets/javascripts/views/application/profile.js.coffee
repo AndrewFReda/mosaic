@@ -8,34 +8,16 @@ class App.Views.Profile extends Backbone.View
 
   initialize: ->
     @user = new App.Models.User({ id: @model.get('id') })
+    @listenTo(@user, 'change', @renderUsersEdit)
     @user.fetch()
-    @listenTo(@user, 'change', @render)
 
   render: =>
     @$el.html(@template())
-    view = new App.Views.UsersEdit(model: @user)
-    @$('#profile-body').html(view.render().el)
     this
 
-    # TODO: Move into UsersEdit view after delegating click event
-   updateUser: ->
-    @$('#profile-body input').removeClass('error')
-    old_password = @$('#profile-old-password')
-    new_password = @$('#profile-new-password')
-    confirmation = @$('#profile-new-password-confirmation')
+  renderUsersEdit: (model) ->
+    view = new App.Views.UsersEdit(model: @user)
+    @$('#profile-body').html(view.render().el)
 
-    if new_password.val() != confirmation.val()
-      new_password.addClass('error')
-      confirmation.addClass('error')
-    else
-      @user.save({
-          password: @$('#profile-old-password').val()
-          new_password: new_password.val()
-        },
-        success: (model, resp, opts) => 
-          $('#profile-body input').addClass('success')
-
-        error: (model, resp, opts) =>
-          if resp['status'] == 401
-            $('#profile-old-password').addClass('error')
-      )
+  updateUser: (e) ->
+    App.EventBus.trigger 'updateUser'

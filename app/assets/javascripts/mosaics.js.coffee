@@ -8,6 +8,7 @@ window.Mosaics =
     Backbone.history.start(pushState: true)
 
 window.App = window.Mosaics
+window.App.EventBus = _.extend({}, Backbone.Events)
 
 $(document).ready ->
   Mosaics.initialize()
