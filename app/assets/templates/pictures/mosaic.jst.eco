@@ -8,5 +8,9 @@
   </button>
 </div>
 
+<div class='select-all'>
+  <a href='#'> Select All Pictures </a>
+</div>
+
 <div id='pictures-mosaic-picture-list'>
 </div>

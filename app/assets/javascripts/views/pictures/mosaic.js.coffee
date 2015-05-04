@@ -4,8 +4,10 @@ class App.Views.PicturesMosaic extends Backbone.View
   id: 'pictures-mosaic'
 
   events:
+    'click .select-all': 'selectAllPictures'
     'click .continue-button': 'renderBasePictures'
     'click .create-button': 'createMosaic'
+
 
   initialize: ->
     @collection     = new App.Collections.Pictures()
@@ -21,6 +23,10 @@ class App.Views.PicturesMosaic extends Backbone.View
     view = new App.Views.PicturesIndex(model: @model, collection: @collection, subViewAction: 'select')
     @$('#pictures-mosaic-picture-list').html(view.render().el)
 
+  selectAllPictures: (e) ->
+    _.forEach(@$('input[type=checkbox]'), (cb) -> $(cb)[0].checked = true)
+    @$('.picture img').addClass('selected')
+
   renderBasePictures: (e) =>
     @selectedCompositionIDs = @getSelectedPictureIDs()
     @updateBaseHeader()
@@ -32,6 +38,7 @@ class App.Views.PicturesMosaic extends Backbone.View
     @$('.page-sub-title p').text('Select a picture that your mosaic will be based on:')
     @$('.glyphicon-arrow-right').switchClass('glyphicon-arrow-right', 'glyphicon-arrow-up')
     @$('.continue-button').switchClass('continue-button', 'create-button')
+    @$('.select-all').addClass('hidden')
     @$('.create-button span').text('Create')
 
   getSelectedPictureIDs: =>

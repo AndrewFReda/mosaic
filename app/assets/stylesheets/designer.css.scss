@@ -7,6 +7,12 @@
     }
 
     #pictures-mosaic {
+      .select-all {
+        text-decoration: none;
+        font-style: italic;
+        text-align: right;
+      }
+
       .picture-list {
         .picture {
           img {
