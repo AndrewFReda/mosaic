@@ -14,6 +14,7 @@ class App.Views.PicturesShow extends Backbone.View
     @$el.html(@template(model: @model))
     this
 
+  # TODO: Convert to class based click event instead?
   determineClickAction: (e) ->
     if @viewAction == 'edit'
       @renderEditDialog()
@@ -31,9 +32,7 @@ class App.Views.PicturesShow extends Backbone.View
         hide: { effect: 'fade', duration: 150 }
         modal: true
         width: 500
-
-        close: ->
-          $(this).remove()
+        close: -> $(this).remove()
       )
 
   removeView: (e) ->
