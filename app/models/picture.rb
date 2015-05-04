@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class Picture < ActiveRecord::Base
   has_one :histogram, dependent: :destroy
   belongs_to :user
@@ -17,6 +19,21 @@ class Picture < ActiveRecord::Base
   def getContentType
     extension = name.split('.').last
     "image/#{extension}"
+  end
+
+  def get_dominant_hue
+    if self.histogram.nil? or self.histogram.dominant_hue.nil?
+      # Download file and open in File object
+      file  = File.open(open(URI::encode(self.url)))
+      image = Image.read(file).first
+      hist  = Histogram.new
+      hist.set_hue image: image
+      self.histogram = hist
+      self.image     = file
+      file.close
+    end
+
+    self.histogram.dominant_hue
   end
 
   private
