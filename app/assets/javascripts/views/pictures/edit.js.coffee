@@ -8,7 +8,7 @@ class App.Views.PicturesEdit extends Backbone.View
     'click .update-button': 'updatePicture'
     'click .delete-button': 'deletePicture'
 
-  intialize: ->
+  initialize: ->
 
   render: =>
     @$el.html(@template(picture: @model))

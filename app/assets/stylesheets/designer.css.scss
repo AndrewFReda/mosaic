@@ -1,7 +1,19 @@
 /***** DESIGNER PAGE *****/
 #designer {
-  #designer-explaination {
-    text-align: left;
-    font: 14px;
+  #designer-body {
+    #designer-explaination {
+      text-align: left;
+      font: 14px;
+    }
+
+    #mosaics-create {
+      .picture-list {
+        .picture {
+          img {
+            width: 30%;
+          }
+        }
+      }
+    }
   }
 }

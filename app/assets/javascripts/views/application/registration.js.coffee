@@ -10,4 +10,3 @@ class App.Views.Registration extends Backbone.View
     view = new App.Views.Login()
     @$('#registration-form').html(view.render().el)
     this
-

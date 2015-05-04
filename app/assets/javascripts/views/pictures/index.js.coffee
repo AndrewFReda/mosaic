@@ -1,5 +1,4 @@
 class App.Views.PicturesIndex extends Backbone.View
-  template: JST['pictures/index']
 
   className: 'picture-list'
   tagName: 'ul'
@@ -8,7 +7,6 @@ class App.Views.PicturesIndex extends Backbone.View
     @listenTo(@collection, 'add', @renderPicture)
 
   render: =>
-    @$el.html(@template())
     @collection.forEach(@renderPicture)
     this
 

@@ -5,7 +5,7 @@
 
   <!-- TODO: Center button vertically -->
   <button class="title-button btn begin-button"> 
-    <i class='glyphicon glyphicon-arrow-right'></i> 
+    <i class='glyphicon glyphicon-arrow-down'></i> 
     <span class='button-text'> Begin </span>
   </button>
 </div>
