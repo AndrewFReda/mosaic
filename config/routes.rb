@@ -8,5 +8,6 @@ Rails.application.routes.draw do
     resources :pictures
   end
 
+  post 'users/:user_id/pictures/mosaic', to: 'pictures#mosaic'
 
 end

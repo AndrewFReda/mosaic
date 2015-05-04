@@ -1,10 +1,10 @@
 class PicturesController < ApplicationController
 
-  before_action :verify_picture_type
+  before_action :verify_picture_type, only: [:index, :create, :update]
   before_action :find_user
   before_action :find_picture, only: [:update, :destroy]
 
-  respond_to :json, only: [:index, :create, :update, :destroy]
+  respond_to :json, only: [:index, :create, :update, :destroy, :mosaic]
   
   def index
     @pictures = @user.find_pictures_by type: params[:type]
@@ -35,6 +35,22 @@ class PicturesController < ApplicationController
   def destroy
     if @picture.destroy
       head status: 204
+    else
+      render json: { errors: @picture.errors.full_messages.first }, status: 500
+    end
+  end
+
+  def mosaic
+    composition_pics = @user.find_pictures_by id: params[:composition_picture_ids]
+    base_pic         = (@user.find_pictures_by id: params[:base_picture_id]).first
+    @mosaic  = Mosaic.new composition_pictures: composition_pics, base_picture: base_pic
+    @mosaic.create()
+    @picture = Picture.new name: 'temp-mosaic.png', type: 'mosaic', user: @user
+    @picture.set_image(@mosaic.image)
+    binding.pry
+    
+    if @picture.save
+      render json: @picture, status: 201
     else
       render json: { errors: @picture.errors.full_messages.first }, status: 500
     end
