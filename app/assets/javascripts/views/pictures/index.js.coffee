@@ -3,7 +3,8 @@ class App.Views.PicturesIndex extends Backbone.View
   className: 'picture-list'
   tagName: 'ul'
 
-  intialize: ->
+  initialize: (options) ->
+    @subViewAction = options.subViewAction
     @listenTo(@collection, 'add', @renderPicture)
 
   render: =>
@@ -11,5 +12,5 @@ class App.Views.PicturesIndex extends Backbone.View
     this
 
   renderPicture: (picture) =>
-    view = new App.Views.PicturesShow(model: picture, className: 'picture picture-thumbnail')
+    view = new App.Views.PicturesShow(model: picture, className: 'picture', viewAction: @subViewAction)
     @$el.append(view.render().el)
