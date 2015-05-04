@@ -24,16 +24,13 @@ class Mosaic
       image       = Image.read(file).first
       @cache[hue] = @cache[hue].push(image)
     end
-
-    rescue TypeError
-      binding.pry
-      a = 1
   end
 
   # Determine aspect ratio of this Mosaic based on its Base Picture
   def set_aspect_ratio
     file       = File.open(open(URI::encode(@base_picture.url)))
     base_image = Image.read(file).first
+    @image     = Image.new(base_image.columns, base_image.rows)
 
     if base_image.columns > base_image.rows
       @columns = 60 * (base_image.columns / base_image.rows)
@@ -47,7 +44,6 @@ class Mosaic
   def create
     file       = File.open(open(URI::encode(@base_picture.url)))
     base_image = Image.read(file).first
-    @image     = Image.new(base_image.columns, base_image.rows)
 
     # Divide base image into a grid that will map to mosaic grid
     # Determine *EXACT* height/width of the individual base image cells 
@@ -58,12 +54,10 @@ class Mosaic
     base_image_x = 0
     # iterate through the grid that will represent the mosaic
     @columns.times do |c|
-      puts "base_x #{base_image_x}"
       @rows.times do |r|
         # X and Y current base_img offsets
         base_image_x = c * base_image_column_width
         base_image_y = r * base_image_row_height
-        puts "base_y #{base_image_y}"
 
         # Crop to grid cell image and create corresponding histogram
         # Crop: starting x pixel coord, starting y pixel coord, x pixel length, y pixel length, discard non-cropped
@@ -75,6 +69,7 @@ class Mosaic
         # Find composition image of matching dominant hue with the cropped image, 
         #  chosen at random from the cache's matching hue sub-array
         img = @cache[hue].sample
+
         @image.composite!(img, base_image_x, base_image_y, OverCompositeOp)
       end
     end

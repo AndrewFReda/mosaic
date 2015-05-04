@@ -7,10 +7,6 @@ class S3Upload
     end
   end
 
-#  def initialize(picture:)
-#    @picture = picture
-#  end
-  
   def format_return_info
     {
       s3_upload: {
@@ -23,7 +19,6 @@ class S3Upload
       picture: @picture.attributes
     }
   end
-
 
   private
     # generate the policy document that amazon is expecting.
@@ -53,5 +48,4 @@ class S3Upload
         )
       ).gsub(/\n/, '')
     end
-
 end
