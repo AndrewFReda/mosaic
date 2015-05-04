@@ -2,8 +2,6 @@ class User < ActiveRecord::Base
   has_secure_password
   before_save { self.email = email.downcase }
   validates :email, presence: true,
-                    # TODO: Email validation is saying everything fails. Figure out why.
-                    #format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
                     uniqueness: { case_sensitive: false }
  
   validates :password, length: { minimum: 1 }
@@ -13,6 +11,8 @@ class User < ActiveRecord::Base
   def find_pictures_by(attrs)
     if attrs[:type]
       self.pictures.where type: attrs[:type]
+    elsif attrs[:id]
+      self.pictures.where id: attrs[:id]
     else
       self.pictures
     end
