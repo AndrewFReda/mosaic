@@ -12,7 +12,6 @@ class App.Views.PicturesShow extends Backbone.View
 
   render: ->
     @$el.html(@template(model: @model))
-    console.log('render')
     this
 
   determineClickAction: (e) ->

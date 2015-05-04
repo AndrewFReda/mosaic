@@ -1,9 +1,7 @@
 class Histogram < ActiveRecord::Base
   belongs_to :picture
 
-###### NOT IMPLEMENTED ##############
   # Set this Histogram's dominant hue from given ImageMagick image
-  def set_hue_from_image(img)
     num_colors = 8
 
     img   = img.quantize(num_colors)
@@ -21,5 +19,4 @@ class Histogram < ActiveRecord::Base
     sorted = simplified_hist.sort_by { |pos, v| v }.reverse
     self.dominant_hue = sorted.first.first
   end
-
 end

@@ -22,13 +22,6 @@ ActiveRecord::Schema.define(version: 20150201204243) do
 
   add_index "histograms", ["picture_id"], name: "index_histograms_on_picture_id"
 
-  create_table "mosaics", force: true do |t|
-    t.integer  "grid_columns"
-    t.integer  "grid_rows"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "pictures", force: true do |t|
     t.string   "name"
     t.string   "url"

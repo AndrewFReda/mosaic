@@ -27,21 +27,4 @@ class Picture < ActiveRecord::Base
         errors.add(:type, "must be one of: composition, base, mosaic")
       end
     end
-
-###### NOT IMPLEMENTED ##############
-  def set_from_tempfile(temp)
-    file  = File.open(temp.tempfile)
-    fname = "#{DateTime.now.to_s}-#{temp.original_filename}"    
-    set_from_file(file, fname)
-    file.close
-  end
-
-  def set_from_file(file, fname)
-    self.name  = fname
-    self.image = file
-    
-    self.histogram = Histogram.new
-    img            = Image.read(file).first    
-    self.histogram.set_hue_from_image(img)
-  end
 end
