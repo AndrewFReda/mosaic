@@ -18,13 +18,12 @@ class App.Views.PicturesCreate extends Backbone.View
     this
 
   renderPictures: (collection) =>
-    view = new App.Views.PicturesIndex(collection: @collection)
-    # Important!: Needed to update collection in subviews
-    view.listenTo(@collection, 'add', view.renderPicture)
+    view = new App.Views.PicturesIndex(collection: @collection, subViewAction: 'edit')
     @$('.upload-picture-list').html(view.render().el)
 
   setUpS3UploadHooks: (el) =>
     fileInput = $(el)
+    @pictures = []
     fileInput.fileupload(
       autoUpload: true
       replaceFileInput: false
@@ -40,11 +39,13 @@ class App.Views.PicturesCreate extends Backbone.View
           data: { picture: { name: data.files[0].name, type: @type } }
           success: (response) =>
             # Create picture model in order to add it to collection after upload
-            @picture = new App.Models.Picture(response.picture)
+            @pictures.push new App.Models.Picture(response.picture)
             @uploadToS3(data, response)
 
       done: (e, data) =>
-        @collection.add(@picture)
+        # Find which Picture uploaded then add to @collection
+        picture = _.remove(@pictures, (p) -> (p.get('name') == data.files[0].name))
+        @collection.add(picture[0])
 
       fail: (e, data) =>
         # TODO: Handle Failure

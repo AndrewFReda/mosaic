@@ -16,18 +16,6 @@
       border: none;
       font-weight: bold;
 
-      .glyphicon {
-        float: left;
-        // TODO: Align center
-        vertical-align: bottom;
-      }
-
-      .btn-text {
-        float: right;
-        // TODO: Align center
-        vertical-align: bottom;
-      }
-
       &:focus {
         outline: none;
       }

@@ -6,8 +6,8 @@ class App.Views.SideNav extends Backbone.View
   events:
     'click .side-nav-item': 'toggleActiveNav'
     'click #side-nav-gallery': 'renderGallery'
-    'click #side-nav-create': 'renderCreate'
-    'click #side-nav-content': 'renderContent'
+    'click #side-nav-designer': 'renderDesigner'
+    'click #side-nav-content-manager': 'renderContentManager'
     'click #side-nav-profile': 'renderProfile'
     
   initialize: ->
@@ -26,12 +26,12 @@ class App.Views.SideNav extends Backbone.View
     view = new App.Views.Gallery(model: @session)
     @renderDashboardBody(view)
 
-  renderCreate: (e) ->
-    view = new App.Views.Create()
+  renderDesigner: (e) ->
+    view = new App.Views.Designer(model: @session)
     @renderDashboardBody(view)
 
-  renderContent: (e) ->
-    view = new App.Views.Content(model: @session)
+  renderContentManager: (e) ->
+    view = new App.Views.ContentManager(model: @session)
     @renderDashboardBody(view)
 
   renderProfile: (e) ->

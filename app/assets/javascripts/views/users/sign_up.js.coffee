@@ -4,7 +4,7 @@ class App.Views.SignUp extends Backbone.View
   id: 'sign-up-form'
 
   events:
-    'click #sign-up-btn': 'signUp'
+    'click #sign-up-button': 'signUp'
 
   render: =>
     @$el.html(@template())

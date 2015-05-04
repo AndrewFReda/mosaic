@@ -24,7 +24,7 @@
 
 /***** Layout *****/
 #container {
-  max-width: 660px;
+  max-width: 750px;
   margin-top: 100px;
   padding: 15px 20px 15px;
   text-align: center;
@@ -52,6 +52,10 @@ body {
   color: green;
 }
 
+.selected {
+  border: 2px ridge blue;
+}
+
 /***** Page Headings *****/
 .page-title {
   padding-bottom: 6px;
@@ -73,6 +77,34 @@ body {
     padding-top: 0px;
     padding-bottom: 0px;
     font-weight: bold;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.page-sub-title {
+  width: 100%;
+  float: right;
+  font-style: italic;
+
+  .title-text {
+    float: left;
+    font-size: 14px;
+    font-weight: italic;
+  }
+
+  .title-button {
+    float: right;
+    background: transparent;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    font-weight: bold;
+
+    &:focus {
+      outline: none;
+    }
   }
 }
 
@@ -87,7 +119,7 @@ body {
     img {
       margin: 1px;
 
-      &:hover {
+      &:hover:not(.selected) {
         border: 1px solid rgba(68, 83, 142, 0.74);
       }
     }

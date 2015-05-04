@@ -1,0 +1,4 @@
+<ul class='nav nav-pills'>
+  <li role="presentation" class='content-manager-nav-item' id='content-manager-nav-composition'><a href="#">Composition</a></li>
+  <li role="presentation" class='content-manager-nav-item' id='content-manager-nav-base'><a href="#">Base</a></li>
+</ul>

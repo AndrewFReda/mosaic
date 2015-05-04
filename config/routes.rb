@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-
   root to: 'application#index'
 
   # Naming the resource singularly enables you to leave off the :id
@@ -9,17 +8,6 @@ Rails.application.routes.draw do
     resources :pictures
   end
 
-=begin
-
-  delete 'users/delete_pictures', to: 'users#delete_pictures', as: 'delete_pictures'
-  post   'upload',       to: 'users#upload_pictures', as: 'upload'
-  
-  delete 'mosaics', to: 'pictures#delete_mosaic'
-  post   'mosaics', to: 'pictures#create_mosaic'
-  
-  resources :users
-  resources :pictures
-
-=end
+  post 'users/:user_id/pictures/mosaic', to: 'pictures#mosaic'
 
 end

@@ -1,0 +1,25 @@
+/***** DESIGNER PAGE *****/
+#designer {
+  #designer-body {
+    #designer-explaination {
+      text-align: left;
+      font: 14px;
+    }
+
+    #pictures-mosaic {
+      .select-all {
+        text-decoration: none;
+        font-style: italic;
+        text-align: right;
+      }
+
+      .picture-list {
+        .picture {
+          img {
+            width: 30%;
+          }
+        }
+      }
+    }
+  }
+}

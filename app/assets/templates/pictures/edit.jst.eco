@@ -7,12 +7,12 @@
 </div>
 
 <div class='picture-edit-footer'>
-  <button class='btn edit-btn'> 
+  <button class='btn edit-button'> 
     <i class='glyphicon glyphicon-pencil'></i> 
-    <div class='btn-text'> Edit </div>
+    <span class='btn-text'> Edit </span>
   </button>
-  <button class='btn delete-btn'> 
+  <button class='btn delete-button'> 
     <i class='glyphicon glyphicon-remove'></i>
-    <div class='btn-text'> Delete </div>
+    <span class='btn-text'> Delete </span>
   </button>
 </div>

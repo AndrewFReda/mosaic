@@ -1,10 +1,11 @@
 class App.Views.Profile extends Backbone.View
   template: JST['application/profile']
+  # TODO: Break into UsersEdit view
 
   id: 'profile'
 
   events:
-    'click .update': 'updateUser'
+    'click .update-button': 'updateUser'
 
   initialize: ->
     @user = new App.Models.User({ id: @model.get('id') })

@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-  include Histogramr
 
   before_action :find_user, only: [:show, :update]
   respond_to :json, only: [:show, :create, :update]

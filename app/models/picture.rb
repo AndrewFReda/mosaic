@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class Picture < ActiveRecord::Base
   has_one :histogram, dependent: :destroy
   belongs_to :user
@@ -19,6 +21,21 @@ class Picture < ActiveRecord::Base
     "image/#{extension}"
   end
 
+  def get_dominant_hue
+    if self.histogram.nil? or self.histogram.dominant_hue.nil?
+      # Download file and open in File object
+      file  = File.open(open(URI::encode(self.url)))
+      image = Image.read(file).first
+      hist  = Histogram.new
+      hist.set_hue image: image
+      self.histogram = hist
+      self.image     = file
+      file.close
+    end
+
+    self.histogram.dominant_hue
+  end
+
   private
     def type_checker
       permitted_types = Set.new ['composition', 'base', 'mosaic']
@@ -27,21 +44,4 @@ class Picture < ActiveRecord::Base
         errors.add(:type, "must be one of: composition, base, mosaic")
       end
     end
-
-###### NOT IMPLEMENTED ##############
-  def set_from_tempfile(temp)
-    file  = File.open(temp.tempfile)
-    fname = "#{DateTime.now.to_s}-#{temp.original_filename}"    
-    set_from_file(file, fname)
-    file.close
-  end
-
-  def set_from_file(file, fname)
-    self.name  = fname
-    self.image = file
-    
-    self.histogram = Histogram.new
-    img            = Image.read(file).first    
-    self.histogram.set_hue_from_image(img)
-  end
 end

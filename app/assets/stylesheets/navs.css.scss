@@ -1,6 +1,10 @@
 .nav {
+  text-overflow: clip;
+
   .active {
     font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
 
     a {
       background-color: gray !important;
@@ -19,6 +23,6 @@
 #side-nav {
 }
 
-/***** CONTENT PAGE *****/
-#content-nav {
+/***** CONTENT MANAGER PAGE *****/
+#content-manager-nav {
 }

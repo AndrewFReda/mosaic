@@ -1,17 +1,16 @@
 class App.Views.PicturesIndex extends Backbone.View
-  template: JST['pictures/index']
 
   className: 'picture-list'
   tagName: 'ul'
 
-  intialize: ->
+  initialize: (options) ->
+    @subViewAction = options.subViewAction
     @listenTo(@collection, 'add', @renderPicture)
 
   render: =>
-    @$el.html(@template())
     @collection.forEach(@renderPicture)
     this
 
   renderPicture: (picture) =>
-    view = new App.Views.PicturesShow(model: picture, className: 'picture picture-thumbnail')
+    view = new App.Views.PicturesShow(model: picture, className: 'picture', viewAction: @subViewAction)
     @$el.append(view.render().el)

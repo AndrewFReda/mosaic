@@ -1,0 +1,26 @@
+<div class='page-title'>
+  <div class='title-text'>
+    <span> Designer </span>
+  </div>
+
+  <!-- TODO: Center button vertically -->
+  <button class="title-button btn begin-button"> 
+    <i class='glyphicon glyphicon-arrow-down'></i> 
+    <span class='button-text'> Begin </span>
+  </button>
+</div>
+
+<div id='designer-body'>
+  <div id='designer-explaination'>
+    <p>
+    This will explain what Mosaics is all about.
+    </br>
+    You will make mosaics OF your own pictures WITH your own pictures.
+    </br>
+    You will need to be supply a minimum number of pictures to begin. There will need to be at least one from cover every major color group.
+    </br>
+    When you are ready click Begin!
+    </p>
+  </div>
+
+</div>
