@@ -4,13 +4,13 @@ class App.Views.Designer extends Backbone.View
   id: 'designer'
 
   events:
-    'click .begin-button': 'renderMosaicsCreate'
+    'click .begin-button': 'renderPicturesMosaic'
 
   render: =>
     @$el.html(@template())
     this
 
-  renderMosaicsCreate: (e) =>
+  renderPicturesMosaic: (e) =>
     @$('.begin-button').addClass('hidden')
-    view = new App.Views.MosaicsCreate(model: @model)
+    view = new App.Views.PicturesMosaic(model: @model)
     @$('#designer-body').html(view.render().el)

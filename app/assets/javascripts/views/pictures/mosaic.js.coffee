@@ -1,7 +1,7 @@
-class App.Views.MosaicsCreate extends Backbone.View
-  template: JST['mosaics/create']
+class App.Views.PicturesMosaic extends Backbone.View
+  template: JST['pictures/mosaic']
 
-  id: 'mosaics-create'
+  id: 'pictures-mosaic'
 
   events:
     'click .continue-button': 'renderBasePictures'
@@ -19,12 +19,12 @@ class App.Views.MosaicsCreate extends Backbone.View
 
   renderPictures: (collection) =>
     view = new App.Views.PicturesIndex(model: @model, collection: @collection, subViewAction: 'select')
-    @$('#mosaics-create-picture-list').html(view.render().el)
+    @$('#pictures-mosaic-picture-list').html(view.render().el)
 
   renderBasePictures: (e) =>
     @selectedCompositionIDs = @getSelectedPictureIDs()
     @updateBaseHeader()
-    @$('#mosaics-create-picture-list').addClass('radio-buttons')
+    @$('#pictures-mosaic-picture-list').addClass('radio-buttons')
     @collection.url = "/users/#{@model.id}/pictures?type=base"
     @collection.fetch({reset: true})
 
