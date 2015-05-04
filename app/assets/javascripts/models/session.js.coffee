@@ -1,5 +1,5 @@
 class App.Models.Session extends Backbone.Model
-  url: 'session'
+  urlRoot: '/session'
 
   create: (attrs) ->
     this.set
