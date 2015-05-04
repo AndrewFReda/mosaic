@@ -1,0 +1,4 @@
+<input type='text' disabled='true' class='form-control' id='profile-email' value="<%= @user.get('email') %>" placeholder="Email"></input>
+<input type='password' class="form-control" id='profile-old-password' placeholder="Old Password"></input>
+<input type='password' class="form-control" id='profile-new-password' placeholder="New Password"></input>  
+<input type='password' class="form-control" id='profile-new-password-confirmation' placeholder="Confirm New Password"></input>

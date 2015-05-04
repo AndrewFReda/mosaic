@@ -1,6 +1,5 @@
 class App.Views.Profile extends Backbone.View
   template: JST['application/profile']
-  # TODO: Break into UsersEdit view
 
   id: 'profile'
 
@@ -9,15 +8,17 @@ class App.Views.Profile extends Backbone.View
 
   initialize: ->
     @user = new App.Models.User({ id: @model.get('id') })
-    @user.url = "/users/#{@user.get('id')}"
     @user.fetch()
     @listenTo(@user, 'change', @render)
 
   render: =>
-    @$el.html(@template(user: @user))
+    @$el.html(@template())
+    view = new App.Views.UsersEdit(model: @user)
+    @$('#profile-body').html(view.render().el)
     this
 
-  updateUser: ->
+    # TODO: Move into UsersEdit view after delegating click event
+   updateUser: ->
     @$('#profile-body input').removeClass('error')
     old_password = @$('#profile-old-password')
     new_password = @$('#profile-new-password')
