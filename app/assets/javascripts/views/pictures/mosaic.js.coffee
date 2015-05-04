@@ -49,3 +49,10 @@ class App.Views.PicturesMosaic extends Backbone.View
     @selectedBaseID = @getSelectedPictureIDs()
     @picture = new App.Models.Picture()
     @picture.url = "/users/#{@model.get('id')}/pictures/mosaic"
+    @picture.save({
+        composition_picture_ids: @selectedCompositionIDs
+        base_picture_id: @selectedBaseID
+      }
+      success: (model, resp, opts) ->
+      error: (model, resp, opts) ->
+    )
