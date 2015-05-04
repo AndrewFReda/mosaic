@@ -11,15 +11,15 @@
 </div>
 
 <div id='designer-body'>
-  <div id='designer-explaination'>
+  <div id='designer-explaination' class='lead'>
     <p>
-    This will explain what Mosaics is all about.
+    This is what Mosaics is all about.
     </br>
-    You will make mosaics OF your own pictures WITH your own pictures.
+    It helps you to make mosaics OF your own pictures WITH your own pictures.
     </br>
-    You will need to be supply a minimum number of pictures to begin. There will need to be at least one from cover every major color group.
+    There is a minimum number and range of pictures needed to begin. You will need to supply at least one picture from cover every major color group.
     </br>
-    When you are ready click Begin!
+    There's nothing left but to click Begin!
     </p>
   </div>
 
