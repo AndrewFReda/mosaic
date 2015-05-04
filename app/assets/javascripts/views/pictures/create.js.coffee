@@ -18,7 +18,7 @@ class App.Views.PicturesCreate extends Backbone.View
     this
 
   renderPictures: (collection) =>
-    view = new App.Views.PicturesIndex(collection: @collection)
+    view = new App.Views.PicturesIndex(collection: @collection, subViewAction: 'edit')
     # Important!: Needed to update collection in subviews
     view.listenTo(@collection, 'add', view.renderPicture)
     @$('.upload-picture-list').html(view.render().el)

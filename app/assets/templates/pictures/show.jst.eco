@@ -1,1 +1,2 @@
 <img class='img-thumbnail' src="<%= @model.get('url') %>">
+<input type='checkbox' class='pictures-show-selector hidden' data-id="<%= @model.get('id') %>">
