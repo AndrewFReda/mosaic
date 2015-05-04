@@ -4,9 +4,9 @@
   </div>
 
   <!-- TODO: Center button vertically -->
-  <button class="title-button btn begin-btn"> 
+  <button class="title-button btn begin-button"> 
     <i class='glyphicon glyphicon-arrow-right'></i> 
-    <span> Begin </span>
+    <div class='button-text'> Begin </span>
   </button>
 </div>
 

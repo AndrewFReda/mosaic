@@ -4,7 +4,7 @@ class App.Views.Designer extends Backbone.View
   id: 'designer'
 
   events:
-    'click .begin-btn': 'renderMosaicsCreate'
+    'click .begin-button': 'renderMosaicsCreate'
 
   render: =>
     @$el.html(@template())

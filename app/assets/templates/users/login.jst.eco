@@ -14,5 +14,5 @@
 
 
 <div class='registration-form-footer'>
-  <button id='login-btn' class='btn btn-large btn-primary'> Login </button>
+  <button id='login-button' class='btn btn-large btn-primary'> Login </button>
 </div>

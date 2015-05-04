@@ -4,7 +4,7 @@ class App.Views.Login extends Backbone.View
   id: 'login-form'
 
   events:
-    'click #login-btn': 'login'
+    'click #login-button': 'login'
 
   render: =>
     @$el.html(@template())

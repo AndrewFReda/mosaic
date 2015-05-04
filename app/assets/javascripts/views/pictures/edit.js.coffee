@@ -4,9 +4,9 @@ class App.Views.PicturesEdit extends Backbone.View
   className: 'picture-edit-dialog'
 
   events:
-    'click .edit-btn': 'prepareEditForm'
-    'click .update-btn': 'updatePicture'
-    'click .delete-btn': 'deletePicture'
+    'click .edit-button': 'prepareEditForm'
+    'click .update-button': 'updatePicture'
+    'click .delete-button': 'deletePicture'
 
   intialize: ->
 
@@ -15,9 +15,9 @@ class App.Views.PicturesEdit extends Backbone.View
     this
 
   prepareEditForm: (e) ->
-    @$('.edit-btn .glyphicon').switchClass('glyphicon-pencil', 'glyphicon-ok')
-    @$('.edit-btn .btn-text').text('Update')
-    @$('.edit-btn').switchClass('edit-btn', 'update-btn')
+    @$('.edit-button .glyphicon').switchClass('glyphicon-pencil', 'glyphicon-ok')
+    @$('.edit-button .button-text').text('Update')
+    @$('.edit-button').switchClass('edit-button', 'update-button')
     @$('.input-container').removeClass('hidden')
 
   # TODO: Update on S3 as well

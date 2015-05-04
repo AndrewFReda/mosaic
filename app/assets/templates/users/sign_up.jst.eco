@@ -19,5 +19,5 @@
 
 
 <div class='registration-form-footer'>
-  <button id='sign-up-btn' class='btn btn-large btn-primary'> Create Account </button>
+  <button id='sign-up-button' class='btn btn-large btn-primary'> Create Account </button>
 </div>
