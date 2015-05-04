@@ -4,30 +4,38 @@ class App.Views.PicturesShow extends Backbone.View
   tagName: 'li'
 
   events:
-    'click': 'selectPicture'
-    'click': 'renderEditDialog'
+    'click': 'determineClickAction'
 
-  initialize: ->
+  initialize: (options) ->
+    @viewAction = options.viewAction
     @listenTo(@model, 'destroy', @removeView)
 
   render: ->
     @$el.html(@template(model: @model))
+    console.log('render')
     this
+
+  determineClickAction: (e) ->
+    if @viewAction == 'edit'
+      @renderEditDialog()
+    else
+      @selectPicture()
 
   #### SubViewAction: edit ####
   # Methods related to opening a dialog to edit this picture.
   renderEditDialog: (e) =>
-    view = new App.Views.PicturesEdit(model: @model)
-    $(view.render().el).dialog(
-      resizable: true
-      show: { effect: 'fade', duration: 200 }
-      hide: { effect: 'fade', duration: 150 }
-      modal: true
-      width: 500
+    if @viewAction == 'edit'
+      view = new App.Views.PicturesEdit(model: @model)
+      $(view.render().el).dialog(
+        resizable: true
+        show: { effect: 'fade', duration: 200 }
+        hide: { effect: 'fade', duration: 150 }
+        modal: true
+        width: 500
 
-      close: ->
-        $(this).remove()
-    )
+        close: ->
+          $(this).remove()
+      )
 
   removeView: (e) ->
     @el.remove()
