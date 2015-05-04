@@ -10,9 +10,6 @@
   </button>
 </div>
 
-<input type='text' id='designer-composition' class='hidden'>
-<input type='text' id='designer-base' class='hidden'>
-
 <div id='designer-body'>
   <div id='designer-explaination'>
     <p>
