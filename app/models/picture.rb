@@ -21,17 +21,8 @@ class Picture < ActiveRecord::Base
   end
 
   def get_dominant_hue
-    if self.histogram.nil? or self.histogram.dominant_hue.nil?
-      # Download file and open in File object
-      file  = File.open(open(URI::encode(self.get_url())))
-      image = Image.read(file).first
-      hist  = Histogram.new
-      hist.set_hue image: image
-      self.histogram = hist
-      self.image     = file
-      file.close
-    end
-
+    set_histogram() if self.histogram.nil? or self.histogram.dominant_hue.nil?
+      
     self.histogram.dominant_hue
   end
 
@@ -61,5 +52,15 @@ class Picture < ActiveRecord::Base
 
     def set_url
       self.url = get_url
+    end
+
+    def set_histogram
+      # Download file and open in File object
+      file  = File.open(open(URI::encode(self.get_url())))
+      image = Image.read(file).first
+      hist  = Histogram.new
+      hist.set_hue image: image
+      self.histogram = hist
+      file.close
     end
 end
