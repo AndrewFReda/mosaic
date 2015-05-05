@@ -16,7 +16,8 @@ class Picture < ActiveRecord::Base
   validates :name, :type, presence: true
   validate :type_checker
 
-  def getContentType
+
+  def get_content_type
     extension = name.split('.').last
     "image/#{extension}"
   end
