@@ -40,8 +40,8 @@ class PicturesController < ApplicationController
   end
 
   def mosaic
-    composition_pics = @user.find_pictures_by id: params[:composition_picture_ids]
-    base_pic         = (@user.find_pictures_by id: params[:base_picture_id]).first
+    composition_pics = @user.find_pictures_by id: params[:picture][:composition_picture_ids]
+    base_pic         = (@user.find_pictures_by id: params[:picture][:base_picture_id]).first
     @mosaic          = Mosaic.new composition_pictures: composition_pics, base_picture: base_pic
 
     @mosaic.create()
@@ -58,7 +58,7 @@ class PicturesController < ApplicationController
   private
 
     def picture_params
-      params.require(:picture).permit(:name, :type, :user_id)
+      params.require(:picture).permit(:name, :type, :user_id, :composition_picture_ids, :base_picture_id)
     end
 
     def find_picture
