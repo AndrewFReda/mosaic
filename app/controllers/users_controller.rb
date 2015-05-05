@@ -12,6 +12,7 @@ class UsersController < ApplicationController
   # Creates User without creating Session
   # Explicit call to create Session required
   def create
+    puts 'users#create'
     @user = User.new user_params
 
     if @user.save
