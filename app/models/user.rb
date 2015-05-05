@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   
   has_many :pictures, dependent: :destroy
 
-  def find_pictures_by(attrs)
+  def find_pictures_by(attrs = {})
     if attrs[:type]
       self.pictures.where type: attrs[:type]
     elsif attrs[:id]
