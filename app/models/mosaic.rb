@@ -15,22 +15,22 @@ class Mosaic
 
   # Create a cache filled with pictures matching composition
   # Buckets sorted based on dominant hue from the Histograms
-  def set_cache
+  def set_cache(scale = [200, 200])
     @cache = Hash.new { [] }
 
     @composition_pictures.each do |picture|
       hue         = picture.get_dominant_hue()
-      file        = File.open(open(URI::encode(picture.url)))
+      file        = File.open(open(URI::encode(picture.get_url())))
       image       = Image.read(file).first
+      image       = image.scale(scale.first, scale.last)
       @cache[hue] = @cache[hue].push(image)
     end
   end
 
   # Determine aspect ratio of this Mosaic based on its Base Picture
   def set_aspect_ratio
-    file       = File.open(open(URI::encode(@base_picture.url)))
+    file       = File.open(open(URI::encode(@base_picture.get_url())))
     base_image = Image.read(file).first
-    @image     = Image.new(base_image.columns, base_image.rows)
 
     if base_image.columns > base_image.rows
       @columns = 60 * (base_image.columns / base_image.rows)
@@ -42,39 +42,32 @@ class Mosaic
   end
 
   def create
-    file       = File.open(open(URI::encode(@base_picture.url)))
+    file       = File.open(open(URI::encode(@base_picture.get_url())))
     base_image = Image.read(file).first
 
     # Divide base image into a grid that will map to mosaic grid
     # Determine *EXACT* height/width of the individual base image cells 
-    base_image_column_width = base_image.columns / @columns.to_f
-    base_image_row_height   = base_image.rows / @rows.to_f
-    histogram = Histogram.new
+    base_image_cell_width  = base_image.columns / @columns.to_f
+    base_image_cell_height = base_image.rows / @rows.to_f
 
-    base_image_x = 0
+    histogram = Histogram.new
+    @image    = Image.new(@columns * mosaic_cell_width, @rows * mosaic_cell_height)
+
     # iterate through the grid that will represent the mosaic
     @columns.times do |c|
       @rows.times do |r|
-        # X and Y current base_img offsets
-        base_image_x = c * base_image_column_width
-        base_image_y = r * base_image_row_height
+        # Crop area to be analyzed from base_image and determine its hue
 
-        # Crop to grid cell image and create corresponding histogram
         # Crop: starting x pixel coord, starting y pixel coord, x pixel length, y pixel length, discard non-cropped
-        cropped_img = base_image.crop(base_image_x, base_image_y, 
-                                      base_image_column_width, base_image_row_height, 
-                                        true)
-        hue = histogram.get_hue_from_image image
-
-        # Find composition image of matching dominant hue with the cropped image, 
-        #  chosen at random from the cache's matching hue sub-array
+        cropped_img = base_image.crop(base_image_cell_width * c, base_image_cell_height * r, 
+                                        base_image_cell_width, base_image_cell_height, true)
+        hue = histogram.get_hue_from_image cropped_img
+        
         img = @cache[hue].sample
-
-        @image.composite!(img, base_image_x, base_image_y, OverCompositeOp)
+        # Use .composite in place of .mosaic as the later seems to be broken
+        @image.composite!(img, mosaic_cell_height * c, mosaic_cell_width * r, OverCompositeOp)
       end
     end
-
-    @image
   end
 
 end
