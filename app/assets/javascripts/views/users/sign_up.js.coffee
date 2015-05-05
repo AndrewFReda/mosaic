@@ -13,9 +13,9 @@ class App.Views.SignUp extends Backbone.View
   signUp: ->
     @user = new App.Models.User()
     @user.set
-      email: @$('.user-email').val(),
-      password: @$('.user-password').val(),
-      password_confirmation: @$('.user-password-confirmation').val()
+      email: @$('.email').val(),
+      password: @$('.password').val(),
+      password_confirmation: @$('.password-confirmation').val()
     @user.save(null,
       success: @handleSignUpSuccess,
       error: @handleSignUpFailure
@@ -30,9 +30,9 @@ class App.Views.SignUp extends Backbone.View
 
 
   handleSignUpFailure: (model, resp, opts) =>
-    @$('.input-group input').removeClass('error')
+    @$('input').removeClass('error')
     if resp['status'] == 401
-      @$('.user-password').addClass('error')
-      @$('.user-password-confirmation').addClass('error')
+      @$('.password').addClass('error')
+      @$('.password-confirmation').addClass('error')
     else
-      @$('.user-email').addClass('error')
+      @$('.email').addClass('error')

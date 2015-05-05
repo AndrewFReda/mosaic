@@ -4,17 +4,17 @@
 
 <div class='input-group'>
   <span class="input-group-addon" id="email-addon">@</span>
-  <input type='text' class='user-email form-control' placeholder="Email..." aria-describedby="email-addon"></input>
+  <input type='text' class='email form-control' placeholder="Email..." aria-describedby="email-addon"></input>
 </div>
 
 <div class='input-group'>
   <span class="input-group-addon" id="password-addon">*</span>
-  <input type='password' class='user-password form-control' placeholder="Password..." aria-describedby="password-addon"></input>
+  <input type='password' class='password form-control' placeholder="Password..." aria-describedby="password-addon"></input>
 </div>
 
 <div class='input-group'>
   <span class="input-group-addon" id="password-confirmation-addon">**</span>
-  <input type='password' class='user-password-confirmation form-control' placeholder="Confirmation..." aria-describedby="password-confirmation-addon"></input>
+  <input type='password' class='password-confirmation form-control' placeholder="Confirmation..." aria-describedby="password-confirmation-addon"></input>
 </div>
 
 
