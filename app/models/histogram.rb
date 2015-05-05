@@ -10,20 +10,13 @@ class Histogram < ActiveRecord::Base
   end
 
   def get_hue_from_image(image)
-    num_colors      = 8
-    image           = image.quantize(num_colors)
-    quantized_hist  = image.color_histogram
-    simplified_hist = Hash.new{ 0 }
-
-    # Sort 8-color histogram into 18 buckets
-    quantized_hist.each do |color_hist|
-      hsla = color_hist.first.to_hsla
-      pos  = (hsla[0].to_i / 20) % 18
-      simplified_hist[pos] += color_hist.last
-    end
-
-    # Sort by number of times pixel appeared from greatest to least
-    sorted = simplified_hist.sort_by { |pos, v| v }.reverse
-    sorted.first.first
+    num_colors      = 1
+    quantized_image = image.quantize(num_colors)
+    histogram       = quantized_image.color_histogram
+    # { Pixel => Occurences}
+    dominant_pixel  = histogram.first.first
+    hue             = dominant_pixel.to_hsla[0].to_i
+    # Divide 360 possible degrees of hue into 18 buckets (360/20=18)
+    hue_bucket      = (hue / 20) % 18
   end
 end
