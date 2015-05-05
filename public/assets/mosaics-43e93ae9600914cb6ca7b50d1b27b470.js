@@ -1,0 +1,1 @@
+(function(){window.Mosaics={Models:{},Collections:{},Views:{},Routers:{},initialize:function(){return new this.Routers.MosaicsRouter,Backbone.history.start({pushState:!0})}},window.App=window.Mosaics,window.App.EventBus=_.extend({},Backbone.Events),$(document).ready(function(){return Mosaics.initialize()})}).call(this);
