@@ -28,8 +28,10 @@ class Picture < ActiveRecord::Base
 
   # TODO: Important!
   # =>  Elimnates URL field but means updating pictures needs to update S3 or links will break
+  #     Leave commented until updates properly propogate to S3
   def get_url
-    "https://s3.amazonaws.com/#{ENV['S3_BUCKET']}/#{self.user.email}/#{self.type}/#{self.name}"
+    self.url
+   # "https://s3.amazonaws.com/#{ENV['S3_BUCKET']}/#{self.user.email}/#{self.type}/#{self.name}"
   end
 
   def set_image(image)

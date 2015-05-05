@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 # General Rails gems
 gem 'rails', '4.1.6'
-gem 'sqlite3'
+gem 'pg'
 gem 'bcrypt', '~> 3.1.7'
 gem 'dotenv-rails', :groups => [:development, :test]
 
@@ -23,7 +23,7 @@ gem 'autoprefixer-rails'
 # Image proessing and upload
 gem 'aws-sdk'
 gem 'paperclip'
-gem 'sidekick'
+gem 'sidekiq'
 gem 'fog'
 
 # Code quality

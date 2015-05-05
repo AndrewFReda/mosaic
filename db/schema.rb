@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20150201204243) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "histograms", force: true do |t|
     t.integer  "dominant_hue"
     t.integer  "picture_id"
@@ -20,7 +23,7 @@ ActiveRecord::Schema.define(version: 20150201204243) do
     t.datetime "updated_at"
   end
 
-  add_index "histograms", ["picture_id"], name: "index_histograms_on_picture_id"
+  add_index "histograms", ["picture_id"], name: "index_histograms_on_picture_id", using: :btree
 
   create_table "pictures", force: true do |t|
     t.string   "name"
@@ -35,7 +38,7 @@ ActiveRecord::Schema.define(version: 20150201204243) do
     t.datetime "image_updated_at"
   end
 
-  add_index "pictures", ["user_id"], name: "index_pictures_on_user_id"
+  add_index "pictures", ["user_id"], name: "index_pictures_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email"
@@ -44,6 +47,6 @@ ActiveRecord::Schema.define(version: 20150201204243) do
     t.datetime "updated_at"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
 
 end
