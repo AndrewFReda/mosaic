@@ -23,20 +23,15 @@ class App.Views.SideNav extends Backbone.View
     @$(e.currentTarget).addClass('active')
 
   renderGallery: (e) ->
-    view = new App.Views.Gallery(model: @session)
-    @renderDashboardBody(view)
+    App.EventBus.trigger('side-nav:gallery')
 
   renderDesigner: (e) ->
-    view = new App.Views.Designer(model: @session)
-    @renderDashboardBody(view)
+    App.EventBus.trigger('side-nav:designer')
 
   renderContentManager: (e) ->
-    view = new App.Views.ContentManager(model: @session)
-    @renderDashboardBody(view)
+    App.EventBus.trigger('side-nav:content-manager')
 
   renderProfile: (e) ->
-    view = new App.Views.Profile(model: @session)
-    @renderDashboardBody(view)
+    App.EventBus.trigger('side-nav:profile')
 
-  renderDashboardBody: (view) ->
-    $('#dashboard-body').html(view.render().el)
+  

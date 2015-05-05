@@ -4,8 +4,9 @@ class App.Views.UsersEdit extends Backbone.View
   id: 'users-edit'
 
   initialize: ->
+    @user = @model
     # Consider passing EventBus in constructor
-    @listenTo(App.EventBus, 'updateUser', @updateUser)
+    @listenTo(App.EventBus, 'update-user', @updateUser)
 
   render: =>
     @$el.html(@template(user: @model))
@@ -13,23 +14,23 @@ class App.Views.UsersEdit extends Backbone.View
 
   # TODO: Move into UsersEdit view after delegating click event
   updateUser: ->
-    @$('.users-edit input').removeClass('error')
-    old_password = @$('.users-edit .old-password')
-    new_password = @$('.users-edit .new-password')
-    confirmation = @$('.users-edit .new-password-confirmation')
+    @$('input').removeClass('error')
+    old_password = @$('.old-password')
+    new_password = @$('.new-password')
+    confirmation = @$('.new-password-confirmation')
 
     if new_password.val() != confirmation.val()
       new_password.addClass('error')
       confirmation.addClass('error')
     else
       @user.save({
-          password: @$('.users-edit .old-password').val()
+          password: @$('.old-password').val()
           new_password: new_password.val()
         },
         success: (model, resp, opts) => 
-          $('.users-edit input').addClass('success')
+          $('input').addClass('success')
 
         error: (model, resp, opts) =>
           if resp['status'] == 401
-            $('.users-edit .old-password').addClass('error')
+            $('.old-password').addClass('error')
       )

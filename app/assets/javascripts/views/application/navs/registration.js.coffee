@@ -16,12 +16,7 @@ class App.Views.RegistrationNav extends Backbone.View
     @$(e.currentTarget).addClass('active')
 
   renderLogin: (e) ->
-    view = new App.Views.Login()
-    @renderRegistrationForm(view)
+    App.EventBus.trigger('registration-nav:login')
 
   renderSignUp: (e) ->
-    view = new App.Views.SignUp()
-    @renderRegistrationForm(view)
-
-  renderRegistrationForm: (view) ->
-    $('#registration-form').html(view.render().el)
+    App.EventBus.trigger('registration-nav:sign-up')

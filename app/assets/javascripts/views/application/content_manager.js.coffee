@@ -5,6 +5,8 @@ class App.Views.ContentManager extends Backbone.View
 
   initialize: ->
     @session = @model
+    @listenTo(App.EventBus, 'content-manager-nav:base', @renderUploadBaseForm)
+    @listenTo(App.EventBus, 'content-manager-nav:composition', @renderUploadCompositionForm)
 
   render: =>
     @$el.html(@template())
@@ -14,4 +16,13 @@ class App.Views.ContentManager extends Backbone.View
     @$('#content-manager-body').html(view.render().el)
     this
 
-    
+  renderUploadBaseForm: ->
+    view = new App.Views.PicturesCreate(model: @session, type: 'base')
+    @renderContentManagerBody(view)
+
+  renderUploadCompositionForm: ->
+    view = new App.Views.PicturesCreate(model: @session, type: 'composition')
+    @renderContentManagerBody(view)
+
+  renderContentManagerBody: (view) ->
+    @$('#content-manager-body').html(view.render().el)

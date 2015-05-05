@@ -19,12 +19,7 @@ class App.Views.ContentManagerNav extends Backbone.View
     @$(e.currentTarget).addClass('active')
 
   renderUploadBaseForm: ->
-    view = new App.Views.PicturesCreate(model: @session, type: 'base')
-    @renderContentManagerBody(view)
+    App.EventBus.trigger('content-manager-nav:base')
 
   renderUploadCompositionForm: ->
-    view = new App.Views.PicturesCreate(model: @session, type: 'composition')
-    @renderContentManagerBody(view)
-
-  renderContentManagerBody: (view) ->
-    $('#content-manager-body').html(view.render().el)
+    App.EventBus.trigger('content-manager-nav:composition')

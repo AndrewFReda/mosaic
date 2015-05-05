@@ -13,6 +13,6 @@ class App.Views.Login extends Backbone.View
   login: ->
     @session = new App.Models.Session()
     @session.create
-      email: @$('.user-email').val()
-      password: @$('.user-password').val()
+      email: @$('.email').val()
+      password: @$('.password').val()
 
