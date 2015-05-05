@@ -1,7 +1,7 @@
 class Mosaic
   include ActiveModel::Model
 
-  attr_accessor :base_picture, :composition_pictures, :cache, :columns, :rows, :image
+  attr_accessor :image, :base_picture, :composition_pictures, :cache, :columns, :rows, 
 
   def initialize(attrs)
     super

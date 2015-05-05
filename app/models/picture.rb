@@ -41,6 +41,15 @@ class Picture < ActiveRecord::Base
     "https://s3.amazonaws.com/#{ENV['S3_BUCKET']}/#{self.user.email}/#{self.type}/#{self.name}"
   end
 
+  def set_image(image)
+    path  = "public/images/#{self.name}"
+    
+    image.write(path)
+    file       = File.open(path)
+    self.image = file
+    file.close
+  end
+
   private
     def type_checker
       permitted_types = Set.new ['composition', 'base', 'mosaic']

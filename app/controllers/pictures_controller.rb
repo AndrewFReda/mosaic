@@ -14,7 +14,6 @@ class PicturesController < ApplicationController
   def create
     @picture      = Picture.new picture_params
     @picture.user = @user
-    @picture.url  = "https://s3.amazonaws.com/#{ENV['S3_BUCKET']}/#{@picture.user.email}/#{@picture.type}/#{@picture.name}"
     @s3_upload    = S3Upload.new picture: @picture
 
     if @picture.save
@@ -43,11 +42,11 @@ class PicturesController < ApplicationController
   def mosaic
     composition_pics = @user.find_pictures_by id: params[:composition_picture_ids]
     base_pic         = (@user.find_pictures_by id: params[:base_picture_id]).first
-    @mosaic  = Mosaic.new composition_pictures: composition_pics, base_picture: base_pic
+    @mosaic          = Mosaic.new composition_pictures: composition_pics, base_picture: base_pic
+
     @mosaic.create()
-    @picture = Picture.new name: 'temp-mosaic.png', type: 'mosaic', user: @user
+    @picture = Picture.new name: "#{DateTime.now}-mosaic.png", type: 'mosaic', user: @user
     @picture.set_image(@mosaic.image)
-    binding.pry
     
     if @picture.save
       render json: @picture, status: 201
