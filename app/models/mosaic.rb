@@ -70,6 +70,7 @@ class Mosaic
 
   private
 
+    # TODO: catch error if URI can't parse
     def download_IMagick_image(url)
       # Download file and open in File object
       file  = File.open(open(URI::encode(url)))
