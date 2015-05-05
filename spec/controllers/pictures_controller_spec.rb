@@ -201,6 +201,19 @@ RSpec.describe PicturesController, type: :controller do
     #end
   end
 
+  ##### MOSAIC #####
+  describe '#mosaic' do
+    context 'when ' do
+      it '' do
+        pending 'write tests'
+      end
+
+      it '' do
+        pending 'write tests'
+      end
+    end
+  end
+
 
   # --- before_action Tests --- #
   

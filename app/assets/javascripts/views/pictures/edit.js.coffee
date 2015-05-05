@@ -35,7 +35,6 @@ class App.Views.PicturesEdit extends Backbone.View
         @$('input.edit-name').switchClass('success', 'error')
     )
 
-  # TODO: Delete off S3 as well
   deletePicture: (e) =>
     @model.urlRoot = "users/#{@model.get('user_id')}/pictures"
     @model.destroy({

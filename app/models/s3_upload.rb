@@ -13,7 +13,7 @@ class S3Upload
           key:          "#{@picture.user.email}/#{@picture.type}/#{@picture.name}",
           policy:       policy_document(), 
           signature:    signature(),
-          content_type: @picture.getContentType(),
+          content_type: @picture.get_content_type(),
           access_key:   ENV['S3_ACCESS_KEY']
       },
       picture: @picture.attributes

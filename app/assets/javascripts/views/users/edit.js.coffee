@@ -12,7 +12,6 @@ class App.Views.UsersEdit extends Backbone.View
     @$el.html(@template(user: @model))
     this
 
-  # TODO: Move into UsersEdit view after delegating click event
   updateUser: ->
     @$('input').removeClass('error')
     old_password = @$('.old-password')
