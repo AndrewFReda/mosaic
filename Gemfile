@@ -23,7 +23,7 @@ gem 'autoprefixer-rails'
 # Image proessing and upload
 gem 'aws-sdk'
 gem 'paperclip'
-gem 'sidekick'
+gem 'sidekiq'
 gem 'fog'
 
 # Code quality
