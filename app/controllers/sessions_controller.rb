@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   respond_to :json, only: [:show, :create, :destroy]
 
   def show
-    if signed_in?
+    if current_user
       respond_with current_user, status: 200
     else
       render json: { errors: 'Session does not exist' }, status: 404
@@ -40,8 +40,12 @@ class SessionsController < ApplicationController
       @_current_user    = nil
     end
 
-    def signed_in?
-      current_user
+    def current_user
+      begin
+        if session[:user_id]
+          @_current_user ||= User.find session[:user_id]
+        end
+      rescue ActiveRecord::RecordNotFound
+      end
     end
-
 end
