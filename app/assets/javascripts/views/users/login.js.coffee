@@ -15,4 +15,3 @@ class App.Views.Login extends Backbone.View
     @session.create
       email: @$('.email').val()
       password: @$('.password').val()
-
