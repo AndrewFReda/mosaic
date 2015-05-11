@@ -20,7 +20,7 @@ class Mosaic
 
     @composition_pictures.each do |picture|
       hue         = picture.get_dominant_hue()
-      image       = download_IMagick_image(picture.get_url())
+      image       = download_IMagick_image(picture.url)
       scaled      = image.scale(scale.first, scale.last)
       @cache[hue] = @cache[hue].push(scaled)
     end
@@ -28,9 +28,9 @@ class Mosaic
 
   # Determine aspect ratio of this Mosaic based on its Base Picture
   def set_aspect_ratio
-    base_image = download_IMagick_image(@base_picture.get_url())
     @columns   = 80
     @rows      = 80
+    base_image = download_IMagick_image(@base_picture.url)
 
     if base_image.columns > base_image.rows
       @columns *= (base_image.columns / base_image.rows)
@@ -42,7 +42,7 @@ class Mosaic
   end
 
   def create
-    base_image = download_IMagick_image(@base_picture.get_url())
+    base_image = download_IMagick_image(@base_picture.url)
     histogram  = Histogram.new
 
     # Divide base image into a grid that is basis mosaic grid

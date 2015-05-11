@@ -26,23 +26,6 @@ class Picture < ActiveRecord::Base
     self.histogram.dominant_hue
   end
 
-  # TODO: Important!
-  # =>  Elimnates URL field but means updating pictures needs to update S3 or links will break
-  #     Leave commented until updates properly propogate to S3
-  def get_url
-    self.url
-   # "https://s3.amazonaws.com/#{ENV['S3_BUCKET']}/#{self.user.email}/#{self.type}/#{self.name}"
-  end
-
-  def set_image(image)
-    path  = "public/images/#{self.name}"
-    
-    image.write(path)
-    file       = File.open(path)
-    self.image = file
-    file.close
-  end
-
   private
     def type_checker
       permitted_types = Set.new ['composition', 'base', 'mosaic']
@@ -53,16 +36,25 @@ class Picture < ActiveRecord::Base
     end
 
     def set_url
-      self.url = get_url
+      self.url = "https://s3.amazonaws.com/#{ENV['S3_BUCKET']}/#{self.user.email}/#{self.type}/#{self.name}"
     end
 
     def set_histogram
       # Download file and open in File object
-      file  = File.open(open(URI::encode(self.get_url())))
+      file  = File.open(open(URI::encode(self.url)))
       image = Image.read(file).first
+      file.close
       hist  = Histogram.new
       hist.set_hue image: image
       self.histogram = hist
+    end
+
+    def set_image(image)
+      path  = "public/images/#{self.name}"
+      
+      image.write(path)
+      file       = File.open(path)
+      self.image = file
       file.close
     end
 end
