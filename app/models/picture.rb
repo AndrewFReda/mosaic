@@ -8,7 +8,7 @@ class Picture < ActiveRecord::Base
   # URL interpretted by Paperclip (see initializers/paperclip.rb)
   has_attached_file :image, :path => '/:user_email/:type/:name', :url => 'https://s3.amazonaws.com/afr-mosaic/:user_email/:type/:name'
 
-  # Validate the attached image is image/jpg, image/png, etc
+  # Validate the attached is an image
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
   validates :name, :type, presence: true
   validate :type_checker

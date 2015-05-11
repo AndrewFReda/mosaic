@@ -68,7 +68,6 @@ class PicturesController < ApplicationController
     end
 
     def find_user
-      # TODO: Should this just be 'current_user' instead?
       @user = User.find params[:user_id]
     rescue ActiveRecord::RecordNotFound
       render json: { errors: "Unable to find User with ID: #{params[:user_id]}" }, status: 404

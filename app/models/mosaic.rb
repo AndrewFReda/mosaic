@@ -69,7 +69,6 @@ class Mosaic
   end
 
   private
-
     # TODO: catch error if URI can't parse
     def download_IMagick_image(url)
       # Download file and open in File object
