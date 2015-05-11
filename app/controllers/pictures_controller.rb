@@ -23,6 +23,17 @@ class PicturesController < ApplicationController
     end
   end
 
+  def mosaic
+    @picture = Picture.new name: "#{DateTime.now}-mosaic.png", type: 'mosaic', user: @user
+    @picture.create_mosaic params[:picture]
+    
+    if @picture.save
+      render json: @picture, status: 201
+    else
+      render json: { errors: @picture.errors.full_messages.first }, status: 500
+    end
+  end
+
   def update
     if @picture.update picture_params
       head status: 204
@@ -34,22 +45,6 @@ class PicturesController < ApplicationController
   def destroy
     if @picture.destroy
       head status: 204
-    else
-      render json: { errors: @picture.errors.full_messages.first }, status: 500
-    end
-  end
-
-  def mosaic
-    composition_pics = @user.find_pictures_by id: params[:picture][:composition_picture_ids]
-    base_pic         = (@user.find_pictures_by id: params[:picture][:base_picture_id]).first
-    @mosaic          = Mosaic.new composition_pictures: composition_pics, base_picture: base_pic
-
-    @mosaic.create()
-    @picture = Picture.new name: "#{DateTime.now}-mosaic.png", type: 'mosaic', user: @user
-    @picture.set_image(@mosaic.image)
-    
-    if @picture.save
-      render json: @picture, status: 201
     else
       render json: { errors: @picture.errors.full_messages.first }, status: 500
     end

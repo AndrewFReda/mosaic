@@ -15,6 +15,16 @@ class Picture < ActiveRecord::Base
 
   before_save :set_url
 
+  def create_mosaic(picture_params)
+    composition_pics = self.user.find_pictures_by id: picture_params[:composition_picture_ids]
+    base_pic         = (self.user.find_pictures_by id: picture_params[:base_picture_id]).first
+    
+    mosaic = Mosaic.new composition_pictures: composition_pics, base_picture: base_pic
+    mosaic.create()
+    
+    set_image(mosaic.image)
+  end
+
   def get_content_type
     extension = name.split('.').last
     "image/#{extension}"
