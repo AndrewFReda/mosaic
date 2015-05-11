@@ -11,9 +11,9 @@ class App.Views.ContentManager extends Backbone.View
   render: =>
     @$el.html(@template())
     view = new App.Views.ContentManagerNav(model: @session)
+    @addSubView('content-manager-nav', view)
     @$('#content-manager-nav').html(view.render().el)
-    view = new App.Views.PicturesCreate(model: @session, type: 'composition')
-    @$('#content-manager-body').html(view.render().el)
+    @renderUploadCompositionForm()
     this
 
   renderUploadBaseForm: ->
@@ -26,3 +26,4 @@ class App.Views.ContentManager extends Backbone.View
 
   renderContentManagerBody: (view) ->
     @$('#content-manager-body').html(view.render().el)
+    @addSubView('content-manager-body', view)

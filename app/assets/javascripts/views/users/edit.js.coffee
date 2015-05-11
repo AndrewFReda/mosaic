@@ -6,7 +6,7 @@ class App.Views.UsersEdit extends Backbone.View
   initialize: ->
     @user = @model
     # Consider passing EventBus in constructor
-    @listenTo(App.EventBus, 'update-user', @updateUser)
+    @listenTo(App.EventBus, 'profile:update-user', @updateUser)
 
   render: =>
     @$el.html(@template(user: @model))

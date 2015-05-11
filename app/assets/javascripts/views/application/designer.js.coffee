@@ -14,3 +14,4 @@ class App.Views.Designer extends Backbone.View
     @$('.begin-button').addClass('hidden')
     view = new App.Views.PicturesMosaic(model: @model)
     @$('#designer-body').html(view.render().el)
+    @addSubView('designer-body', view)

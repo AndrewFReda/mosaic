@@ -8,7 +8,7 @@ class App.Views.PicturesShow extends Backbone.View
 
   initialize: (options) ->
     @viewAction = options.viewAction
-    @listenTo(@model, 'destroy', @removeView)
+    @listenTo(@model, 'destroy', @close)
 
   render: ->
     @$el.html(@template(model: @model))
@@ -34,9 +34,6 @@ class App.Views.PicturesShow extends Backbone.View
         width: 500
         close: -> $(this).remove()
       )
-
-  removeView: (e) ->
-    @el.remove()
 
   #### SubViewAction: select ####
   # Methods related to selecting this picture from the list.

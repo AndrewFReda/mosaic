@@ -24,7 +24,7 @@ class App.Views.PicturesEdit extends Backbone.View
   updatePicture: (e) ->
     @model.urlRoot = "users/#{@model.get('user_id')}/pictures"
     @model.set
-      name: $('.edit-name').val()
+      name: @$('input.edit-name').val()
     @model.save(null,
       success: (model, resp, opts) =>
         console.log('success')

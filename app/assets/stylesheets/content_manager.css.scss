@@ -1,7 +1,22 @@
 /***** CONTENT MANAGER PAGE *****/
 #content-manager {
+  #content-manager-nav {
+    float: left;
+  }
+
   .upload-form {
+    .fileinput-button {
+      float: right;
+      font-weight: bold;
+
+      &:focus {
+        outline: none;
+      }
+    }
+    
     .upload-picture-list {
+      clear: both;
+
       .picture-list {
         .picture {
           img {

@@ -11,8 +11,8 @@ class App.Views.Registration extends Backbone.View
     @$el.html(@template())
     view = new App.Views.RegistrationNav()
     @$('#registration-nav').html(view.render().el)
-    view = new App.Views.Login()
-    @$('#registration-form').html(view.render().el)
+    @addSubView('registration-nav', view)
+    @renderLogin()
     this
 
   renderLogin: (e) ->
@@ -25,3 +25,4 @@ class App.Views.Registration extends Backbone.View
 
   renderRegistrationForm: (view) ->
     @$('#registration-form').html(view.render().el)
+    @addSubView('registration-form', view)
