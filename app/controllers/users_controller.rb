@@ -5,8 +5,6 @@ class UsersController < ApplicationController
 
   def show
     respond_with @user, status: 200
-  rescue ActiveRecord::RecordNotFound
-    render json: { errors: "Unable to find User with ID: #{params[:id]}" }, status: 404
   end
 
   # Creates User without creating Session
