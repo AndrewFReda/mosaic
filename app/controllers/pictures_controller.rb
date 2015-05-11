@@ -14,9 +14,9 @@ class PicturesController < ApplicationController
   def create
     @picture      = Picture.new picture_params
     @picture.user = @user
-    @s3_upload    = S3Upload.new picture: @picture
 
     if @picture.save
+      @s3_upload = S3Upload.new picture: @picture
       render json: @s3_upload.format_return_info, status: 201
     else
       render json: { errors: @picture.errors.full_messages.first }, status: 500
