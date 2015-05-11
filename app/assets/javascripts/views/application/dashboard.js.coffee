@@ -8,7 +8,6 @@ class App.Views.Dashboard extends Backbone.View
 
   initialize: ->
     @session = @model
-    # TODO: Look into how this compares to adding classes
     @listenTo(App.EventBus, 'side-nav:gallery', @renderGallery)
     @listenTo(App.EventBus, 'side-nav:designer', @renderDesigner)
     @listenTo(App.EventBus, 'side-nav:content-manager', @renderContentManager)
@@ -23,13 +22,13 @@ class App.Views.Dashboard extends Backbone.View
     this
 
   signOut: ->
+    @close()
     @session.destroy
       success: ->
         view = new App.Views.Registration()
         $('#container').html(view.render().el)
       error: ->
         # handle error
-    false
 
   # Delegation of SideNav clicks
   renderGallery: (e) ->
