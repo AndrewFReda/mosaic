@@ -58,9 +58,9 @@ class Mosaic
                                    base_image_cell_width, base_image_cell_height, true)
         
         # Determine hue of cropped picture
-        hue   = histogram.get_hue_from_image cropped
+        histogram.set_hue image: cropped
         # Find image with matching hue from cache
-        image = @cache[hue].sample
+        image = @cache[histogram.dominant_hue].sample
 
         # Use .composite in place of .mosaic as the later seems to be broken
         @image.composite!(image, image.columns * c, image.rows * r, OverCompositeOp)
