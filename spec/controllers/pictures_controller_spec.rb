@@ -129,19 +129,19 @@ RSpec.describe PicturesController, type: :controller do
 
   ##### UPDATE #####
   describe '#update' do
-    let(:picture) { FactoryGirl.create :picture } 
+    let(:user) { FactoryGirl.create :user_with_pictures }
 
     context 'when given all valid Picture attributes' do
-      let(:updated_name) { "updated_#{picture.name}" }
+      let(:updated_name) { "updated_#{user.pictures.first.name}" }
 
       it 'responds with an HTTP 204' do
-        put :update, { user_id: user.id, id: picture.id, picture: { id: picture.id, name: updated_name } }
+        put :update, { user_id: user.id, id: user.pictures.first.id, picture: { name: updated_name }}
 
         expect(response).to have_http_status(204)
       end
 
       it 'responds with no JSON content' do
-        put :update, { user_id: user.id, id: picture.id, picture: { id: picture.id, name: updated_name }}
+        put :update, { user_id: user.id, id: user.pictures.first.id, picture: { name: updated_name }}
 
         expect(response.body).to eq('')
       end
@@ -151,13 +151,13 @@ RSpec.describe PicturesController, type: :controller do
       let(:updated_name) { "" }
 
       it 'responds with an HTTP 500' do
-        put :update, { user_id: user.id, id: picture.id, picture: { id: picture.id, name: updated_name }}
+        put :update, { user_id: user.id, id: user.pictures.first.id, picture: { name: updated_name }}
 
         expect(response).to have_http_status(500)
       end
 
       it 'responds with a JSON error message' do
-        put :update, { user_id: user.id, id: picture.id, picture: { id: picture.id, name: updated_name }}        
+        put :update, { user_id: user.id, id: user.pictures.first.id, picture: { name: updated_name }}        
 
         expect(parsed_response.keys.first).to   eq('errors')
         expect(parsed_response.values.first).to eq("Name can't be blank")
@@ -167,17 +167,18 @@ RSpec.describe PicturesController, type: :controller do
 
   ##### DESTROY #####
   describe '#destroy' do
-    let(:picture) { FactoryGirl.create :picture }
+    let(:user) { FactoryGirl.create :user_with_pictures }
+
     # TODO: Make tests more robust
     context 'when given valid Picture' do
       it 'responds with an HTTP 204' do
-        delete :destroy, { user_id: user.id, id: picture.id }
+        delete :destroy, { user_id: user.id, id: user.pictures.first.id }
 
         expect(response).to have_http_status(204)
       end
 
       it 'responds with no JSON' do
-        delete :destroy, { user_id: user.id, id: picture.id }
+        delete :destroy, { user_id: user.id, id: user.pictures.first.id }
 
         expect(response.body).to eq('')
       end
