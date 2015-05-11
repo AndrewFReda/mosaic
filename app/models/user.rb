@@ -1,12 +1,13 @@
 class User < ActiveRecord::Base
   has_secure_password
-  before_save { self.email = email.downcase }
+  has_many :pictures, dependent: :destroy
+
   validates :email, presence: true,
                     uniqueness: { case_sensitive: false }
  
   validates :password, length: { minimum: 1 }
   
-  has_many :pictures, dependent: :destroy
+  before_save { self.email = self.email.downcase }
 
   def find_pictures_by(attrs = {})
     if attrs[:type]

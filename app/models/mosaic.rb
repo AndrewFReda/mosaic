@@ -6,7 +6,7 @@ class Mosaic
   def initialize(attrs)
     super
     if attrs
-      @base_picture = attrs[:base_picture]
+      @base_picture         = attrs[:base_picture]
       @composition_pictures = attrs[:composition_pictures]
       set_composition_cache()
       set_aspect_ratio()
@@ -28,14 +28,14 @@ class Mosaic
 
   # Determine aspect ratio of this Mosaic based on its Base Picture
   def set_aspect_ratio
-    @columns   = 80
-    @rows      = 80
     base_image = download_IMagick_image(@base_picture.url)
+    @columns   = 75
+    @rows      = 75
 
     if base_image.columns > base_image.rows
       @columns *= (base_image.columns / base_image.rows)
     else
-      @rows *= (base_image.rows / base_image.columns)
+      @rows    *= (base_image.rows / base_image.columns)
     end
 
     @image = Image.new(@columns * @cache[0][0].columns, @rows * @cache[0][0].rows)
