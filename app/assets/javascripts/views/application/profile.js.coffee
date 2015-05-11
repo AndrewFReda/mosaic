@@ -17,6 +17,7 @@ class App.Views.Profile extends Backbone.View
   renderUsersEdit: (model) =>
     view = new App.Views.UsersEdit(model: @user)
     @$('#profile-body').html(view.render().el)
+    @addSubView('profile-body', view)
 
   # TODO: Move into UsersEdit view after delegating click event
   # Currently getting Zombie views when I attempt this though

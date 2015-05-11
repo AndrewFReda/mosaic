@@ -22,6 +22,7 @@ class App.Views.PicturesMosaic extends Backbone.View
   renderPictures: (collection) =>
     view = new App.Views.PicturesIndex(model: @model, collection: @collection, subViewAction: 'select')
     @$('#pictures-mosaic-picture-list').html(view.render().el)
+    @addSubView('pictures-mosaic-picture-list', view)
 
   selectAllPictures: (e) ->
     _.forEach(@$('input[type=checkbox]'), (cb) -> $(cb)[0].checked = true)

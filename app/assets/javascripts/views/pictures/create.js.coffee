@@ -20,6 +20,7 @@ class App.Views.PicturesCreate extends Backbone.View
   renderPictures: (collection) =>
     view = new App.Views.PicturesIndex(collection: @collection, subViewAction: 'edit')
     @$('.upload-picture-list').html(view.render().el)
+    @addSubView('upload-picture-list', view)
 
   setUpS3UploadHooks: (el) =>
     fileInput = $(el)
