@@ -33,5 +33,3 @@ class App.Views.SideNav extends Backbone.View
 
   renderProfile: (e) ->
     App.EventBus.trigger('side-nav:profile')
-
-  
