@@ -11,7 +11,8 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery-ui
+//= require jquery-ui/dialog
+//= require jquery-ui/effect.all
 //= require jquery_ujs
 //= require jquery-fileupload/basic-plus
 //= require bootstrap-sprockets
