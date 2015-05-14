@@ -11,13 +11,12 @@ class Histogram < ActiveRecord::Base
 
   private
     def determine_image_hue(image)
-      num_colors      = 1
-      quantized_image = image.quantize(num_colors)
-      histogram       = quantized_image.color_histogram
-      # histogram:    [{ Pixel => Occurences}]
-      dominant_pixel  = histogram.first.first
-      hue             = dominant_pixel.to_hsla[0].to_i
-      # Divide 360 possible degrees of hue into 18 buckets (360/20=18)
-      hue_bucket      = (hue / 20) % 18
+      # Reduce colors
+      num_colors = 1
+      image.colors(num_colors)
+      # Find hue of dominant color (expressed as a decimal)
+      hue = image["%[fx:hue]"].to_f * 360
+        # Determine hue bucket
+        (hue / 20).to_i % 18
   end
 end
