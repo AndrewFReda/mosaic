@@ -16,7 +16,20 @@ class Histogram < ActiveRecord::Base
       image.colors(num_colors)
       # Find hue of dominant color (expressed as a decimal)
       hue = image["%[fx:hue]"].to_f * 360
+      #sat = image["%[fx:saturation]"].to_f * 100
+      lit = image["%[fx:lightness]"].to_f * 100
+      #lum = image["%[fx:luma]"].to_f * 100
+      # Determine if saturated out
+      #if sat <= 5
+      #  return "grey"
+      #elsif lit >= 95
+      if lit >= 95
+        18 # represents white
+      elsif lit <= 15
+        19 # represents black
+      else      
         # Determine hue bucket
         (hue / 20).to_i % 18
+      end
   end
 end
