@@ -16,8 +16,8 @@ class PicturesController < ApplicationController
     @picture.user = @user
 
     if @picture.save
-      @s3_upload = S3Upload.new picture: @picture
-      render json: @s3_upload.format_return_info, status: 201
+      @s3_uploader_credentials = S3UploaderCredentials.new picture: @picture
+      render json: @s3_uploader_credentials.generate, status: 201
     else
       render json: { errors: @picture.errors.full_messages.first }, status: 500
     end

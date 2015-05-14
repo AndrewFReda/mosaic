@@ -98,8 +98,8 @@ RSpec.describe PicturesController, type: :controller do
         post :create, { user_id: user.id, picture: { name: picture.name, url: picture.url, type: picture.type, histogram: picture.histogram } }
         
         upload_keys = parsed_response.keys
-        s3_keys     = parsed_response['s3_upload'].keys
-        expect(upload_keys).to eq(['s3_upload', 'picture'])
+        s3_keys     = parsed_response['s3_uploader_credentials'].keys
+        expect(upload_keys).to eq(['s3_uploader_credentials', 'picture'])
         expect(s3_keys).to eq(['key', 'policy', 'signature', 'content_type', 'access_key'])
       end
     end
