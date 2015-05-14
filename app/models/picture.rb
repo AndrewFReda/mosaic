@@ -17,12 +17,11 @@ class Picture < ActiveRecord::Base
 
   def create_mosaic(picture_params)
     composition_pics = self.user.find_pictures_by id: picture_params[:composition_picture_ids]
-    base_pic         = (self.user.find_pictures_by id: picture_params[:base_picture_id]).first
-    
-    mosaic = Mosaic.new composition_pictures: composition_pics, base_picture: base_pic
-    mosaic.create()
-    
-    set_image(mosaic.image)
+    base_pics        = self.user.find_pictures_by id: picture_params[:base_picture_id]
+    base_pic         = base_pics.first
+
+    mosaic = MosaicCreator.new base_picture: base_pic, composition_pictures: composition_pics
+    set_image(mosaic.get_image())
   end
 
   def get_content_type
@@ -32,7 +31,7 @@ class Picture < ActiveRecord::Base
 
   def get_dominant_hue
     set_histogram() if self.histogram.nil? or self.histogram.dominant_hue.nil?
-      
+
     self.histogram.dominant_hue
   end
 
@@ -50,20 +49,16 @@ class Picture < ActiveRecord::Base
     end
 
     def set_histogram
-      # Download file and open in File object
-      file  = File.open(open(URI::encode(self.url)))
-      image = Image.read(file).first
-      file.close
+      image = MiniMagick::Image.open(self.url)
       hist  = Histogram.new
       hist.set_hue image: image
       self.histogram = hist
     end
 
     def set_image(image)
-      path  = "public/images/#{self.name}"
-      
+      path  = "tmp/#{self.name}"
       image.write(path)
-      file       = File.open(path)
+      file       = File.open(image.path)
       self.image = file
       file.close
     end
