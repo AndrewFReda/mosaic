@@ -8,12 +8,23 @@ class Picture < ActiveRecord::Base
   # URL interpretted by Paperclip (see initializers/paperclip.rb)
   has_attached_file :image, :path => '/:user_email/:type/:name', :url => 'https://s3.amazonaws.com/afr-mosaic/:user_email/:type/:name'
 
-  # Validate the attached image is image/jpg, image/png, etc
+  # Validate the attached is an image
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
   validates :name, :type, presence: true
   validate :type_checker
 
   before_save :set_url
+
+  def create_mosaic(attrs)
+    composition_pics = self.user.find_pictures_by id: attrs[:composition_picture_ids]
+    base_pics        = self.user.find_pictures_by id: attrs[:base_picture_id]
+    base_pic         = base_pics.first
+
+    mosaic = MosaicCreator.new base_picture: base_pic, composition_pictures: composition_pics
+    image  = mosaic.get_image()
+    set_image(image)
+    image.destroy!
+  end
 
   def get_content_type
     extension = name.split('.').last
@@ -22,25 +33,8 @@ class Picture < ActiveRecord::Base
 
   def get_dominant_hue
     set_histogram() if self.histogram.nil? or self.histogram.dominant_hue.nil?
-      
+
     self.histogram.dominant_hue
-  end
-
-  # TODO: Important!
-  # =>  Elimnates URL field but means updating pictures needs to update S3 or links will break
-  #     Leave commented until updates properly propogate to S3
-  def get_url
-    self.url
-   # "https://s3.amazonaws.com/#{ENV['S3_BUCKET']}/#{self.user.email}/#{self.type}/#{self.name}"
-  end
-
-  def set_image(image)
-    path  = "public/images/#{self.name}"
-    
-    image.write(path)
-    file       = File.open(path)
-    self.image = file
-    file.close
   end
 
   private
@@ -53,16 +47,22 @@ class Picture < ActiveRecord::Base
     end
 
     def set_url
-      self.url = get_url
+      self.url = "https://s3.amazonaws.com/#{ENV['S3_BUCKET']}/#{self.user.email}/#{self.type}/#{self.name}"
     end
 
     def set_histogram
-      # Download file and open in File object
-      file  = File.open(open(URI::encode(self.get_url())))
-      image = Image.read(file).first
+      image = MiniMagick::Image.open(self.url)
       hist  = Histogram.new
       hist.set_hue image: image
       self.histogram = hist
+      image.destroy!
+    end
+
+    def set_image(image)
+      path  = "tmp/#{self.name}"
+      image.write(path)
+      file       = File.open(image.path)
+      self.image = file
       file.close
     end
 end

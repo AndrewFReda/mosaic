@@ -1,8 +1,9 @@
 source 'https://rubygems.org'
 
 # General Rails gems
-gem 'rails', '4.1.6'
+gem 'rails', '4.2.1'
 gem 'pg'
+gem 'responders'
 gem 'bcrypt', '~> 3.1.7'
 gem 'dotenv-rails', :groups => [:development, :test]
 
@@ -21,10 +22,10 @@ gem 'therubyracer'
 gem 'autoprefixer-rails'
 
 # Image proessing and upload
-gem 'aws-sdk'
+gem 'aws-sdk', '< 2.0'
 gem 'paperclip'
 gem 'sidekiq'
-gem 'fog'
+gem 'mini_magick', '4.2.4'
 
 # Code quality
 gem 'rubocop'
@@ -58,7 +59,8 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   # Misc
-  gem 'lolcommits'
+  #gem 'lolcommits'
+  gem 'rbtrace'
 end
 
 group :doc do

@@ -1,10 +1,10 @@
 class PicturesController < ApplicationController
 
-  before_action :verify_picture_type, only: [:index, :create, :update]
+  before_action :verify_picture_type, except: [:destroy]
   before_action :find_user
   before_action :find_picture, only: [:update, :destroy]
 
-  respond_to :json, only: [:index, :create, :update, :destroy, :mosaic]
+  respond_to :json
   
   def index
     @pictures = @user.find_pictures_by type: params[:type]
@@ -14,10 +14,21 @@ class PicturesController < ApplicationController
   def create
     @picture      = Picture.new picture_params
     @picture.user = @user
-    @s3_upload    = S3Upload.new picture: @picture
 
     if @picture.save
-      render json: @s3_upload.format_return_info, status: 201
+      @s3_uploader_credentials = S3UploaderCredentials.new picture: @picture
+      render json: @s3_uploader_credentials.generate, status: 201
+    else
+      render json: { errors: @picture.errors.full_messages.first }, status: 500
+    end
+  end
+
+  def mosaic
+    @picture = Picture.new name: "#{DateTime.now}-mosaic.png", type: 'mosaic', user: @user
+    @picture.create_mosaic params[:picture]
+    
+    if @picture.save
+      render json: @picture, status: 201
     else
       render json: { errors: @picture.errors.full_messages.first }, status: 500
     end
@@ -39,22 +50,6 @@ class PicturesController < ApplicationController
     end
   end
 
-  def mosaic
-    composition_pics = @user.find_pictures_by id: params[:picture][:composition_picture_ids]
-    base_pic         = (@user.find_pictures_by id: params[:picture][:base_picture_id]).first
-    @mosaic          = Mosaic.new composition_pictures: composition_pics, base_picture: base_pic
-
-    @mosaic.create()
-    @picture = Picture.new name: "#{DateTime.now}-mosaic.png", type: 'mosaic', user: @user
-    @picture.set_image(@mosaic.image)
-    
-    if @picture.save
-      render json: @picture, status: 201
-    else
-      render json: { errors: @picture.errors.full_messages.first }, status: 500
-    end
-  end
-
   private
 
     def picture_params
@@ -68,7 +63,6 @@ class PicturesController < ApplicationController
     end
 
     def find_user
-      # TODO: Should this just be 'current_user' instead?
       @user = User.find params[:user_id]
     rescue ActiveRecord::RecordNotFound
       render json: { errors: "Unable to find User with ID: #{params[:user_id]}" }, status: 404

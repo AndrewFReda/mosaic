@@ -56,10 +56,10 @@ class App.Views.PicturesCreate extends Backbone.View
   uploadToS3: (data, response) =>
     # After creating our document in rails, we send back JSON of the key, policy
     #  and signature.  We must put these into our form before submitting to S3.
-    @$('.file-upload input[name=key]').val(response.s3_upload.key)
-    @$('.file-upload input[name=policy]').val(response.s3_upload.policy)
-    @$('.file-upload input[name=signature]').val(response.s3_upload.signature)
-    @$('.file-upload input[name=ContentType]').val(response.s3_upload.content_type)
-    @$('.file-upload input[name=AWSAccessKeyID]').val(response.s3_upload.access_key)
+    @$('.file-upload input[name=key]').val(response.s3_uploader_credentials.key)
+    @$('.file-upload input[name=policy]').val(response.s3_uploader_credentials.policy)
+    @$('.file-upload input[name=signature]').val(response.s3_uploader_credentials.signature)
+    @$('.file-upload input[name=ContentType]').val(response.s3_uploader_credentials.content_type)
+    @$('.file-upload input[name=AWSAccessKeyID]').val(response.s3_uploader_credentials.access_key)
     # Send to Amazon S3
     data.submit()

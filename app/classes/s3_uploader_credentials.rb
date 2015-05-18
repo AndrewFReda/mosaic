@@ -1,5 +1,4 @@
-class S3Upload
-  include ActiveModel::Model
+class S3UploaderCredentials
 
   def initialize(attrs)
     if attrs[:picture]
@@ -7,14 +6,14 @@ class S3Upload
     end
   end
 
-  def format_return_info
+  def generate
     {
-      s3_upload: {
-          key:          "#{@picture.user.email}/#{@picture.type}/#{@picture.name}",
-          policy:       policy_document(), 
-          signature:    signature(),
-          content_type: @picture.get_content_type(),
-          access_key:   ENV['S3_ACCESS_KEY']
+      s3_uploader_credentials: {
+        key:          "#{@picture.user.email}/#{@picture.type}/#{@picture.name}",
+        policy:       policy_document(), 
+        signature:    signature(),
+        content_type: @picture.get_content_type(),
+        access_key:   ENV['S3_ACCESS_KEY']
       },
       picture: @picture.attributes
     }
