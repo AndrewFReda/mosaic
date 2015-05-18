@@ -29,7 +29,7 @@ class Histogram < ActiveRecord::Base
         19 # represents black
       else      
         # Determine hue bucket
-        (hue / 20).to_i % 18
+        (hue / 20).round % 18
       end
   end
 end
