@@ -8,7 +8,6 @@ class App.Views.PicturesMosaic extends Backbone.View
     'click .continue-button': 'renderBasePictures'
     'click .create-button': 'createMosaic'
 
-
   initialize: ->
     @collection     = new App.Collections.Pictures()
     @collection.url = "/users/#{@model.id}/pictures?type=composition"
@@ -47,6 +46,7 @@ class App.Views.PicturesMosaic extends Backbone.View
     selectedIDs = _.map(selectedPictures, (n) -> return $(n).data('id') )
 
   createMosaic: (e) =>
+    $(e.currentTarget).addClass('disabled')
     @selectedBaseID = @getSelectedPictureIDs()
     @picture = new App.Models.Picture()
     @picture.url = "/users/#{@model.get('id')}/pictures/mosaic"

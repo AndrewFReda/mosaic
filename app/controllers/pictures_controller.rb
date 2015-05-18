@@ -25,9 +25,9 @@ class PicturesController < ApplicationController
 
   def mosaic
     @picture = Picture.new name: "#{DateTime.now}-mosaic.png", type: 'mosaic', user: @user
-    @picture.create_mosaic params[:picture]
     
     if @picture.save
+      CreateMosaic.perform_later params[:picture].merge({ id: @picture.id })
       render json: @picture, status: 201
     else
       render json: { errors: @picture.errors.full_messages.first }, status: 500

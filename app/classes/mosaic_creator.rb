@@ -51,7 +51,7 @@ class MosaicCreator
           # Find image from cache with hue matching given image
           matching = @cache.find_matching_image image
           row << matching.path
-          #image.destroy!
+          image.destroy!
         end
 
         row_path = "tmp/row-#{r}.png"
