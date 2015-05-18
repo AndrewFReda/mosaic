@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  respond_to :json, only: [:show, :create, :destroy]
+  respond_to :json
 
   def show
     if current_user
