@@ -1,10 +1,10 @@
 class PicturesController < ApplicationController
 
-  before_action :verify_picture_type, only: [:index, :create, :update]
+  before_action :verify_picture_type, except: [:destroy]
   before_action :find_user
   before_action :find_picture, only: [:update, :destroy]
 
-  respond_to :json, only: [:index, :create, :update, :destroy, :mosaic]
+  respond_to :json
   
   def index
     @pictures = @user.find_pictures_by type: params[:type]
