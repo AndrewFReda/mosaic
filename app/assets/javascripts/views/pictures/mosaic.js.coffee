@@ -8,7 +8,6 @@ class App.Views.PicturesMosaic extends Backbone.View
     'click .continue-button': 'renderBasePictures'
     'click .create-button': 'createMosaic'
 
-
   initialize: ->
     @collection     = new App.Collections.Pictures()
     @collection.url = "/users/#{@model.id}/pictures?type=composition"
