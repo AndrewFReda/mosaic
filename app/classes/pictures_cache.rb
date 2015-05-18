@@ -11,15 +11,6 @@ class PicturesCache
     end
   end
 
-  # Fill this cache with Pictures sorted into buckets by 
-  #  its Histogram's dominant hue
-  def populate
-    @pictures.each do |picture|
-      hue         = picture.get_dominant_hue()
-      @cache[hue] = @cache[hue].push(picture)
-    end
-  end
-
   # Lazily converts Pictures into ImageMagick Images as they are used:
   #  If random matching element is a Picture, download the ImageMagick version,
   #   scale it down and insert it back into the cache
@@ -39,4 +30,14 @@ class PicturesCache
 
     random
   end
+
+  private
+    # Fill this cache with Pictures sorted into buckets by 
+    #  its Histogram's dominant hue
+    def populate
+      @pictures.each do |picture|
+        hue         = picture.get_dominant_hue()
+        @cache[hue] = @cache[hue].push(picture)
+      end
+    end
 end
