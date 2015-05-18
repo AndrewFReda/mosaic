@@ -15,16 +15,6 @@ class Picture < ActiveRecord::Base
 
   before_save :set_url
 
-  def create_mosaic(attrs)
-    composition_pics = self.user.find_pictures_by id: attrs[:composition_picture_ids]
-    base_pics        = self.user.find_pictures_by id: attrs[:base_picture_id]
-    base_pic         = base_pics.first
-
-    mosaic = MosaicCreator.new base_picture: base_pic, composition_pictures: composition_pics
-    image  = mosaic.get_image()
-    set_image(image)
-    image.destroy!
-  end
 
   def get_content_type
     extension = name.split('.').last
@@ -37,6 +27,13 @@ class Picture < ActiveRecord::Base
     self.histogram.dominant_hue
   end
 
+  def set_image(image)
+    path  = "tmp/#{self.name}"
+    image.write(path)
+    file       = File.open(image.path)
+    self.image = file
+    file.close
+  end
   private
     def type_checker
       permitted_types = Set.new ['composition', 'base', 'mosaic']
@@ -56,13 +53,5 @@ class Picture < ActiveRecord::Base
       hist.set_hue image: image
       self.histogram = hist
       image.destroy!
-    end
-
-    def set_image(image)
-      path  = "tmp/#{self.name}"
-      image.write(path)
-      file       = File.open(image.path)
-      self.image = file
-      file.close
     end
 end
