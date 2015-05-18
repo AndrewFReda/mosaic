@@ -15,13 +15,15 @@ class Picture < ActiveRecord::Base
 
   before_save :set_url
 
-  def create_mosaic(picture_params)
-    composition_pics = self.user.find_pictures_by id: picture_params[:composition_picture_ids]
-    base_pics        = self.user.find_pictures_by id: picture_params[:base_picture_id]
+  def create_mosaic(attrs)
+    composition_pics = self.user.find_pictures_by id: attrs[:composition_picture_ids]
+    base_pics        = self.user.find_pictures_by id: attrs[:base_picture_id]
     base_pic         = base_pics.first
 
     mosaic = MosaicCreator.new base_picture: base_pic, composition_pictures: composition_pics
-    set_image(mosaic.get_image())
+    image  = mosaic.get_image()
+    set_image(image)
+    image.destroy!
   end
 
   def get_content_type
@@ -53,6 +55,7 @@ class Picture < ActiveRecord::Base
       hist  = Histogram.new
       hist.set_hue image: image
       self.histogram = hist
+      image.destroy!
     end
 
     def set_image(image)
